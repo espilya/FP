@@ -1,5 +1,5 @@
 #include "Conjunto.h"
-#include <iostream>
+
 
 void cjto_vacio(tConjunto &c) {
 	for (int i = 0; i < DIMENSION; i++) {

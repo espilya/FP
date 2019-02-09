@@ -4,14 +4,16 @@
 #include <fstream>
 #include <iostream>
 #include "casilla.h"
-
 using namespace std;
 
 // Tablero Sudoku
 typedef tCasilla tTablero[DIMENSION][DIMENSION];
 
-void iniciaTablero(tTablero tablero); //Inicia todas las casillas del tablero
-bool cargaTablero(const string &fichero, tTablero tablero); //Carga un tablero de fichero
+//Inicia todas las casillas del tablero
+void iniciaTablero(tTablero tablero); 
+
+//Carga un tablero de fichero
+bool cargaTablero(const string &fichero, tTablero tablero); 
 
 
 // Dibuja el tablero en pantalla
@@ -43,5 +45,8 @@ void rellenarSimples(tTablero t);
 
 void resolver(tTablero t, int nCasilla, bool &exito);
 
-
+///---HECHOS POR EL ALUMNO---
+//Calculo de elementos posibles de una casilla(recorro las demas y elimino el numero que encontre en los otros
+// de los casos posibles de nuestra casilla)
+void calcElementosPosibles(tTablero t);
 #endif

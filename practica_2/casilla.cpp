@@ -1,18 +1,10 @@
 #include "casilla.h"
-#include <iostream>
-#include <Windows.h>
 using namespace std;
 
 ///
 //
 //
 //		como incluir cada interfaz/cpp entre si mismos
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -23,9 +15,9 @@ void iniciaCasilla(tCasilla & casilla) {
 
 void rellenaCasilla(tCasilla & casilla, char c, bool fija = false) {
 	if (c == ' ') casilla.estado = VACIO;
-	else if (!fija && isalnum(c)) {
+	else if (!fija && isdigit(c)) {
 		casilla.estado = RELLENO;
-		casilla.numero = c;
+		casilla.numero = c - '0';
 	}
 	else if (fija) casilla.estado = FIJA;
 }
