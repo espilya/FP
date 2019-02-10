@@ -1,5 +1,5 @@
 #include "Conjunto.h"
-
+#include <iostream>
 
 void cjto_vacio(tConjunto &c) {
 	for (int i = 0; i < DIMENSION; i++) {
@@ -20,13 +20,17 @@ bool pertenece(const tConjunto &c, int e) {
 }
 
 void addElemento(tConjunto & c, int e) {
+	if (e != -1) {
 			c.elementos[e] == true;
 			c.nElems++;
+	}
 }
 
 void delElemento(tConjunto & c, int e) {
-	c.elementos[e] == false;
-	c.nElems--;
+	if (e != -1) {
+		c.elementos[e] == false;
+		c.nElems--;
+	}
 }
 
 int numElems(const tConjunto & c) {

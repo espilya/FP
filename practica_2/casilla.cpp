@@ -1,4 +1,6 @@
 #include "casilla.h"
+#include <iostream>
+#include <Windows.h>
 using namespace std;
 
 ///
@@ -8,18 +10,37 @@ using namespace std;
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 void iniciaCasilla(tCasilla & casilla) {
 	cjto_lleno(casilla.posibles);
+	casilla.numero = -1;
 }
 
 void rellenaCasilla(tCasilla & casilla, char c, bool fija = false) {
-	if (c == ' ') casilla.estado = VACIO;
-	else if (!fija && isdigit(c)) {
-		casilla.estado = RELLENO;
-		casilla.numero = c - '0';
+	if (fija) {
+		casilla.numero = c;
+		if (c == ' ') {
+			casilla.estado = VACIO;
+		}
+		else {
+			casilla.estado = FIJA;
+		}
 	}
-	else if (fija) casilla.estado = FIJA;
+	else {
+		casilla.estado = RELLENO;
+		casilla.numero = c;
+	}
+}
+
+void borraCasilla(tCasilla & casilla) {
+	casilla.estado = VACIO;
+	casilla.numero = -1;
 }
 
 void dibujaCasilla(const tCasilla & casilla) {
