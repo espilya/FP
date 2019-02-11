@@ -2,6 +2,8 @@
 #define _conjunto
 const int DIMENSION = 9;
 
+
+//hola
 //Tipo de datos que representa un subconjunto del conjunto de elementos {1,2,3,4,5,6,7,8,9}
 
 typedef bool tElementos[DIMENSION];
