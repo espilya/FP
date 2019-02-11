@@ -162,6 +162,8 @@
   <ItemGroup>
     <ClCompile Include="casilla.cpp" />
     <ClCompile Include="Conjunto.cpp" />
+    <ClCompile Include="juego.cpp" />
+    <ClCompile Include="listaSudokus.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

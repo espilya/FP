@@ -24,12 +24,13 @@ void iniciaCasilla(tCasilla & casilla) {
 
 void rellenaCasilla(tCasilla & casilla, char c, bool fija = false) {
 	if (fija) {
-		casilla.numero = c;
 		if (c == ' ') {
 			casilla.estado = VACIO;
+			casilla.numero = -1;
 		}
 		else {
 			casilla.estado = FIJA;
+			casilla.numero = c;
 		}
 	}
 	else {
@@ -46,7 +47,7 @@ void borraCasilla(tCasilla & casilla) {
 void dibujaCasilla(const tCasilla & casilla) {
 	tPaleta color;
 	if (casilla.estado == VACIO) {
-		cout << casilla.numero;
+		cout << ' ';
 	}
 	else if (casilla.estado == RELLENO) {
 		colorFondo(color = ROJO);

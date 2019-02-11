@@ -6,7 +6,9 @@
 //
 //		--arreglar si se introduze valor malo
 //
+//		como mejor pasar constantes: "const string &fichero" o "const string fichero"??
 //
+//		dibujarTablero..
 
 void iniciaTablero(tTablero tablero) {
 	for (int i = 0; i < DIMENSION; i++) {
@@ -16,11 +18,11 @@ void iniciaTablero(tTablero tablero) {
 	}
 }
 
-bool cargarTablero(string nombreFichero, tTablero t) {
+bool cargarTablero(const string &fichero, tTablero t) {
 	char ch;
 	bool ok = false;
 	ifstream file;
-	file.open(nombreFichero);
+	file.open(fichero);
 	if (file.is_open()) {
 		for (int i = 0; i < DIMENSION; i++) {
 			for (int j = 0; j < DIMENSION; j++) {
@@ -33,43 +35,6 @@ bool cargarTablero(string nombreFichero, tTablero t) {
 	}
 	file.close();
 	return ok;
-}
-
-void calcElementosPosibles(tTablero t, int x = -1, int y = -1, int mode = 0, int c = -1) {
-	if (mode == 0) {
-		for (int i = 0; i < DIMENSION; i++) {
-			for (int j = 0; j < DIMENSION; j++) {
-				if(t[i][j].estado==VACIO)
-				for (int a = 0; a < DIMENSION; a++) {
-					if(t[a][j].estado == FIJA)
-						delElemento(t[i][j].posibles, t[a][j].numero);
-				}
-				for (int b = 0; b < DIMENSION; b++) {
-					if(t[i][b].estado == FIJA)
-						delElemento(t[i][j].posibles, t[i][b].numero);
-				}
-			}
-		}
-	}
-	else {
-		for (int a = 0; a < DIMENSION; a++) {
-			if (t[a][y].estado != FIJA) {
-				if (mode == 1)
-					delElemento(t[a][y].posibles, t[x][y].numero);
-				else
-					addElemento(t[a][y].posibles, c);
-			}
-		}
-		for (int b = 0; b < DIMENSION; b++) {
-			if (t[x][b].estado != FIJA) {
-				if (mode == 1)
-					delElemento(t[x][b].posibles, t[x][y].numero);
-				else
-					addElemento(t[x][b].posibles, c);
-
-			}
-		}
-	}
 }
 
 void dibujarTablero(const tTablero tablero) {
@@ -101,33 +66,95 @@ bool borraNum(tTablero t, int x, int y) {
 	return ok;
 }
 
-//Determina si el tablero ha sido rellenado completamente
-//Si el sudoku tiene una unica solucion, como solamente permitimos valores validos no seria posible que estuviese lleno y no fuese correcto
-//Si pudiese tener varias soluciones entonces puede terner sentido tener esta funcion
-//O si permitiesemos poner valores erroneos
-bool tableroLleno(const tTablero t) {
-	//devuelve un valor booleano que indica si el tablero dado está relleno por completo.
 
+bool tableroLleno(const tTablero t) {
+	bool lleno = true;
+	for (int i = 0; i < DIMENSION; i++) {
+		for (int j = 0; j < DIMENSION; j++) {
+			if (t[i][j].estado == VACIO) {
+				lleno = false;
+			}
+		}
+	}
+	return lleno;
 }
 
-//Muestra los posibles valores de una casilla valida cualquiera
-//Si es fija solo figurara su propio valor, ya que no se puede cambiar
+
 void mostrarPosibles(const tTablero t, int x, int y) {
 	//muestra los valores posibles de la casilla del tablero dado que tiene
 	//coordenadas(fila, col) (fila y col estarán en el intervalo[1, 9])
-
-
+	if ((0 < x&& x < 10) && (0 < y && y < 10)) {
+		if (t[x][y].estado != FIJA) {
+			cout << "Valores posibles: ";
+			for (int i = 0; i < DIMENSION; i++) {
+				cout << t[x][y].posibles.elementos << ' ';
+			}
+			cout << endl;
+		}
+		else {
+			cout << t[x][y].numero << endl;
+		}
+	}
+	else cout << "Coordenada incorrecta." << endl;
 }
 
-//Recorre la matriz mirando que casillas vacias tienen un unico valor posible y lo rellena
-//De nuevo quita valores posibles de la fila, columna y submatriz
-void rellenarSimples(tTablero t) {
-	//en cada casilla que tiene un
-	//único valor posible se pone dicho valor y se actualizan convenientemente
-	//los valores posibles de las casillas que puedan verse afectadas.
 
+void rellenarSimples(tTablero t) {
+	int numero;
+	for (int i = 0; i < DIMENSION; i++) {
+		for (int j = 0; j < DIMENSION; j++) {
+			if (esSimple(t[i][j], numero))
+				ponerNum(t, i, j, numero);
+		}
+	}
+}
+
+void calcElementosPosibles(tTablero t, int x = -1, int y = -1, int mode = 0, int c = -1) {
+	if (mode == 0) {
+		for (int i = 0; i < DIMENSION; i++) {
+			for (int j = 0; j < DIMENSION; j++) {
+				if (t[i][j].estado == VACIO)
+					for (int a = 0; a < DIMENSION; a++) {
+						if (t[a][j].estado == FIJA)
+							delElemento(t[i][j].posibles, t[a][j].numero);
+					}
+				for (int b = 0; b < DIMENSION; b++) {
+					if (t[i][b].estado == FIJA)
+						delElemento(t[i][j].posibles, t[i][b].numero);
+				}
+			}
+		}
+	}
+	else {
+		for (int a = 0; a < DIMENSION; a++) {
+			if (t[a][y].estado != FIJA) { //tampoco es necesario. de todos modos en ningun caso se va a modificar el valor de casilla FIJA
+				if (mode == 1)
+					delElemento(t[a][y].posibles, t[x][y].numero);
+				else
+					addElemento(t[a][y].posibles, c);
+			}
+		}
+		for (int b = 0; b < DIMENSION; b++) {
+			if (t[x][b].estado != FIJA) {
+				if (mode == 1)
+					delElemento(t[x][b].posibles, t[x][y].numero);
+				else
+					addElemento(t[x][b].posibles, c);
+
+			}
+		}
+	}
 }
 
 void resolver(tTablero t, int nCasilla, bool &exito) {
+	const int limiteCtd = 25;
+	int ctd = 0; //para no entrar en un bucle infinito, si no se puede resolver con esta algoritmo/funcion rellenarSimples()
+	exito = false;
 
+	while ((!exito) && (ctd<limiteCtd)) {
+		rellenarSimples(t);
+		ctd++;
+		exito = tableroLleno(t);
+	}
 }
+

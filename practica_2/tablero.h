@@ -10,9 +10,11 @@ using namespace std;
 // Tablero Sudoku
 typedef tCasilla tTablero[DIMENSION][DIMENSION];
 
-void iniciaTablero(tTablero tablero); //Inicia todas las casillas del tablero
-bool cargaTablero(const string &fichero, tTablero tablero); //Carga un tablero de fichero
+//Inicia todas las casillas del tablero
+void iniciaTablero(tTablero tablero); 
 
+//Carga un tablero de fichero
+bool cargarTablero(const string &fichero, tTablero tablero); 
 
 // Dibuja el tablero en pantalla
 void dibujarTablero(const tTablero tablero);
