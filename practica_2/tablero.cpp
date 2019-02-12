@@ -1,14 +1,11 @@
 ﻿#include "tablero.h"
 
 //
-//		Al eliminar un numero en una casilla, hace falta poner posibles valores para casillas rellenas/fijas?
-//		Al poner un numero en una casilla, hace falta eliminar posibles valores para casillas rellenas/fijas?
-//
 //		--arreglar si se introduze valor malo
 //
 //		como mejor pasar constantes: "const string &fichero" o "const string fichero"??
 //
-//		dibujarTablero..
+
 
 void iniciaTablero(tTablero tablero) {
 	for (int i = 0; i < DIMENSION; i++) {
@@ -38,7 +35,64 @@ bool cargarTablero(const string &fichero, tTablero t) {
 }
 
 void dibujarTablero(const tTablero tablero) {
-
+	//lineas de fuera: 200, 201, 202, 203, 204, 205, 206, 188, 187, 186, 185
+	// ╚ ╔ ╩ ╦ ╠ ═ ╬ ╝ ║ ╣ ╗
+	//dentro: 191, 192 ,193, 194 , 195 ,196, 197, 217, 218, 124
+	//╚ ╔ ╩ ╦ ╠ ═ ╬ ╝ ║ ╣ ╗
+	//	╔═══════╦═══════╦═══════╗
+	//	║2  4  5║       ║       ║
+	//	║      5║       ║      4║
+	//	║   8   ║  3    ║       ║
+	//	╠═══════╬═══════╬═══════╣
+	//	║2  4  5║       ║       ║
+	//	║      5║       ║      4║
+	//	║   8   ║  3    ║       ║
+	//	╠═══════╬═══════╬═══════╣
+	//	║2  4  5║       ║       ║
+	//	║      5║       ║      4║
+	//	║   8   ║  3    ║       ║
+	//	╚═══════╩═══════╩═══════╝
+	for (int i = 0; i < 13; i++) {
+		switch (i)
+		{
+		case 0:
+			cout << "╔═══════╦═══════╦═══════╗" << endl;
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 8:
+			break;
+		case 11:
+			break;
+		case 12:
+			break;
+		default:
+			break;
+		}
+		if(i==0)
+		else if (i < 4) {
+			cout << '║' <<  << "  " <<  << "  " <<  << "  "
+				 << '║' <<  << "  " <<  << "  " <<  << "  "
+				 << '║' <<  << "  " <<  << "  " <<  << "  " << '║' << endl;
+		}
+		else if (i == 4)cout << "╠═══════╬═══════╬═══════╣" << endl;
+		else if (i < 8) {
+			cout << '║' <<  << "  " <<  << "  " <<  << "  "
+				<< '║' <<  << "  " <<  << "  " <<  << "  "
+				<< '║' <<  << "  " <<  << "  " <<  << "  " << '║' << endl;
+		}
+		else if (i == 8)cout << "╠═══════╬═══════╬═══════╣" << endl;
+		else if (i < 12) {
+			cout << '║' <<  << "  " <<  << "  " <<  << "  "
+				<< '║' <<  << "  " <<  << "  " <<  << "  "
+				<< '║' <<  << "  " <<  << "  " <<  << "  " << '║' << endl;
+		}
+		else cout << "╚═══════╩═══════╩═══════╝" << endl;
+	}
+	
+	
 }
 
 bool ponerNum(tTablero t, int x, int y, int c) {

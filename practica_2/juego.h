@@ -1,12 +1,8 @@
 #ifndef _juego
 #define _juego
-#include <Windows.h>
-#include <iostream>
-#include <fstream>
 #include <locale.h>
 #include <iomanip>     
 #include <cmath>
-#include <conio.h>
 #include "tablero.h"
 using namespace std;
 
@@ -41,6 +37,8 @@ void mostrarJuego(const tJuego &juego);
 void pausa();
 
 int leerOpcion(int inf, int sup);
+
+void clear();
 
 
 

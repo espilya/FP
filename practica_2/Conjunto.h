@@ -1,5 +1,9 @@
 ﻿#ifndef _conjunto
 #define _conjunto
+#include <iostream>
+#include <string>
+#include <fstream>
+
 const int DIMENSION = 9;
 
 //Tipo de datos que representa un subconjunto del conjunto de elementos {1,2,3,4,5,6,7,8,9}
