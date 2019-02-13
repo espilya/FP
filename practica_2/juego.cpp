@@ -1,7 +1,11 @@
 ﻿#include "juego.h"
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
 
 //cout << "El sudoku: " << juego.sudoku.fichero << ". De nivel: " << juego.sudoku.nivel 
 //	<< ". Esta " << ((juego.terminado) ? "completo." : "incompleto.") << endl;
+
 
 
 // Inicializa el juego
@@ -10,6 +14,12 @@ void iniciaJuego(tJuego & juego, const tSudoku &sudoku) {
 		//parámetro juego a un juego no acabado con dicha información como
 		//registro del sudoku a jugar y con un tablero inicializado según se ha
 		//indicado en el módulo anterior.
+	iniciaTablero(juego.tablero);
+	cargaJuego(juego, sudoku);
+}
+
+//carga del juego
+bool cargaJuego(tJuego & juego, const tSudoku &sudoku) {
 	cargarTablero(sudoku.fichero, juego.tablero);
 }
 
@@ -30,7 +40,10 @@ int mostrarMenuPrincipal() { //mostrarMenuJugada
 		switch ((int)op)
 		{
 		case 1:
-			mostrarJuego(juego);
+			iniciaJuego(juego, sudoku);
+			do {
+				mostrarJuego(juego);
+			} while (JugarUnSudoku(sudoku) != 0);
 			break;
 		case 2:
 			break;
@@ -69,7 +82,10 @@ int JugarUnSudoku(const tSudoku &sudoku) {
 //muestra el juego
 void mostrarJuego(const tJuego &juego) {
 	/*muestra por pantalla la
-		información del sudoku que se va a jugar así como el tablero del mismo.*/
+		información del sudoku que se va a jugar así como el tablero del mismo.
+		pic.Tablero de partida
+		*/
+
 	int op, x, y, c;
 	while (op != 0) {
 		dibujarTablero(juego.tablero);
@@ -88,7 +104,7 @@ void mostrarJuego(const tJuego &juego) {
 			cin >> x;
 			cout << " y 'Y':\n>";
 			cin >> y;
-			ponerNum(juego.tablero, x, y, c);
+			//ponerNum(juego.tablero, x, y, c);
 			break;
 		case 3:
 			break;
@@ -112,11 +128,7 @@ int leerOpcion(int inf, int sup) {
 
 }
 
+void clear() {
+	//clrscr();
+} 
 
-//carga del juego
-bool cargaJuego(tJuego & juego, const tSudoku &sudoku) {
-	//actualiza el tablero del parámetro juego con el contenido del archivo cuyo
-	//	nombre figura en el parámetro de tipo tSudoku recibido.
-	iniciaTablero(juego.tablero);
-	cargarTablero(sudoku.fichero, juego.tablero);
-}

@@ -1,5 +1,4 @@
 #include "casilla.h"
-#include <iostream>
 #include <Windows.h>
 using namespace std;
 
@@ -7,12 +6,6 @@ using namespace std;
 //
 //
 //		como incluir cada interfaz/cpp entre si mismos
-//
-//
-//
-//
-//
-//
 //
 //
 //

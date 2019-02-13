@@ -1,14 +1,11 @@
 ﻿#include "tablero.h"
 
 //
-//		Al eliminar un numero en una casilla, hace falta poner posibles valores para casillas rellenas/fijas?
-//		Al poner un numero en una casilla, hace falta eliminar posibles valores para casillas rellenas/fijas?
-//
 //		--arreglar si se introduze valor malo
 //
 //		como mejor pasar constantes: "const string &fichero" o "const string fichero"??
 //
-//		dibujarTablero..
+
 
 void iniciaTablero(tTablero tablero) {
 	for (int i = 0; i < DIMENSION; i++) {
@@ -37,8 +34,52 @@ bool cargarTablero(const string &fichero, tTablero t) {
 	return ok;
 }
 
-void dibujarTablero(const tTablero tablero) {
+void dibujarTablero(const tTablero t) {
+	//lineas de fuera: 200, 201, 202, 203, 204, 205, 206, 188, 187, 186, 185
+	// ╚ ╔ ╩ ╦ ╠ ═ ╬ ╝ ║ ╣ ╗
+	//dentro: 191, 192 ,193, 194 , 195 ,196, 197, 217, 218, 124
+	//╚ ╔ ╩ ╦ ╠ ═ ╬ ╝ ║ ╣ ╗
+	//	╔═══════╦═══════╦═══════╗
+	//	║2  4  5║       ║       ║
+	//	║      5║       ║      4║
+	//	║   8   ║  3    ║       ║
+	//	╠═══════╬═══════╬═══════╣
+	//	║2  4  5║       ║       ║
+	//	║      5║       ║      4║
+	//	║   8   ║  3    ║       ║
+	//	╠═══════╬═══════╬═══════╣
+	//	║2  4  5║       ║       ║
+	//	║      5║       ║      4║
+	//	║   8   ║  3    ║       ║
+	//	╚═══════╩═══════╩═══════╝
+	int y = 0;
+	for (int i = 0; i < 12; i++) {
+		if(i==0)					cout << "╔═══════╦═══════╦═══════╗" << endl;
+		else if (i > 0 && i < 3) 	dibujarCasilla(t, y);
+		else if (i == 3)			cout << "╠═══════╬═══════╬═══════╣" << endl;
+		else if (i > 3 && i < 7) 	dibujarCasilla(t, y);
+		else if (i == 7)			cout << "╠═══════╬═══════╬═══════╣" << endl;
+		else if (i > 7 && i < 11)	dibujarCasilla(t, y);
+		else						cout << "╚═══════╩═══════╩═══════╝" << endl;
+	}
+}
 
+void dibujarCasilla(const tTablero t, int &y){
+	int a;
+	for (int x = 0; x < DIMENSION; x++) {
+		cout << '║' << dibujarNumero(t, x, y) << "  " << dibujarNumero(t, x, y) << "  " << dibujarNumero(t, x, y)
+			<< '║' << dibujarNumero(t, x, y) << "  " << dibujarNumero(t, x, y) << "  " << dibujarNumero(t, x, y)
+			<< '║' << dibujarNumero(t, x, y) << "  " << dibujarNumero(t, x, y) << "  " << dibujarNumero(t, x, y) << '║' << endl;
+	}
+	y++;
+}
+
+char dibujarNumero(const tTablero t, int x, int y) {
+	char ch;
+	if (t[x][y].numero == -1)
+		ch = ' ';
+	else ch = t[x][y].numero;
+	return ch;
 }
 
 bool ponerNum(tTablero t, int x, int y, int c) {

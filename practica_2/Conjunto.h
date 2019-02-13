@@ -1,5 +1,9 @@
 ﻿#ifndef _conjunto
 #define _conjunto
+#include <iostream>
+#include <string>
+#include <fstream>
+
 const int DIMENSION = 9;
 
 
