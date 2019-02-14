@@ -1,5 +1,7 @@
 #ifndef _juego
 #define _juego
+#include "pch.h"
+#include <conio.h>
 #include <locale.h>
 #include <iomanip>     
 #include <cmath>
@@ -32,7 +34,7 @@ int JugarUnSudoku(const tSudoku &sudoku);
 void iniciaJuego(tJuego & juego, const tSudoku &sudoku);
 
 //muestra el juego
-void mostrarJuego(const tJuego &juego);
+void mostrarJuego(tJuego juego);//(const tJuego &juego)
 
 void pausa();
 

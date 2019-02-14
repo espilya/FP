@@ -1,5 +1,6 @@
 #ifndef _casilla
 #define _casilla
+#include "pch.h"
 #include "Conjunto.h"
 // Estado de cada casilla
 typedef enum { VACIO, FIJA, RELLENO} tEstadoCasilla;

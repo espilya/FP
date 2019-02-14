@@ -1,8 +1,12 @@
 #ifndef _tablero
 #define _tablero
+#include "pch.h"
 #include "casilla.h"
 
 using namespace std;
+
+//array para los bordes de la tabla
+typedef int tArray[25];
 
 // Tablero Sudoku
 typedef tCasilla tTablero[DIMENSION][DIMENSION];
@@ -16,11 +20,9 @@ bool cargarTablero(const string &fichero, tTablero tablero);
 // Dibuja el tablero en pantalla
 void dibujarTablero(const tTablero tablero);
 
-//Dibuja la casilla
-void dibujarCasilla(const tTablero t, int &y);
+//Dibuja la submatriz
+void dibujarCuadrado(const tTablero t, int &y);
 
-//Dibuja el numero
-char dibujarNumero(const tTablero t, int x, int y);
   
 //Coloca c en x, y
 //c, x e y estan 1 y 9

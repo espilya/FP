@@ -1,5 +1,6 @@
 ﻿#ifndef _conjunto
 #define _conjunto
+#include "pch.h"
 #include <iostream>
 #include <string>
 #include <fstream>

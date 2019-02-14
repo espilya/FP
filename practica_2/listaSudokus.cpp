@@ -1,11 +1,12 @@
-﻿#include "listaSudokus.h"
+﻿#include "pch.h"
+#include "listaSudokus.h"
 
 
 
 
 bool cargarListaSudokus(tListaSudokus & lista) {
 	//inicializa lista a una lista vacía.
-
+	return 0;
 }
 
 void mostrarListaSudokus(const tListaSudokus &lista) {
@@ -17,5 +18,5 @@ void mostrarListaSudokus(const tListaSudokus &lista) {
 
 int  menuListaSudokus(const tListaSudokus & lista) {
 	/*visualiza por pantalla la lista de sudokus dada.*/
-
+	return 0;
 }

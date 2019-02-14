@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "casilla.h"
 #include <Windows.h>
 using namespace std;
@@ -5,36 +6,32 @@ using namespace std;
 ///
 //
 //
-//		como incluir cada interfaz/cpp entre si mismos
-//
-//
-//
 
 void iniciaCasilla(tCasilla & casilla) {
 	cjto_lleno(casilla.posibles);
-	casilla.numero = -1;
+	//casilla.numero = 0;
 }
 
-void rellenaCasilla(tCasilla & casilla, char c, bool fija = false) {
+void rellenaCasilla(tCasilla & casilla, char c, bool fija) {
 	if (fija) {
 		if (c == ' ') {
 			casilla.estado = VACIO;
-			casilla.numero = -1;
+			casilla.numero = 0;
 		}
 		else {
 			casilla.estado = FIJA;
-			casilla.numero = c;
+			casilla.numero = c - '0';
 		}
 	}
 	else {
 		casilla.estado = RELLENO;
-		casilla.numero = c;
+		casilla.numero = c - '0';
 	}
 }
 
 void borraCasilla(tCasilla & casilla) {
 	casilla.estado = VACIO;
-	casilla.numero = -1;
+	casilla.numero = 0;
 }
 
 void dibujaCasilla(const tCasilla & casilla) {

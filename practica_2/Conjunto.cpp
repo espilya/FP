@@ -1,8 +1,8 @@
+#include "pch.h"
 #include "Conjunto.h"
 #include <iostream>
 
 //hola
-
 void cjto_vacio(tConjunto &c) {
 	for (int i = 0; i < DIMENSION; i++) {
 		c.elementos[i] = false;
@@ -18,21 +18,17 @@ void cjto_lleno(tConjunto &c) {
 }
 
 bool pertenece(const tConjunto &c, int e) {
-	return c.elementos[e];
+	return c.elementos[e - 1];
 }
 
 void addElemento(tConjunto & c, int e) {
-	if (e != -1) {
-			c.elementos[e] == true;
-			c.nElems++;
-	}
+	c.elementos[e - 1] = true;
+	c.nElems++;
 }
 
 void delElemento(tConjunto & c, int e) {
-	if (e != -1) {
-		c.elementos[e] == false;
-		c.nElems--;
-	}
+	c.elementos[e - 1] = false;
+	c.nElems--;
 }
 
 int numElems(const tConjunto & c) {
@@ -46,7 +42,7 @@ bool esUnitario(const tConjunto & c, int &e) {
 	for (int i = 0; i < DIMENSION; i++) {
 		if (c.elementos[i] == true) {
 			contador++;
-			pos = i+1;
+			pos = i + 1;
 		}
 	}
 	if (contador == 1) {
@@ -54,12 +50,11 @@ bool esUnitario(const tConjunto & c, int &e) {
 		unitario = true;
 	}
 	return unitario;
-
 }
 
 void mostrar(const tConjunto&c) {
-	for (int i = 1; i <= DIMENSION; i++) {
-		std::cout << i << ",";
+	for (int i = 0; i < DIMENSION; i++) {
+		if (c.elementos[i])
+			std::cout << i + 1 << " ";
 	}
-
 }
