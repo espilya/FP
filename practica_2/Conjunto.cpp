@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Conjunto.h"
-#include <iostream>
 
 //hola
 void cjto_vacio(tConjunto &c) {
@@ -55,6 +54,6 @@ bool esUnitario(const tConjunto & c, int &e) {
 void mostrar(const tConjunto&c) {
 	for (int i = 0; i < DIMENSION; i++) {
 		if (c.elementos[i])
-			std::cout << i + 1 << " ";
+			std::cout << i + 1 << ' ';
 	}
 }

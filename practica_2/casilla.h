@@ -2,6 +2,10 @@
 #define _casilla
 #include "pch.h"
 #include "Conjunto.h"
+#include <Windows.h>
+#include <string>
+using namespace std;
+
 // Estado de cada casilla
 typedef enum { VACIO, FIJA, RELLENO} tEstadoCasilla;
 //Tamaño del tablero
@@ -14,7 +18,11 @@ typedef struct {
 	tConjunto posibles; //valores posibles de una casilla
 }tCasilla;
 
-typedef enum { NEGRO = 0, AZUL = 1, ROJO = 4 } tPaleta;
+//LETRA
+// 9 = azul;
+// 12 = rojo;
+// 15 = negro; 
+typedef enum {VIOLETA = 5, BLANCO = 7, GRIS = 8, AZUL = 9, ROJO = 12 } tPaleta;
 
 
 //Inicialmente casilla vacia con todos los valores posibles
@@ -35,6 +43,12 @@ void dibujaCasilla(const tCasilla &casilla);
 //Devuelve falso para las casillas fijas o ya rellenas
 bool esSimple(const tCasilla & casilla, int & numero);
 
-// Establece el color de fondo de una casilla
-void colorFondo(int color);
+// Establece el color de una casilla
+void colorFondo(tPaleta colorLet = BLANCO);
+
+//Ecribe la string con el coloe seleccionado. Despues de llamar esta funcion el colo vuelve a ser blanco
+//{VIOLETA = 5, GRIS = 8, AZUL = 9, ROJO = 12, BLANCO = 15} tPaleta;
+void colorStr(string str, tPaleta colorLet = BLANCO);
+
+
 #endif

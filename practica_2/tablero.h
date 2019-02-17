@@ -2,11 +2,14 @@
 #define _tablero
 #include "pch.h"
 #include "casilla.h"
+#include <iostream>
+#include <Windows.h>
+#include <string>
 
 using namespace std;
 
 //array para los bordes de la tabla
-typedef int tArray[25];
+typedef char tArray[25];
 
 // Tablero Sudoku
 typedef tCasilla tTablero[DIMENSION][DIMENSION];
@@ -55,5 +58,8 @@ void resolver(tTablero t, int nCasilla, bool &exito);
 //x,y: coodernadas de las casillas en las cuales se ha borrado/anadido algo
 //mode; mode de funcion, 0-para cargar fichero, 1-para poner num, 2-para borrar num
 void calcElementosPosibles(tTablero t, int mode = 0, int x = -1, int y = -1, int c = -1);
+
+
+void calcElementosPosibles_SubMatriz(tTablero t, int x, int y);
 
 #endif

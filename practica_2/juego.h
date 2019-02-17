@@ -1,11 +1,14 @@
 #ifndef _juego
 #define _juego
 #include "pch.h"
+#include "tablero.h"
 #include <conio.h>
 #include <locale.h>
 #include <iomanip>     
 #include <cmath>
-#include "tablero.h"
+#include <stdio.h>
+#include <string.h>
+
 using namespace std;
 
 // Tipos de Sudokus
@@ -28,7 +31,7 @@ typedef struct {
 int mostrarMenuPrincipal(); //mostrarMenuJugada
 
 // Bucle del juego de un sudoku
-int JugarUnSudoku(const tSudoku &sudoku);
+int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c);
 
 // Inicializa el juego
 void iniciaJuego(tJuego & juego, const tSudoku &sudoku);

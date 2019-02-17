@@ -1,19 +1,17 @@
 ﻿#include "pch.h"
 #include "juego.h"
-#include <stdio.h>
-#include <string.h>
 
 //cout << "El sudoku: " << juego.sudoku.fichero << ". De nivel: " << juego.sudoku.nivel 
 //	<< ". Esta " << ((juego.terminado) ? "completo." : "incompleto.") << endl;
 
-
+//
+// reinuciar no reinicia si hacer autocompletar
+//
+//
+//
 
 // Inicializa el juego
 void iniciaJuego(tJuego & juego, const tSudoku &sudoku) {
-		//recibe en sudoku la información del sudoku elegido para jugar e inicializa el
-		//parámetro juego a un juego no acabado con dicha información como
-		//registro del sudoku a jugar y con un tablero inicializado según se ha
-		//indicado en el módulo anterior.
 	iniciaTablero(juego.tablero);
 }
 
@@ -22,8 +20,7 @@ bool cargaJuego(tJuego & juego, const tSudoku &sudoku) {
 	return cargarTablero(sudoku.fichero, juego.tablero);
 }
 
-//Mostrar menu de acciones para jugar un sudoku
-//Si alguna carga no tiene éxito la aplicación deberá finalizar.
+
 int mostrarMenuPrincipal() { //mostrarMenuJugada
 	tSudoku sudoku;
 	tJuego juego;
@@ -39,11 +36,10 @@ int mostrarMenuPrincipal() { //mostrarMenuJugada
 		switch ((int)op)
 		{
 		case 1:
+			clear();
 			iniciaJuego(juego, sudoku);
 			cargaJuego(juego, sudoku);
-			do {
-				mostrarJuego(juego);
-			} while (JugarUnSudoku(sudoku) != 0);
+			mostrarJuego(juego);
 			break;
 		case 2:
 			break;
@@ -63,7 +59,7 @@ int mostrarMenuPrincipal() { //mostrarMenuJugada
 }
 
 // Bucle del menu del juego(proceso) de un sudoku
-int JugarUnSudoku(const tSudoku &sudoku) {
+int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c) {
 	//dada la información del
 	//	sudoku elegido lleva a cabo todas las acciones correspondientes a haber
 	//	elegido la opción 1 de esta versión y devuelve la puntuación obtenida por el
@@ -75,68 +71,81 @@ int JugarUnSudoku(const tSudoku &sudoku) {
 			<< "3. - Borrar valor de una casilla\n"
 			<< "4. - Reiniciar el tablero\n"
 			<< "5. - Autocompletar celdas simples\n"
-			<< "0. - Abortar la resolución y volver al menu principal\n";
+			<< "0. - Abortar la resolucion y volver al menu principal\n";
 		cin >> op;
-		return op;
-}
-
-
-//muestra el juego (procesado de opcion del menu del juego)
-void mostrarJuego(tJuego juego) {//(const tJuego &juego)
-	/*muestra por pantalla la
-		información del sudoku que se va a jugar así como el tablero del mismo.
-		pic.Tablero de partida
-		*/
-
-	int op, x, y, c;
-	do {
-		dibujarTablero(juego.tablero);
-		op = JugarUnSudoku(juego.sudoku);
 		switch ((int)op)
 		{
 		case 1://Posibles casos
 			cout << "Introduce las coodenadas 'X':\n>";
 			cin >> x;
-			cout << " y 'Y':\n>";
+			cout << " y las coodenadas 'Y':\n>";
 			cin >> y;
 			x--;
 			y--;
-			mostrarPosibles(juego.tablero, x, y);
 			break;
 		case 2: //Introducir numero
 			cout << "Introduce las coodenadas 'X':\n>";
 			cin >> x;
-			cout << " y 'Y':\n>";
+			cout << " y las coodenadas 'Y':\n>";
 			cin >> y;
 			cout << "Introduce el numero:\n>";
 			cin >> c;
 			x--;
 			y--;
-			if (!ponerNum(juego.tablero, x, y, c))
-				cout << "Fallo" << endl;
 			break;
 		case 3://Borrar numero
 			cout << "Introduce las coodenadas 'X':\n>";
 			cin >> x;
-			cout << " y 'Y':\n>";
+			cout << " y las coodenadas 'Y':\n>";
 			cin >> y;
 			x--;
 			y--;
-			if (!borraNum(juego.tablero, x, y))
-				cout << "Fallo" << endl;
 			break;
 		case 4:
-			iniciaJuego(juego, juego.sudoku);
-			cargaJuego(juego, juego.sudoku);
 			break;
 		case 5:
-			rellenarSimples(juego.tablero);
 			break;
 		case 0:
 			cout << "\n\n\n\tAdios!";
 			break;
 		default:
 			cout << "Opcion incorrecta." << endl;
+		}
+		return op;
+}
+
+
+//muestra el juego (procesado de opcion del menu del juego)
+void mostrarJuego(tJuego juego) {//(const tJuego &juego)
+	int op, x, y, c;
+	do {
+		dibujarTablero(juego.tablero);
+		op = JugarUnSudoku(juego.sudoku, x, y, c);
+		switch (op)
+		{
+		case 1:
+			//Posibles casos
+			mostrarPosibles(juego.tablero, x, y);
+			break;
+		case 2: 
+			//Introducir numero
+			if (!ponerNum(juego.tablero, x, y, c))
+				cout << "Fallo" << endl;
+			break;
+		case 3:
+			//Borrar numero
+			if (!borraNum(juego.tablero, x, y))
+				cout << "Fallo" << endl;
+			break;
+		case 4:
+			//Reiniciar el tablero
+			iniciaJuego(juego, juego.sudoku);
+			cargaJuego(juego, juego.sudoku);
+			break;
+		case 5:
+			//Autocompletar celdas simples
+			rellenarSimples(juego.tablero);
+			break;
 		}
 		pausa();
 		clear();

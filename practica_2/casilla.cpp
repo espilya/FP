@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "casilla.h"
-#include <Windows.h>
-using namespace std;
+
+
 
 ///
 //
@@ -40,22 +40,39 @@ void dibujaCasilla(const tCasilla & casilla) {
 		cout << ' ';
 	}
 	else if (casilla.estado == RELLENO) {
-		colorFondo(color = ROJO);
+		colorFondo(ROJO);
 		cout << casilla.numero;
 	}
 	else {
-		colorFondo(color = AZUL);
+		colorFondo(AZUL);
 		cout << casilla.numero;
 	}
-	colorFondo(color = NEGRO);
+	colorFondo();
 }
 
-void colorFondo(int color) {
+void colorFondo(tPaleta colorLet){
+	//LETRA
+		// GRIS = 8
+		// 9 = azul;
+		// 12 = rojo;
+		// 15 = BLANCO;  
+	tPaleta color;
+	int fondo_Neg = 0;
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, colorLet | (0 << 4));
+}
+
+void colorStr(string str, tPaleta colorLet) {
+	tPaleta color;
 	// 1 = azul;
 	// 4 = rojo;
-	// 0 = negro;  
+	// 15 = BLANCO;  
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(handle, 15 | (color << 4));
+	SetConsoleTextAttribute(handle, colorLet | (0 << 4));
+	if (str.size() > 0) {
+		cout << str;
+		colorStr("", BLANCO);
+	}
 }
 
 bool esSimple(const tCasilla & casilla, int & numero) {
