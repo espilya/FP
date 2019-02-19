@@ -1,2 +1,14 @@
 ﻿  juego.cpp
-  ConsoleApplication1.vcxproj -> C:\GitHub\university\practica_2\Debug\practica_2.exe
+  listaSudokus.cpp
+  main.cpp
+  tablero.cpp
+c:\hlocal\university-master\practica_2\tablero.cpp(67): warning C4838: conversion from 'int' to 'const char' requires a narrowing conversion
+c:\hlocal\university-master\practica_2\tablero.cpp(67): warning C4309: 'initializing': truncation of constant value
+c:\hlocal\university-master\practica_2\tablero.cpp(68): warning C4838: conversion from 'int' to 'const char' requires a narrowing conversion
+c:\hlocal\university-master\practica_2\tablero.cpp(68): warning C4309: 'initializing': truncation of constant value
+c:\hlocal\university-master\practica_2\tablero.cpp(69): warning C4838: conversion from 'int' to 'const char' requires a narrowing conversion
+c:\hlocal\university-master\practica_2\tablero.cpp(69): warning C4309: 'initializing': truncation of constant value
+c:\hlocal\university-master\practica_2\tablero.cpp(71): warning C4101: 'color': unreferenced local variable
+c:\hlocal\university-master\practica_2\tablero.cpp(182): warning C4101: 'color': unreferenced local variable
+  Generating Code...
+  ConsoleApplication1.vcxproj -> C:\hlocal\university-master\practica_2\Debug\practica_2.exe

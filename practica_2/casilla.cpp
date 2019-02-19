@@ -9,7 +9,9 @@
 
 void iniciaCasilla(tCasilla & casilla) {
 	cjto_lleno(casilla.posibles);
-	//casilla.numero = 0;
+	casilla.estado = VACIO;
+	casilla.numero = 0;
+
 }
 
 void rellenaCasilla(tCasilla & casilla, char c, bool fija) {

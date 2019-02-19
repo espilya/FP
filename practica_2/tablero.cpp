@@ -9,21 +9,22 @@
 //
 
 
-void iniciaTablero(tTablero tablero) {
+void iniciaTablero(tTablero &tablero) {
 	for (int i = 0; i < DIMENSION; i++) {
 		for (int j = 0; j < DIMENSION; j++) {
 			iniciaCasilla(tablero[i][j]);
+
 		}
 	}
 }
 
-bool cargarTablero(const string &fichero, tTablero t) {
+bool cargarTablero(const string &fichero, tTablero &t) {
 	char ch;
 	string temp;
 	bool ok = false;
 	ifstream file;
 	file.open(fichero);
-	cout << fichero << endl;
+	//cout << fichero << endl;
 	if (file.is_open()) {
 		for (int j = 0; j < 9; j++) {
 			for (int i = 0; i < 9; i++) {
@@ -33,6 +34,9 @@ bool cargarTablero(const string &fichero, tTablero t) {
 			getline(file, temp);
 		}
 		calcElementosPosibles(t);
+		/*for (int j = 0; j < 9; j++) 
+			for (int i = 0; i < 9; i++) 
+				calcelementosposibles_submatriz(t, i, j);*/
 
 		ok = true;
 	}
@@ -205,20 +209,18 @@ void dibujarCuadrado(const tTablero t, int &y) {
 }
 
 
-bool ponerNum(tTablero t, int x, int y, int c) {
+bool ponerNum(tTablero &t, int x, int y, int c) {
 	const int modo = 1;
 	bool ok = false;
-	cout << t[x][y].estado << endl;
 	if (t[x][y].estado == VACIO && ((c > 0) && (c < 10)) && ((x >= 0) && (x < 9)) && ((y >= 0) && (y < 9))){
 		rellenaCasilla(t[x][y], c + '0');
 		calcElementosPosibles(t, modo, x, y);
-		calcElementosPosibles_SubMatriz(t, x, y);
 		ok = true;
 	}
 	return ok;
 }
 
-bool borraNum(tTablero t, int x, int y) {
+bool borraNum(tTablero &t, int x, int y) {
 	const int modo = 2;
 	bool ok = false;
 	const int numero = t[x][y].numero;
@@ -226,7 +228,6 @@ bool borraNum(tTablero t, int x, int y) {
 	if ((t[x][y].estado == RELLENO) && ((x >= 0) && (x < 9)) && ((y >= 0) && (y < 9))) {
 		borraCasilla(t[x][y]);
 		calcElementosPosibles(t, modo, x, y, numero);
-		calcElementosPosibles_SubMatriz(t, x, y);
 		ok = true;
 	}
 	return ok;
@@ -265,7 +266,7 @@ void mostrarPosibles(const tTablero t, int x, int y) {
 }
 
 
-void rellenarSimples(tTablero t) {
+void rellenarSimples(tTablero &t) {
 	int numero;
 	for (int i = 0; i < DIMENSION; i++) {
 		for (int j = 0; j < DIMENSION; j++) {
@@ -275,7 +276,7 @@ void rellenarSimples(tTablero t) {
 	}
 }
 
-void calcElementosPosibles(tTablero t, int mode, int x, int y, int c) {
+void calcElementosPosibles(tTablero &t, int mode, int x, int y, int c) {
 	if (mode == 0) {
 		for (int j = 0; j < DIMENSION; j++) {
 			for (int i = 0; i < DIMENSION; i++) {
@@ -295,78 +296,91 @@ void calcElementosPosibles(tTablero t, int mode, int x, int y, int c) {
 	else {
 		for (int a = 0; a < DIMENSION; a++) {
 			if (t[a][y].estado != FIJA) { //tampoco es necesario. de todos modos en ningun caso se va a modificar el valor de casilla FIJA
-				if (mode == 1)
+				if (mode == 1) 
 					delElemento(t[a][y].posibles, t[x][y].numero);
-				else
+				else {
 					addElemento(t[a][y].posibles, c);
+				}
 			}
 		}
 		for (int b = 0; b < DIMENSION; b++) {
 			if (t[x][b].estado != FIJA) {
 				if (mode == 1)
 					delElemento(t[x][b].posibles, t[x][y].numero);
-				else
+				else {
 					addElemento(t[x][b].posibles, c);
-
+				}
 			}
+		}
+	}
+	calcElementosPosibles_SubMatriz(t);
+}
+
+void calcElementosPosibles_SubMatriz(tTablero &t) {
+	for (int y = 0; y < 9; y++) {
+		for (int x = 0; x < 9; x++) {
+			int a = x % 3;
+			int b = y % 3;
+
+			if (a == 0)
+				for (int i = x; i <= x + 2; i++) {//X
+					if (b == 0)
+						for (int j = y; j <= y + 2; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+					else if (b == 1)
+						for (int j = y - 1; j <= y + 1; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+					else
+						for (int j = y - 2; j <= y; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+				}
+			else if (a == 1)
+				for (int i = x - 1; i <= x + 1; i++) {//X
+					if (b == 0)
+						for (int j = y; j <= y + 2; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+					else if (b == 1)
+						for (int j = y - 1; j <= y + 1; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+					else
+						for (int j = y - 2; j <= y; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+				}
+			else
+				for (int i = x - 2; i <= x; i++) {//X
+					if (b == 0)
+						for (int j = y; j <= y + 2; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+					else if (b == 1)
+						for (int j = y - 1; j <= y + 1; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+					else
+						for (int j = y - 2; j <= y; j++) {
+							if (t[i][j].estado != VACIO)
+								delElemento(t[x][y].posibles, t[i][j].numero);
+						}
+				}
 		}
 	}
 }
 
-void calcElementosPosibles_SubMatriz(tTablero t, int x, int y) {
-	int a = x % 3;
-	int b = y % 3;
-
-	if (a == 0)
-		for (int i = x; i <= x + 2; i++) {
-			if (b == 0)
-				for (int j = y; j <= y + 2; j++) {
-					delElemento(t[y][x].posibles, t[j][i].numero);
-				}
-			else if (b == 1)
-				for (int j = y - 1; j  <= y + 1; j--) {
-					delElemento(t[y][x].posibles, t[j][i].numero);
-				}
-			else
-				for (int j = y - 3; j <= y + 2; j--) {
-					delElemento(t[y][x].posibles, t[j][i].numero);
-				}
-		}
-	else if (a == 1)
-		for (int i = x - 1; i <= x + 1; i--) {
-			if (b == 0)
-				for (int j = y; j <= y + 2; j++) {
-					delElemento(t[y][x].posibles, t[j][i].numero);
-				}
-			else if (b == 1)
-				for (int j = y - 1; j <= y + 1; j--) {
-					delElemento(t[y][x].posibles, t[i][j].numero);
-				}
-			else
-				for (int j = y - 3; j <= y + 2; j--) {
-					delElemento(t[y][x].posibles, t[j][i].numero);
-				}
-
-		}
-	else
-		for (int i = x - 3; i <= x + 2; i--) {
-			if (b == 0)
-				for (int j = y; j <= y + 2; j++) {
-					delElemento(t[x][y].posibles, t[i][j].numero);
-				}
-			else if (b == 1)
-				for (int j = y - 1; j <= y + 1; j--) {
-					delElemento(t[x][y].posibles, t[i][j].numero);
-				}
-			else
-				for (int j = y - 3; j <= y + 2; j--) {
-					delElemento(t[x][y].posibles, t[i][j].numero);
-				}
-		}
-	
-}
-
-void resolver(tTablero t, int nCasilla, bool &exito) {
+void resolver(tTablero &t, int nCasilla, bool &exito) {
 	const int limiteCtd = 30;
 	int ctd = 0; //para no entrar en un bucle infinito, si no se puede resolver con esta algoritmo/funcion rellenarSimples()
 	exito = false;

@@ -17,15 +17,16 @@ void iniciaJuego(tJuego & juego, const tSudoku &sudoku) {
 
 //carga del juego
 bool cargaJuego(tJuego & juego, const tSudoku &sudoku) {
-	return cargarTablero(sudoku.fichero, juego.tablero);
+	bool ok;
+	ok =cargarTablero(sudoku.fichero, juego.tablero);
+	return ok;
 }
 
 
 int mostrarMenuPrincipal() { //mostrarMenuJugada
-	tSudoku sudoku;
 	tJuego juego;
-	sudoku.fichero = "sudoku1.txt";
-	float op;
+	juego.sudoku.fichero = "sudoku1.txt";
+	int op;
 	do {
 		cout << "1. - Jugar:\n"
 			<< "2. - Ver jugadores ordenados por identificador\n"
@@ -33,12 +34,12 @@ int mostrarMenuPrincipal() { //mostrarMenuJugada
 			<< "4. - Incorporar sudoku\n"
 			<< "0. - Salir\n";
 		cin >> op;
-		switch ((int)op)
+		switch (op)
 		{
 		case 1:
 			clear();
-			iniciaJuego(juego, sudoku);
-			cargaJuego(juego, sudoku);
+			iniciaJuego(juego, juego.sudoku);
+			cargaJuego(juego, juego.sudoku);
 			mostrarJuego(juego);
 			break;
 		case 2:
@@ -139,6 +140,7 @@ void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 			break;
 		case 4:
 			//Reiniciar el tablero
+			cout << "hola";
 			iniciaJuego(juego, juego.sudoku);
 			cargaJuego(juego, juego.sudoku);
 			break;
