@@ -12,7 +12,7 @@
 using namespace std;
 
 // Tipos de Sudokus
-typedef enum { FACIL, MEDIO, DIFICIL } tNivelSudoku;
+typedef enum { FACIL, MEDIO, DIFICIL, EMPTY} tNivelSudoku;
 
 // tipo Sudoku
 typedef struct {
@@ -26,6 +26,8 @@ typedef struct {
 	tTablero tablero;
 	bool terminado;
 }tJuego;
+
+
 
 // Mostrar menú de acciones para jugar un sudoku
 int mostrarMenuPrincipal(); //mostrarMenuJugada
@@ -41,6 +43,8 @@ void mostrarJuego(tJuego juego);//(const tJuego &juego)
 
 void pausa();
 
+
+// (op >= inf) && (op <= sup)
 int leerOpcion(int inf, int sup);
 
 void clear();

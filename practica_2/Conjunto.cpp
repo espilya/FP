@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Conjunto.h"
 
-//hola
+
 void cjto_vacio(tConjunto &c) {
 	for (int i = 0; i < DIMENSION; i++) {
 		c.elementos[i] = false;

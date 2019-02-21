@@ -18,11 +18,15 @@ typedef struct {
 	tConjunto posibles; //valores posibles de una casilla
 }tCasilla;
 
-//LETRA
-// 9 = azul;
-// 12 = rojo;
-// 15 = negro; 
-typedef enum {VIOLETA = 5, BLANCO = 7, GRIS = 8, AZUL = 9, ROJO = 12 } tPaleta;
+//COLOR
+// NEGRO = 0;
+// AZUL_OSC = 1;
+//	...
+// BLANCO =	15; 
+typedef enum {
+	NEGRO, AZUL_OSC, VERDE_OSC, CYAN_OSC, ROJO_OSC, MAGENTA_OSC, AMARILLO_OSC, 
+	BLANCO_OSC, GRIS, AZUL, VERDE, CYAN, ROJO, MAGENTA, AMARILLO, BLANCO}
+	tPaleta;
 
 
 //Inicialmente casilla vacia con todos los valores posibles
@@ -44,11 +48,11 @@ void dibujaCasilla(const tCasilla &casilla);
 bool esSimple(const tCasilla & casilla, int & numero);
 
 // Establece el color de una casilla
-void colorFondo(tPaleta colorLet = BLANCO);
+void colorFondo(tPaleta colorLet = BLANCO_OSC);
 
-//Ecribe la string con el coloe seleccionado. Despues de llamar esta funcion el colo vuelve a ser blanco
-//{VIOLETA = 5, GRIS = 8, AZUL = 9, ROJO = 12, BLANCO = 15} tPaleta;
-void colorStr(string str, tPaleta colorLet = BLANCO);
+
+//Ecribe el string del argumento con el color seleccionado. Despues de llamar esta funcion el color vuelve a ser blanco
+void colorStr(string str, tPaleta colorLet = BLANCO_OSC);
 
 
 #endif

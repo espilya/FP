@@ -4,7 +4,7 @@
 //
 //		--arreglar si se introduze valor malo
 //
-//		como mejor pasar constantes: "const string &fichero" o "const string fichero"??
+//
 // proteccion contra poner num malo
 //
 
@@ -24,7 +24,6 @@ bool cargarTablero(const string &fichero, tTablero &t) {
 	bool ok = false;
 	ifstream file;
 	file.open(fichero);
-	//cout << fichero << endl;
 	if (file.is_open()) {
 		for (int j = 0; j < 9; j++) {
 			for (int i = 0; i < 9; i++) {
@@ -68,16 +67,24 @@ void dibujarTablero(const tTablero t) {
 	const tArray medio = {204,205,205,205,205,205,205,205,206,205,205,205,205,205,205,205,206,205,205,205,205,205,205,205,185};
 	const tArray abajo = {200,205,205,205,205,205,205,205,202,205,205,205,205,205,205,205,202,205,205,205,205,205,205,205,188};
 	int y = 0;
-	tPaleta color;
+	if (tableroLleno(t)) {
+		cout << "\n\t\t";
+		colorStr("FECILIDADES!!", BLANCO);
+		cout << "\n\t\t";
+		colorStr("HAS COMPLETADO EL TABLERO", BLANCO);
+		cout << "\n\t\t";
+		colorStr("JUEGO FINALIZADO", BLANCO);
+		cout << '\n';
+	}
 	//--------------------DIBUJA FILAS--------------------
 	for (int i = 1; i <= 13; i++) {
 		switch (i)
 		{
 		case 1:
 			cout << "\t ";
-			colorFondo(VIOLETA);
-			for (int i = 0; i < (int)size(arriba); i++) 
-				cout << arriba[i];
+			colorFondo(MAGENTA_OSC);
+			for (int i = 0; i < DIM_BORDES; i++)
+				cout << (char)arriba[i];
 			colorFondo();
 			cout << endl;
 			break;
@@ -95,9 +102,9 @@ void dibujarTablero(const tTablero t) {
 			break;
 		case 5:
 			cout << "\t ";
-			colorFondo(VIOLETA);
-			for (int i = 0; i < (int)size(arriba); i++) 
-				cout << medio[i];
+			colorFondo(MAGENTA_OSC);
+			for (int i = 0; i < DIM_BORDES; i++)
+				cout << (char)medio[i];
 			colorFondo();
 			cout << endl;
 			break;
@@ -115,9 +122,9 @@ void dibujarTablero(const tTablero t) {
 			break;
 		case 9:
 			colorStr("\t ", GRIS);
-			colorFondo(VIOLETA);
-			for (int i = 0; i < (int)size(arriba); i++) 
-				cout << medio[i];
+			colorFondo(MAGENTA_OSC);
+			for (int i = 0; i < DIM_BORDES; i++)
+				cout << (char)medio[i];
 			colorFondo();
 			cout << endl;
 			break;
@@ -135,81 +142,49 @@ void dibujarTablero(const tTablero t) {
 			break;
 		case 13:
 			cout << "\t ";
-			colorFondo(VIOLETA);
-			for (int i = 0; i < (int)size(arriba); i++) 
-				cout << abajo[i];
+			colorFondo(MAGENTA_OSC);
+			for (int i = 0; i < DIM_BORDES; i++)
+				cout << (char)abajo[i];
 			cout << endl;
 			colorStr("\t  1  2  3 4  5  6 7  8  9\n\n", GRIS);
 			break;
 		default:
 			break;
 		}
-	/*	if (i == 1) { 
-			for (int i = 0; i < size(arriba); i++) cout << (char)arriba[i];
-			cout << endl; 
-		}
-
-		else if (i > 1 && i < 5){
-			dibujarCasilla(t, y);
-		}
-
-		else if (i == 5) {
-			for (int i = 0; i < size(arriba); i++) cout << (char)medio[i];
-			cout << endl;
-		}
-
-		else if (i > 5 && i < 9) {
-			dibujarCasilla(t, y);
-		}
-
-		else if (i == 9) {
-			for (int i = 0; i < size(arriba); i++) 	cout << (char)medio[i];
-			cout << endl;
-		}
-
-		else if (i > 9 && i < 12) { 
-			dibujarCasilla(t, y); 
-		}
-
-		else {
-			for (int i = 0; i < size(arriba); i++) cout << (char)abajo[i];
-			cout << endl;
-		}*/
 	}
 }
 
 void dibujarCuadrado(const tTablero t, int &y) {
-	tPaleta color;
 	//--------------------DIBUJA COLUMNAS--------------------
 	char barraCh = (char)186;
 	string barra = "";
 	barra += barraCh;
 	string blnc = "  ";
-	colorStr(barra, VIOLETA);
+	colorStr(barra, MAGENTA_OSC);
 	for (int x = 0; x < 3; x++) {
 		dibujaCasilla(t[x][y]);
 		if (x == 0 || x == 1) 
 			colorStr(blnc, GRIS);
 	}
-	colorStr(barra, VIOLETA);
+	colorStr(barra, MAGENTA_OSC);
 	for (int x = 3; x < 6; x++) {
 		dibujaCasilla(t[x][y]);
 		if (x == 3 || x == 4) 
 			colorStr(blnc, GRIS);
 	}
-	colorStr(barra, VIOLETA);
+	colorStr(barra, MAGENTA_OSC);
 	for (int x = 6; x < 9; x++) {
 		dibujaCasilla(t[x][y]);
 		if (x == 6 || x == 7) 
 			colorStr(blnc, GRIS);
 	}
-	colorStr(barra, VIOLETA);
+	colorStr(barra, MAGENTA_OSC);
 	cout << endl;	
 	y++;
 }
 
 
-bool ponerNum(tTablero &t, int x, int y, int c) {
+bool ponerNum(tTablero &t, int x, int y, int c, short int &error) {
 	const int modo = 1;
 	bool ok = false;
 	if (t[x][y].estado == VACIO && ((c > 0) && (c < 10)) && ((x >= 0) && (x < 9)) && ((y >= 0) && (y < 9))){
@@ -217,10 +192,14 @@ bool ponerNum(tTablero &t, int x, int y, int c) {
 		calcElementosPosibles(t, modo, x, y);
 		ok = true;
 	}
+	if (t[x][y].estado == RELLENO)
+		error = 100;
+	if (t[x][y].estado == FIJA)
+		error = 101;
 	return ok;
 }
 
-bool borraNum(tTablero &t, int x, int y) {
+bool borraNum(tTablero &t, int x, int y, short int &error) {
 	const int modo = 2;
 	bool ok = false;
 	const int numero = t[x][y].numero;
@@ -230,6 +209,10 @@ bool borraNum(tTablero &t, int x, int y) {
 		calcElementosPosibles(t, modo, x, y, numero);
 		ok = true;
 	}
+	if (t[x][y].estado == VACIO)
+		error = 200;
+	if (t[x][y].estado == FIJA)
+		error = 201;
 	return ok;
 }
 
@@ -268,10 +251,11 @@ void mostrarPosibles(const tTablero t, int x, int y) {
 
 void rellenarSimples(tTablero &t) {
 	int numero;
+	short int error;
 	for (int i = 0; i < DIMENSION; i++) {
 		for (int j = 0; j < DIMENSION; j++) {
-			if (esSimple(t[j][i], numero))
-				ponerNum(t, j, i, numero);
+			if ((esSimple(t[j][i], numero)) && (t[j][i].estado == VACIO))
+				ponerNum(t, j, i, numero, error);
 		}
 	}
 }
@@ -380,15 +364,16 @@ void calcElementosPosibles_SubMatriz(tTablero &t) {
 	}
 }
 
-void resolver(tTablero &t, int nCasilla, bool &exito) {
-	const int limiteCtd = 30;
+bool resolver(tTablero &t, int nCasilla) {
+	const int LimiteCtd = 40;
 	int ctd = 0; //para no entrar en un bucle infinito, si no se puede resolver con esta algoritmo/funcion rellenarSimples()
-	exito = false;
+	bool exito = false;
 
-	while ((!exito) && (ctd<limiteCtd)) {
+	do {
 		rellenarSimples(t);
 		ctd++;
 		exito = tableroLleno(t);
-	}
+	} while ((!exito) && (ctd < LimiteCtd));
+	return exito;
 }
 

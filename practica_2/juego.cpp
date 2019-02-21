@@ -5,8 +5,9 @@
 //	<< ". Esta " << ((juego.terminado) ? "completo." : "incompleto.") << endl;
 
 //
-// reinuciar no reinicia si hacer autocompletar
-//
+// preguntar si hace falta hacer comprobacion de ficheros:
+//		-listaSudokus.txt
+//		-sudoku9.txt
 //
 //
 
@@ -28,12 +29,11 @@ int mostrarMenuPrincipal() { //mostrarMenuJugada
 	juego.sudoku.fichero = "sudoku1.txt";
 	int op;
 	do {
+		clear();
 		cout << "1. - Jugar:\n"
-			<< "2. - Ver jugadores ordenados por identificador\n"
-			<< "3. - Ver jugadores ordenados por puntos\n"
-			<< "4. - Incorporar sudoku\n"
+			<< "2. - Seleccionar sudoku\n"
 			<< "0. - Salir\n";
-		cin >> op;
+		op = leerOpcion(0, 2);
 		switch (op)
 		{
 		case 1:
@@ -43,23 +43,17 @@ int mostrarMenuPrincipal() { //mostrarMenuJugada
 			mostrarJuego(juego);
 			break;
 		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
+			
 			break;
 		case 0:
 			cout << "\n\n\n\tAdios!";
 			break;
-		default:
-			cout << "Opcion incorrecta." << endl;
 		}
 	} while (op != 0);
-
 	return 0;
 }
 
-// Bucle del menu del juego(proceso) de un sudoku
+// Bucle del menu(texto) del juego(proceso) de un sudoku.
 int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c) {
 	//dada la información del
 	//	sudoku elegido lleva a cabo todas las acciones correspondientes a haber
@@ -67,15 +61,16 @@ int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c) {
 	//	jugador(0 si aborta la resolución antes de rellenar el tablero o los puntos
 	//		asociados al sudoku elegido en caso de resolverlo).
 	int op;
-		cout << "1. - Ver posibles valores de una casilla vacia\n"
-			<< "2. - Colocar valor en una casilla\n"
-			<< "3. - Borrar valor de una casilla\n"
-			<< "4. - Reiniciar el tablero\n"
-			<< "5. - Autocompletar celdas simples\n"
-			<< "0. - Abortar la resolucion y volver al menu principal\n";
-		cin >> op;
-		switch ((int)op)
-		{
+	cout << "1. - Ver posibles valores de una casilla vacia\n"
+		<< "2. - Colocar valor en una casilla\n"
+		<< "3. - Borrar valor de una casilla\n"
+		<< "4. - Reiniciar el tablero\n"
+		<< "5. - Autocompletar celdas simples\n"
+		<< "6. - Resolver el sudoku\n"
+		<< "0. - Abortar la resolucion y volver al menu principal\n";
+	op = leerOpcion(0, 6);
+	switch ((int)op)
+	{
 		case 1://Posibles casos
 			cout << "Introduce las coodenadas 'X':\n>";
 			cin >> x;
@@ -102,24 +97,30 @@ int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c) {
 			x--;
 			y--;
 			break;
-		case 4:
-			break;
-		case 5:
-			break;
 		case 0:
-			cout << "\n\n\n\tAdios!";
+			colorStr("\n\n\nGracias por jugar!", BLANCO);
 			break;
-		default:
-			cout << "Opcion incorrecta." << endl;
-		}
-		return op;
+	}
+return op;
 }
 
 
-//muestra el juego (procesado de opcion del menu del juego)
+//Procesado de opcion seleccionada del menu del juego.
 void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 	int op, x, y, c;
+	short int error;
+	const string fallo = "\t\tFallo.\n";
+	const string e_100 = "Error al PONER un digito en una casilla RELLANA\n";
+	const string e_101 = "Error al BORRAR un digito en una casilla FIJA\n";
+	const string e_200 = "Error al BORRAR un digito en una casilla VACIA\n";
+	const string e_201 = "Error al BORRAR un digito en una casilla FIJA\n";
+	/* ERRORES:
+		100 - Error al PONER un digito en una casilla RELLANA
+		101 - Error al PONER un digito en una casilla FIJA
+		200 - Error al BORRAR un digito en una casilla VACIA
+		201 - Error al BORRAR un digito en una casilla FIJA*/
 	do {
+		error = 0;
 		dibujarTablero(juego.tablero);
 		op = JugarUnSudoku(juego.sudoku, x, y, c);
 		switch (op)
@@ -130,23 +131,39 @@ void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 			break;
 		case 2: 
 			//Introducir numero
-			if (!ponerNum(juego.tablero, x, y, c))
-				cout << "Fallo" << endl;
+			if (!ponerNum(juego.tablero, x, y, c, error)) {
+				colorStr(fallo, ROJO);
+				if (error == 100)
+					colorStr(e_100, ROJO);
+				else if (error == 101)
+					colorStr(e_101, ROJO);
+
+			}
 			break;
 		case 3:
 			//Borrar numero
-			if (!borraNum(juego.tablero, x, y))
-				cout << "Fallo" << endl;
+			if (!borraNum(juego.tablero, x, y, error)) {
+				colorStr(fallo, ROJO);
+				if (error == 200)
+					colorStr(e_200, ROJO);
+				else if (error == 201)
+					colorStr(e_201, ROJO);
+			}
 			break;
 		case 4:
 			//Reiniciar el tablero
-			cout << "hola";
 			iniciaJuego(juego, juego.sudoku);
 			cargaJuego(juego, juego.sudoku);
 			break;
 		case 5:
 			//Autocompletar celdas simples
 			rellenarSimples(juego.tablero);
+			break;
+		
+		case 6:
+			//Resolver el sudoku
+			if(!resolver(juego.tablero, 0))
+				colorStr(fallo, ROJO);
 			break;
 		}
 		pausa();
@@ -159,10 +176,30 @@ void pausa() {
 	string str;
 	cin.sync();
 	cin >> str;
+	cin.sync();
 }
 
 int leerOpcion(int inf, int sup) {
-	return 0;
+	string str;
+	bool ok = false;
+	int op = -1;
+
+	do {
+		cin.sync();
+		cin.clear();
+		getline(cin, str);
+
+		if (isdigit(str[0]) && (str.size() == 1)) {
+			op= str[0] - '0';
+			if ((op >= inf) && (op <= sup))
+				ok = true;
+		}
+		if (!ok) {
+			cout << "Opcion incorrecta." << endl;
+		}
+	} while (!ok);
+
+	return op;
 }
 
 void clear() {

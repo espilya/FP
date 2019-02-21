@@ -3,9 +3,6 @@
 
 
 
-///
-//
-//
 
 void iniciaCasilla(tCasilla & casilla) {
 	cjto_lleno(casilla.posibles);
@@ -37,35 +34,28 @@ void borraCasilla(tCasilla & casilla) {
 }
 
 void dibujaCasilla(const tCasilla & casilla) {
-	tPaleta color;
+
 	if (casilla.estado == VACIO) {
 		cout << ' ';
 	}
 	else if (casilla.estado == RELLENO) {
-		colorFondo(ROJO);
+		colorFondo(ROJO_OSC);
 		cout << casilla.numero;
 	}
 	else {
-		colorFondo(AZUL);
+		colorFondo(AZUL_OSC);
 		cout << casilla.numero;
 	}
 	colorFondo();
 }
 
-void colorFondo(tPaleta colorLet){
-	//LETRA
-		// GRIS = 8
-		// 9 = azul;
-		// 12 = rojo;
-		// 15 = BLANCO;  
-	tPaleta color;
+void colorFondo(tPaleta colorLet){  
 	int fondo_Neg = 0;
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(handle, colorLet | (0 << 4));
 }
 
 void colorStr(string str, tPaleta colorLet) {
-	tPaleta color;
 	// 1 = azul;
 	// 4 = rojo;
 	// 15 = BLANCO;  
@@ -73,14 +63,10 @@ void colorStr(string str, tPaleta colorLet) {
 	SetConsoleTextAttribute(handle, colorLet | (0 << 4));
 	if (str.size() > 0) {
 		cout << str;
-		colorStr("", BLANCO);
+		colorStr("", BLANCO_OSC);
 	}
 }
 
 bool esSimple(const tCasilla & casilla, int & numero) {
-	bool estado = false;
-	if (casilla.estado == VACIO) {
-		estado = esUnitario(casilla.posibles, numero);
-	}
-	return estado;
+	return esUnitario(casilla.posibles, numero);
 }
