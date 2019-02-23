@@ -1,8 +1,7 @@
 ﻿#include "pch.h"
 #include "juego.h"
 
-//cout << "El sudoku: " << juego.sudoku.fichero << ". De nivel: " << juego.sudoku.nivel 
-//	<< ". Esta " << ((juego.terminado) ? "completo." : "incompleto.") << endl;
+
 
 //
 // preguntar si hace falta hacer comprobacion de ficheros:
@@ -10,56 +9,57 @@
 //		-sudoku9.txt
 //
 //
+//	el sudoku2 tiene auto-solucion?? en mi juego no furula)
+//
+//
+//		7. Salvar 
+//		8. Cargar
 
-// Inicializa el juego
-void iniciaJuego(tJuego & juego, const tSudoku &sudoku) {
+
+void iniciaJuego(tJuego & juego) {
 	iniciaTablero(juego.tablero);
 }
 
-//carga del juego
-bool cargaJuego(tJuego & juego, const tSudoku &sudoku) {
-	bool ok;
-	ok =cargarTablero(sudoku.fichero, juego.tablero);
+
+bool cargaJuego(tJuego & juego) {
+	bool ok = false;
+	if(juego.sudoku.fichero != "VACIO")
+	ok = cargarTablero(juego.sudoku.fichero, juego.tablero);
 	return ok;
 }
 
 
-int mostrarMenuPrincipal() { //mostrarMenuJugada
-	tJuego juego;
-	juego.sudoku.fichero = "sudoku1.txt";
+void mostrarMenuPrincipal(tJuego &juego) { //mostrarMenuJugada
 	int op;
 	do {
-		clear();
-		cout << "1. - Jugar:\n"
-			<< "2. - Seleccionar sudoku\n"
-			<< "0. - Salir\n";
-		op = leerOpcion(0, 2);
+		cout << "Sudoku seleccionado: "; 
+		colorStr(juego.sudoku.fichero + '\n', AMARILLO_OSC);
+		cout << "1. - Jugar.\n"
+			<< "2. - Seleccionar otro sudoku / Salir.\n";
+		op = leerOpcion(1, 2);
 		switch (op)
 		{
 		case 1:
 			clear();
-			iniciaJuego(juego, juego.sudoku);
-			cargaJuego(juego, juego.sudoku);
-			mostrarJuego(juego);
-			break;
-		case 2:
-			
-			break;
-		case 0:
-			cout << "\n\n\n\tAdios!";
+			iniciaJuego(juego);
+			if (cargaJuego(juego))
+				mostrarJuego(juego);
+			else
+				if(errorAbrirFichero(juego.sudoku.fichero))
+					mostrarJuego(juego);
 			break;
 		}
-	} while (op != 0);
-	return 0;
+		clear();
+	} while (op != 2);
 }
 
-// Bucle del menu(texto) del juego(proceso) de un sudoku.
-int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c) {
-	//dada la información del
-	//	sudoku elegido lleva a cabo todas las acciones correspondientes a haber
-	//	elegido la opción 1 de esta versión y devuelve la puntuación obtenida por el
-	//	jugador(0 si aborta la resolución antes de rellenar el tablero o los puntos
-	//		asociados al sudoku elegido en caso de resolverlo).
+
+int menuJugarSudoku(int &x, int &y, int &c) {
+	const int inf_a = 0;
+	const int sup_a = 7;
+	const int inf_1 = 1;
+	const int sup_9 = 9;
+
 	int op;
 	cout << "1. - Ver posibles valores de una casilla vacia\n"
 		<< "2. - Colocar valor en una casilla\n"
@@ -67,53 +67,53 @@ int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c) {
 		<< "4. - Reiniciar el tablero\n"
 		<< "5. - Autocompletar celdas simples\n"
 		<< "6. - Resolver el sudoku\n"
+		<< "7. - Salvar partida actal\n"
 		<< "0. - Abortar la resolucion y volver al menu principal\n";
-	op = leerOpcion(0, 6);
+	op = leerOpcion(inf_a, sup_a);
 	switch ((int)op)
 	{
 		case 1://Posibles casos
 			cout << "Introduce las coodenadas 'X':\n>";
-			cin >> x;
+			x = leerOpcion(inf_1, sup_9);
 			cout << " y las coodenadas 'Y':\n>";
-			cin >> y;
+			y = leerOpcion(inf_1, sup_9);
 			x--;
 			y--;
 			break;
 		case 2: //Introducir numero
 			cout << "Introduce las coodenadas 'X':\n>";
-			cin >> x;
+			x = leerOpcion(inf_1, sup_9);
 			cout << " y las coodenadas 'Y':\n>";
-			cin >> y;
+			y = leerOpcion(inf_1, sup_9);
 			cout << "Introduce el numero:\n>";
-			cin >> c;
+			c = leerOpcion(inf_1, sup_9);
 			x--;
 			y--;
 			break;
 		case 3://Borrar numero
 			cout << "Introduce las coodenadas 'X':\n>";
-			cin >> x;
+			x = leerOpcion(inf_1, sup_9);
 			cout << " y las coodenadas 'Y':\n>";
-			cin >> y;
+			y = leerOpcion(inf_1, sup_9);
 			x--;
 			y--;
 			break;
 		case 0:
-			colorStr("\n\n\nGracias por jugar!", BLANCO);
+			//colorStr("\n\n\nGracias por jugar!", BLANCO);
 			break;
 	}
 return op;
 }
 
-
-//Procesado de opcion seleccionada del menu del juego.
-void mostrarJuego(tJuego juego) {//(const tJuego &juego)
+void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 	int op, x, y, c;
 	short int error;
 	const string fallo = "\t\tFallo.\n";
-	const string e_100 = "Error al PONER un digito en una casilla RELLANA\n";
-	const string e_101 = "Error al BORRAR un digito en una casilla FIJA\n";
-	const string e_200 = "Error al BORRAR un digito en una casilla VACIA\n";
-	const string e_201 = "Error al BORRAR un digito en una casilla FIJA\n";
+	const string e_100 = "Error al PONER un digito en una casilla RELLANA.\n";
+	const string e_101 = "Error al BORRAR un digito en una casilla FIJA.\n";
+	const string e_102 = "Error al PONER un valor IMPOSIBLE en una casilla.\n";
+	const string e_200 = "Error al BORRAR un digito en una casilla VACIA.\n";
+	const string e_201 = "Error al BORRAR un digito en una casilla FIJA.\n";
 	/* ERRORES:
 		100 - Error al PONER un digito en una casilla RELLANA
 		101 - Error al PONER un digito en una casilla FIJA
@@ -121,8 +121,11 @@ void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 		201 - Error al BORRAR un digito en una casilla FIJA*/
 	do {
 		error = 0;
+		cout << setw(24);
+		colorStr(juego.sudoku.fichero, BLANCO);
+		cout << endl;
 		dibujarTablero(juego.tablero);
-		op = JugarUnSudoku(juego.sudoku, x, y, c);
+		op = menuJugarSudoku(x, y, c);
 		switch (op)
 		{
 		case 1:
@@ -137,7 +140,8 @@ void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 					colorStr(e_100, ROJO);
 				else if (error == 101)
 					colorStr(e_101, ROJO);
-
+				else if(error = 102)
+					colorStr(e_102, ROJO);
 			}
 			break;
 		case 3:
@@ -152,8 +156,12 @@ void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 			break;
 		case 4:
 			//Reiniciar el tablero
-			iniciaJuego(juego, juego.sudoku);
-			cargaJuego(juego, juego.sudoku);
+			iniciaJuego(juego);
+			if (cargaJuego(juego))
+				mostrarJuego(juego);
+			else
+				if (errorAbrirFichero(juego.sudoku.fichero))
+					mostrarJuego(juego);
 			break;
 		case 5:
 			//Autocompletar celdas simples
@@ -165,8 +173,13 @@ void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 			if(!resolver(juego.tablero, 0))
 				colorStr(fallo, ROJO);
 			break;
+		case 7:
+			//Salvar
+			salvarJuego(juego);
+			break;
 		}
-		pausa();
+		if (op != 0)
+			pausa();
 		clear();
 	} while (op != 0);
 
@@ -175,8 +188,8 @@ void mostrarJuego(tJuego juego) {//(const tJuego &juego)
 void pausa() {
 	string str;
 	cin.sync();
+	cout << "\nIntroduze un caracter para seguir.." << endl;
 	cin >> str;
-	cin.sync();
 }
 
 int leerOpcion(int inf, int sup) {
@@ -194,11 +207,10 @@ int leerOpcion(int inf, int sup) {
 			if ((op >= inf) && (op <= sup))
 				ok = true;
 		}
-		if (!ok) {
+		if ((!ok) && (str.size() >0)) {
 			cout << "Opcion incorrecta." << endl;
 		}
 	} while (!ok);
-
 	return op;
 }
 
@@ -206,3 +218,47 @@ void clear() {
 	system("cls");
 } 
 
+void salvarJuego(const tJuego &juego) {
+	bool continuar;
+	if (tableroLleno(juego.tablero)) {
+		cout << "Seguro que desea guardar un juego terminado, con todas las casillas completas?\n 1. Si\n 0. No\n" << endl;
+		continuar = leerOpcion(0, 1);
+	}
+	if (continuar) {
+		ofstream file;
+		string str = "nombreDelSudokuSalvado_1.txt";
+		file.open(str);
+		file << "NO TOCAR\n Tablero de valores fijos.\n\n\n";
+		for (int j = 0; j < DIMENSION; j++) {
+			for (int i = 0; i < DIMENSION; i++) {
+				if (juego.tablero[i][j].estado == FIJA) {
+					file << juego.tablero[i][j].numero;
+				}
+				else {
+					file << ' ';
+				}
+			}
+			file << '\n';
+		}
+		file.close();
+	}
+}
+
+bool errorAbrirFichero(const string &fichero) {
+	int temp;
+	bool continuarConVacio = false;
+	colorStr("-ERROR AL CARGAR FICHERO-\n", ROJO);
+	if (fichero == "VACIO") {
+		colorStr("Desea continuar con el tablero VACIO?\n 1. Si.\n 0. No.\n");
+		continuarConVacio = leerOpcion(0, 1);
+		clear();
+	}
+	else {
+		cout << "El fichero ";
+		colorStr(fichero, AMARILLO_OSC);
+		cout << " no se pudo encontrar. Imposible cargar el sudoku." << endl;
+		cout << "Pulse '1' para continuar.\n>";
+		temp = leerOpcion(1, 1);
+	}
+	return continuarConVacio;
+}

@@ -17,7 +17,7 @@ void cjto_lleno(tConjunto &c) {
 }
 
 bool pertenece(const tConjunto &c, int e) {
-	return c.elementos[e - 1];
+	return c.elementos[e-1];
 }
 
 void addElemento(tConjunto & c, int e) {

@@ -1,11 +1,7 @@
 ﻿#include "pch.h"
 #include "tablero.h"
 
-//
-//		--arreglar si se introduze valor malo
-//
-//
-// proteccion contra poner num malo
+
 //
 
 
@@ -187,15 +183,21 @@ void dibujarCuadrado(const tTablero t, int &y) {
 bool ponerNum(tTablero &t, int x, int y, int c, short int &error) {
 	const int modo = 1;
 	bool ok = false;
-	if (t[x][y].estado == VACIO && ((c > 0) && (c < 10)) && ((x >= 0) && (x < 9)) && ((y >= 0) && (y < 9))){
-		rellenaCasilla(t[x][y], c + '0');
-		calcElementosPosibles(t, modo, x, y);
-		ok = true;
+	if (!pertenece(t[x][y].posibles, c))
+		error = 102;
+	else{
+				if (t[x][y].estado == RELLENO)
+					error = 100;
+				else if (t[x][y].estado == FIJA)
+					error = 101;
+				else if (t[x][y].estado == VACIO) {
+					rellenaCasilla(t[x][y], c + '0');
+					calcElementosPosibles(t, modo, x, y);
+					ok = true;
+				}
+
+		
 	}
-	if (t[x][y].estado == RELLENO)
-		error = 100;
-	if (t[x][y].estado == FIJA)
-		error = 101;
 	return ok;
 }
 

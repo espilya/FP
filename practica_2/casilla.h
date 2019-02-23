@@ -39,7 +39,6 @@ void rellenaCasilla(tCasilla & casilla, char c, bool fija=false); //fija es true
 
 void borraCasilla(tCasilla & casilla);
 
-
 // Dibuja una casilla
 void dibujaCasilla(const tCasilla &casilla);
 
@@ -50,9 +49,9 @@ bool esSimple(const tCasilla & casilla, int & numero);
 // Establece el color de una casilla
 void colorFondo(tPaleta colorLet = BLANCO_OSC);
 
-
 //Ecribe el string del argumento con el color seleccionado. Despues de llamar esta funcion el color vuelve a ser blanco
-void colorStr(string str, tPaleta colorLet = BLANCO_OSC);
+void colorStr(const string str, tPaleta colorLet = BLANCO_OSC);
+
 
 
 #endif

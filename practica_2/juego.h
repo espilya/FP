@@ -30,16 +30,16 @@ typedef struct {
 
 
 // Mostrar menú de acciones para jugar un sudoku
-int mostrarMenuPrincipal(); //mostrarMenuJugada
+void mostrarMenuPrincipal(tJuego &juego); //mostrarMenuJugada
 
-// Bucle del juego de un sudoku
-int JugarUnSudoku(const tSudoku &sudoku, int &x, int &y, int &c);
+// Bucle del menu(texto) del juego(proceso) de un sudoku.
+int menuJugarSudoku(int &x, int &y, int &c);
 
 // Inicializa el juego
-void iniciaJuego(tJuego & juego, const tSudoku &sudoku);
+void iniciaJuego(tJuego & juego);
 
-//muestra el juego
-void mostrarJuego(tJuego juego);//(const tJuego &juego)
+//Procesado de opcion seleccionada del menu del juego.
+void mostrarJuego(tJuego &juego);//(const tJuego &juego)
 
 void pausa();
 
@@ -49,11 +49,15 @@ int leerOpcion(int inf, int sup);
 
 void clear();
 
-
-
+//
+bool errorAbrirFichero(const string &fichero);
 
 //carga del juego
-bool cargaJuego(tJuego & juego, const tSudoku &sudoku);
+bool cargaJuego(tJuego & juego);
+
+void salvarJuego(const tJuego &juego);
+
+void cargarSalvadoJuego(tJuego &juego);
 
 
 #endif

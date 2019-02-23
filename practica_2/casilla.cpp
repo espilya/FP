@@ -49,13 +49,17 @@ void dibujaCasilla(const tCasilla & casilla) {
 	colorFondo();
 }
 
+bool esSimple(const tCasilla & casilla, int & numero) {
+	return esUnitario(casilla.posibles, numero);
+}
+
 void colorFondo(tPaleta colorLet){  
 	int fondo_Neg = 0;
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(handle, colorLet | (0 << 4));
 }
 
-void colorStr(string str, tPaleta colorLet) {
+void colorStr(const string str, tPaleta colorLet) {
 	// 1 = azul;
 	// 4 = rojo;
 	// 15 = BLANCO;  
@@ -67,6 +71,5 @@ void colorStr(string str, tPaleta colorLet) {
 	}
 }
 
-bool esSimple(const tCasilla & casilla, int & numero) {
-	return esUnitario(casilla.posibles, numero);
-}
+
+

@@ -22,7 +22,7 @@ typedef struct {
 } tListaSudokus;
 
 //inicializa lista a una lista vacía.
-void creaListaVacia(tListaSudokus &lista);
+void creaListaVacia(tListaSudokus &lista, tJuego & juego);
 
 bool cargarListaSudokus(tListaSudokus & lista);
 
@@ -31,6 +31,6 @@ bool cargarListaSudokus(tListaSudokus & lista);
 void mostrarListaSudokus(const tListaSudokus &lista);
 
 /*visualiza por pantalla la lista de sudokus dada.*/
-int  menuListaSudokus(const tListaSudokus & lista);
+int  menuListaSudokus(const tListaSudokus & lista, tJuego & juego);
 
 #endif
