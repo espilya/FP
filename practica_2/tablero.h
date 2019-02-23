@@ -46,6 +46,9 @@ bool borraNum(tTablero &t, int x, int y, short int &error );
 //O si permitiesemos poner valores erroneos
 bool tableroLleno (const tTablero t);
 
+//determina si el tablero esta "vacio" - que no se ha rellanado ninguna casilla
+bool tableroSoloFijo(const tTablero t);
+
 //Muestra los posibles valores de una casilla valida cualquiera
 //Si es fija solo figurara su propio valor, ya que no se puede cambiar
 void mostrarPosibles(const tTablero t, int x, int y);

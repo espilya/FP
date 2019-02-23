@@ -1,13 +1,24 @@
 NO TOCAR
- Tablero de valores fijos.
+Primero van los valores Fijos y mas abajo los valores Rellenos.
+
+  3  172 
+     4   
+   7  149
+ 148    5
+28     74
+7    268 
+952  8   
+   3     
+ 679  4  
 
 
-         
-         
-         
-         
-         
-         
-         
-         
-         
+:P
+49 58   6
+17629 853
+528 36   
+6   7923 
+  56139  
+ 3945   1
+   14 367
+841 67592
+3   25 18

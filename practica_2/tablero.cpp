@@ -229,6 +229,18 @@ bool tableroLleno(const tTablero t) {
 	}
 	return lleno;
 }
+
+bool tableroSoloFijo(const tTablero t) {
+	bool lleno = true;
+	for (int i = 0; i < DIMENSION; i++) {
+		for (int j = 0; j < DIMENSION; j++) {
+			if (t[j][i].estado == RELLENO) {
+				lleno = false;
+			}
+		}
+	}
+	return lleno;
+}
 	
 
 void mostrarPosibles(const tTablero t, int x, int y) {

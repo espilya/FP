@@ -49,15 +49,14 @@ int leerOpcion(int inf, int sup);
 
 void clear();
 
-//
-bool errorAbrirFichero(const string &fichero);
 
 //carga del juego
-bool cargaJuego(tJuego & juego);
+void guardarJuego(const tJuego &juego);
 
-void salvarJuego(const tJuego &juego);
+void salvarJuego(tJuego &juego);
 
-void cargarSalvadoJuego(tJuego &juego);
+bool errorAbrirFichero(const string &fichero);
+
 
 
 #endif

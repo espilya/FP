@@ -12,14 +12,15 @@
 //	el sudoku2 tiene auto-solucion?? en mi juego no furula)
 //
 //
-//		7. Salvar 
-//		8. Cargar
+//	error al salvar juego y reiniciarlo. encontrar solucion o dejarlo?
+//
+//
+//	Hacer ver los puntos de jugadores en la v1???????
 
 
 void iniciaJuego(tJuego & juego) {
 	iniciaTablero(juego.tablero);
 }
-
 
 bool cargaJuego(tJuego & juego) {
 	bool ok = false;
@@ -27,7 +28,6 @@ bool cargaJuego(tJuego & juego) {
 	ok = cargarTablero(juego.sudoku.fichero, juego.tablero);
 	return ok;
 }
-
 
 void mostrarMenuPrincipal(tJuego &juego) { //mostrarMenuJugada
 	int op;
@@ -53,10 +53,9 @@ void mostrarMenuPrincipal(tJuego &juego) { //mostrarMenuJugada
 	} while (op != 2);
 }
 
-
 int menuJugarSudoku(int &x, int &y, int &c) {
 	const int inf_a = 0;
-	const int sup_a = 7;
+	const int sup_a = 8;
 	const int inf_1 = 1;
 	const int sup_9 = 9;
 
@@ -67,7 +66,8 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 		<< "4. - Reiniciar el tablero\n"
 		<< "5. - Autocompletar celdas simples\n"
 		<< "6. - Resolver el sudoku\n"
-		<< "7. - Salvar partida actal\n"
+		<< "7. - Guardar partida actual\n"
+		<< "8. - Salvar partida anterior\n"
 		<< "0. - Abortar la resolucion y volver al menu principal\n";
 	op = leerOpcion(inf_a, sup_a);
 	switch ((int)op)
@@ -175,6 +175,10 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 			break;
 		case 7:
 			//Salvar
+			guardarJuego(juego);
+			break;
+		case 8:
+			//Salvar
 			salvarJuego(juego);
 			break;
 		}
@@ -218,17 +222,21 @@ void clear() {
 	system("cls");
 } 
 
-void salvarJuego(const tJuego &juego) {
-	bool continuar;
+void guardarJuego(const tJuego &juego) {
+	bool continuar = true;
 	if (tableroLleno(juego.tablero)) {
-		cout << "Seguro que desea guardar un juego terminado, con todas las casillas completas?\n 1. Si\n 0. No\n" << endl;
+		cout << "Seguro que desea guardar un juego TERMINADO, con todas las casillas completas?\n 1. Si\n 0. No\n" << endl;
+		continuar = leerOpcion(0, 1);
+	}
+	else if (tableroSoloFijo(juego.tablero)) {
+		cout << "Seguro que desea guardar un juego SIN EMPEZAR,?\n 1. Si\n 0. No\n" << endl;
 		continuar = leerOpcion(0, 1);
 	}
 	if (continuar) {
 		ofstream file;
 		string str = "nombreDelSudokuSalvado_1.txt";
 		file.open(str);
-		file << "NO TOCAR\n Tablero de valores fijos.\n\n\n";
+		file << "NO TOCAR\nPrimero van los valores Fijos y mas abajo los valores Rellenos.\n\n";
 		for (int j = 0; j < DIMENSION; j++) {
 			for (int i = 0; i < DIMENSION; i++) {
 				if (juego.tablero[i][j].estado == FIJA) {
@@ -240,7 +248,70 @@ void salvarJuego(const tJuego &juego) {
 			}
 			file << '\n';
 		}
+		file << "\n\n" << ":P\n";
+		for (int j = 0; j < DIMENSION; j++) {
+			for (int i = 0; i < DIMENSION; i++) {
+				if (juego.tablero[i][j].estado == RELLENO) {
+					file << juego.tablero[i][j].numero;
+				}
+				else {
+					file << ' ';
+				}
+			}
+			file << '\n';
+		}
 		file.close();
+	}
+}
+
+void salvarJuego(tJuego &juego) {
+	bool ok = true;;
+	char ch;
+	string temp;
+	string userInput;
+	ifstream file;
+	do {
+		cout << "Introduce el nombre del archivo a salvar:\n>";
+		if (!ok)
+			cout << "Nombre incorrecto. \nPara cancelar introduzca '0'." << endl;
+		getline(cin, userInput);
+
+		userInput = "nombreDelSudokuSalvado_1.txt";
+
+		file.open(userInput);
+		ok = file.is_open();
+		clear();
+	} while ( !ok && userInput != "0");
+	if (userInput != "0") {
+		juego.sudoku.fichero = userInput;
+
+		for (int a = 0; a < 3; a++)
+			getline(file, temp);
+
+		for (int j = 0; j < 9; j++) {
+			for (int i = 0; i < 9; i++) {
+				file.get(ch);
+				rellenaCasilla(juego.tablero[i][j], ch, true);
+			}
+			getline(file, temp);
+		}
+
+		do {
+			getline(file, temp);
+		} while (temp != ":P");
+
+		for (int j = 0; j < 9; j++) {
+			for (int i = 0; i < 9; i++) {
+				file.get(ch);
+				if(ch != ' ')
+					rellenaCasilla(juego.tablero[i][j], ch);
+			}
+			getline(file, temp);
+		}
+		calcElementosPosibles(juego.tablero);
+
+
+
 	}
 }
 
