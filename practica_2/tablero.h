@@ -21,7 +21,7 @@ typedef tCasilla tTablero[DIMENSION][DIMENSION];
 void iniciaTablero(tTablero &tablero); 
 
 //Carga un tablero de fichero
-bool cargarTablero(const string &fichero, tTablero &tablero); 
+bool cargarTablero(const string &fichero, tTablero &t); 
 
 // Dibuja el tablero en pantalla
 void dibujarTablero(const tTablero tablero);

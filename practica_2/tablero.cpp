@@ -29,10 +29,6 @@ bool cargarTablero(const string &fichero, tTablero &t) {
 			getline(file, temp);
 		}
 		calcElementosPosibles(t);
-		/*for (int j = 0; j < 9; j++) 
-			for (int i = 0; i < 9; i++) 
-				calcelementosposibles_submatriz(t, i, j);*/
-
 		ok = true;
 	}
 	file.close();
