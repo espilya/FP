@@ -24,7 +24,7 @@ typedef struct {
 typedef struct {
 	tSudoku sudoku;
 	tTablero tablero;
-	bool terminado;
+	bool esSalvado;
 }tJuego;
 
 
@@ -53,7 +53,7 @@ void clear();
 //carga del juego
 void guardarJuego(const tJuego &juego);
 
-void salvarJuego(tJuego &juego);
+void salvarJuego(tJuego &juego, bool reiniciar = false);
 
 bool errorAbrirFichero(const string &fichero);
 

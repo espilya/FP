@@ -22,7 +22,7 @@ typedef struct {
 } tListaSudokus;
 
 //inicializa lista a una lista vacía.
-void creaListaVacia(tListaSudokus &lista, tJuego & juego);
+void creaListaVacia(tListaSudokus &lista);
 
 bool cargarListaSudokus(tListaSudokus & lista);
 

@@ -19,29 +19,54 @@
 
 
 void iniciaJuego(tJuego & juego) {
+	juego.esSalvado = false;
+	juego.sudoku.nivel = EMPTY;
+	juego.sudoku.fichero = "VACIO";
 	iniciaTablero(juego.tablero);
 }
 
 bool cargaJuego(tJuego & juego) {
 	bool ok = false;
-	if(juego.sudoku.fichero != "VACIO")
-	ok = cargarTablero(juego.sudoku.fichero, juego.tablero);
+	bool esPartidaSalvada = false;
+	if (juego.sudoku.fichero != "VACIO")
+		ok = cargarTablero(juego.sudoku.fichero, juego.tablero, esPartidaSalvada);
+	if(juego.esSalvado || esPartidaSalvada)
+		salvarJuego(juego);
 	return ok;
 }
 
 void mostrarMenuPrincipal(tJuego &juego) { //mostrarMenuJugada
 	int op;
+	string fileStr;
 	do {
-		cout << "Sudoku seleccionado: "; 
-		colorStr(juego.sudoku.fichero + '\n', AMARILLO_OSC);
-		cout << "1. - Jugar.\n"
+		fileStr = juego.sudoku.fichero;
+		cout << "Sudoku seleccionado: ";
+		if (fileStr.find(".txt"))
+			fileStr = fileStr.substr(0, fileStr.size() - 4);
+		colorStr(fileStr, AMARILLO_OSC);
+		cout << " de nivel: ";
+		switch ((int)juego.sudoku.nivel)
+		{
+		case 0:
+			colorStr("FACIL", AMARILLO_OSC);
+			break;
+		case 1:
+			colorStr("MEDIO", AMARILLO_OSC);
+			break;
+		case 2:
+			colorStr("DIFICIL", AMARILLO_OSC);
+			break;
+		case 3:
+			colorStr("VACIO", AMARILLO_OSC);
+			break;
+		}
+		cout << "\n1. - Jugar.\n"
 			<< "2. - Seleccionar otro sudoku / Salir.\n";
 		op = leerOpcion(1, 2);
 		switch (op)
 		{
 		case 1:
 			clear();
-			iniciaJuego(juego);
 			if (cargaJuego(juego))
 				mostrarJuego(juego);
 			else
@@ -66,8 +91,8 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 		<< "4. - Reiniciar el tablero\n"
 		<< "5. - Autocompletar celdas simples\n"
 		<< "6. - Resolver el sudoku\n"
-		<< "7. - Guardar partida actual\n"
-		<< "8. - Salvar partida anterior\n"
+		<< "7. - Salvar partida actual\n"
+		<< "8. - Cargar partida anterior\n"
 		<< "0. - Abortar la resolucion y volver al menu principal\n";
 	op = leerOpcion(inf_a, sup_a);
 	switch ((int)op)
@@ -108,6 +133,7 @@ return op;
 void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 	int op, x, y, c;
 	short int error;
+	string fileStr;
 	const string fallo = "\t\tFallo.\n";
 	const string e_100 = "Error al PONER un digito en una casilla RELLANA.\n";
 	const string e_101 = "Error al BORRAR un digito en una casilla FIJA.\n";
@@ -121,9 +147,28 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 		201 - Error al BORRAR un digito en una casilla FIJA*/
 	do {
 		error = 0;
-		cout << setw(24);
-		colorStr(juego.sudoku.fichero, BLANCO);
-		cout << endl;
+		fileStr = juego.sudoku.fichero;
+		if (fileStr.find(".txt"))
+			fileStr = fileStr.substr(0, fileStr.size() - 4);
+		cout << "\t  ";
+		colorStr(fileStr, AMARILLO_OSC);
+		cout << " de nivel: ";
+		switch ((int)juego.sudoku.nivel)
+		{
+		case 0:
+			colorStr("FACIL", AMARILLO_OSC);
+			break;
+		case 1:
+			colorStr("MEDIO", AMARILLO_OSC);
+			break;
+		case 2:
+			colorStr("DIFICIL", AMARILLO_OSC);
+			break;
+		case 3:
+			colorStr("VACIO", AMARILLO_OSC);
+			break;
+		}
+		cout << '\n';
 		dibujarTablero(juego.tablero);
 		op = menuJugarSudoku(x, y, c);
 		switch (op)
@@ -156,12 +201,15 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 			break;
 		case 4:
 			//Reiniciar el tablero
-			iniciaJuego(juego);
-			if (cargaJuego(juego))
-				mostrarJuego(juego);
-			else
-				if (errorAbrirFichero(juego.sudoku.fichero))
-					mostrarJuego(juego);
+			if (!juego.esSalvado) {
+				cout << "no es salvado";
+				iniciaTablero(juego.tablero);
+				bool temp = cargaJuego(juego);
+			}
+			else {
+				cout << "si lo es";
+				salvarJuego(juego, true);
+			}
 			break;
 		case 5:
 			//Autocompletar celdas simples
@@ -224,6 +272,7 @@ void clear() {
 
 void guardarJuego(const tJuego &juego) {
 	bool continuar = true;
+	string nivel;
 	if (tableroLleno(juego.tablero)) {
 		cout << "Seguro que desea guardar un juego TERMINADO, con todas las casillas completas?\n 1. Si\n 0. No\n" << endl;
 		continuar = leerOpcion(0, 1);
@@ -234,7 +283,9 @@ void guardarJuego(const tJuego &juego) {
 	}
 	if (continuar) {
 		ofstream file;
-		string str = "nombreDelSudokuSalvado_1.txt";
+		string str;
+		cout << "Introduce el nombre del archivo a salvar:\n>";
+		cin >> str;
 		file.open(str);
 		file << "NO TOCAR\nPrimero van los valores Fijos y mas abajo los valores Rellenos.\n\n";
 		for (int j = 0; j < DIMENSION; j++) {
@@ -260,31 +311,35 @@ void guardarJuego(const tJuego &juego) {
 			}
 			file << '\n';
 		}
+		file << juego.sudoku.nivel;
 		file.close();
 	}
 }
 
-void salvarJuego(tJuego &juego) {
+void salvarJuego(tJuego &juego, bool reiniciar) {
 	bool ok = true;;
 	char ch;
+	int tempInteger;
 	string temp;
 	string userInput;
 	ifstream file;
 	do {
-		cout << "Introduce el nombre del archivo a salvar:\n>";
-		if (!ok)
-			cout << "Nombre incorrecto. \nPara cancelar introduzca '0'." << endl;
-		getline(cin, userInput);
-
-		userInput = "nombreDelSudokuSalvado_1.txt";
-
+		if (!reiniciar) {
+			cout << "(si desea cargar un sudoku de la lista inicial, por favor, pulse '0', salga al menu inicial, y cargelo desde el menu)" << endl;
+			cout << "Introduce el nombre del archivo a cargar:\n>";
+			if (!ok)
+				cout << "Nombre incorrecto. \nPara cancelar introduzca '0'." << endl;
+			getline(cin, userInput);
+		}
+		else 
+		userInput = juego.sudoku.fichero;
 		file.open(userInput);
 		ok = file.is_open();
 		clear();
 	} while ( !ok && userInput != "0");
 	if (userInput != "0") {
 		juego.sudoku.fichero = userInput;
-
+		iniciaTablero(juego.tablero);
 		for (int a = 0; a < 3; a++)
 			getline(file, temp);
 
@@ -308,10 +363,10 @@ void salvarJuego(tJuego &juego) {
 			}
 			getline(file, temp);
 		}
+		file >> tempInteger;
+		juego.sudoku.nivel = (tNivelSudoku)tempInteger;
 		calcElementosPosibles(juego.tablero);
-
-
-
+		juego.esSalvado = true;
 	}
 }
 

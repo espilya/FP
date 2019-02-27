@@ -7,12 +7,11 @@
 //
 
 
-void creaListaVacia(tListaSudokus &lista, tJuego & juego) {
+void creaListaVacia(tListaSudokus &lista) {
 	for (int i = 0; i < MAX_SUDOKUS; i++) {
 		lista.array[i].fichero = "VACIO";
 		lista.array[i].nivel = EMPTY;
 	}
-	juego.sudoku.fichero = "VACIO";
 	lista.cont = 0;
 }
 
@@ -47,9 +46,8 @@ void mostrarListaSudokus(const tListaSudokus &lista) {
 		tempStr = lista.array[i].fichero;
 		if (tempStr!= "VACIO") {
 			colorStr(to_string(i+1) + " ", VERDE_OSC);
-				tempStr[tempStr.size() - 4] = ' ';
-				tempStr = tempStr.substr(0, tempStr.size() - 3);
-				swap(tempStr[6], tempStr[7]);
+			if (tempStr.find(".txt"))
+			tempStr = tempStr.substr(0, tempStr.size() - 4);
 			colorStr(tempStr, MAGENTA_OSC);
 			switch (lista.array[i].nivel)
 			{
@@ -78,8 +76,11 @@ int  menuListaSudokus(const tListaSudokus & lista, tJuego & juego) {
 	mostrarListaSudokus(lista);
 	cout << "Introduze el numero del sudoku:\n>";
 	op = leerOpcion(0, (lista.cont));
-	if(op !=0)
+	if (op != 0) {
 		juego.sudoku.fichero = lista.array[op - 1].fichero;
+		juego.sudoku.nivel = lista.array[op - 1].nivel;
+		juego.esSalvado = false;
+	}
 	clear();
 	return op;
 }

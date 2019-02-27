@@ -43,7 +43,7 @@ void dibujaCasilla(const tCasilla & casilla) {
 		cout << casilla.numero;
 	}
 	else {
-		colorFondo(AZUL_OSC);
+		colorFondo(AZUL);
 		cout << casilla.numero;
 	}
 	colorFondo();

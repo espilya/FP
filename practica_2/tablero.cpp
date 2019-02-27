@@ -14,22 +14,27 @@ void iniciaTablero(tTablero &tablero) {
 	}
 }
 
-bool cargarTablero(const string &fichero, tTablero &t) {
+bool cargarTablero(const string &fichero, tTablero &t, bool &esSalvado) {
 	char ch;
 	string temp;
 	bool ok = false;
 	ifstream file;
 	file.open(fichero);
 	if (file.is_open()) {
-		for (int j = 0; j < 9; j++) {
-			for (int i = 0; i < 9; i++) {
-				file.get(ch);
-				rellenaCasilla(t[i][j], ch, true);
-			}
-			getline(file, temp);
-		}
-		calcElementosPosibles(t);
 		ok = true;
+			for (int j = 0; j < 9; j++) {
+				for (int i = 0; i < 9; i++) {
+					file.get(ch);
+					rellenaCasilla(t[i][j], ch, true);
+					if (ch == 'N') {
+						esSalvado = true;
+						ok = false;
+					}
+				}
+				getline(file, temp);
+			}
+			calcElementosPosibles(t);
+		
 	}
 	file.close();
 	return ok;
@@ -276,11 +281,11 @@ void calcElementosPosibles(tTablero &t, int mode, int x, int y, int c) {
 			for (int i = 0; i < DIMENSION; i++) {
 				if (t[i][j].estado == VACIO) {
 					for (int a = 0; a < DIMENSION; a++) {
-						if (t[a][j].estado == FIJA)
+						if (t[a][j].estado != VACIO)
 							delElemento(t[i][j].posibles, t[a][j].numero);
 					}
 					for (int b = 0; b < DIMENSION; b++) {
-						if (t[i][b].estado == FIJA)
+						if (t[i][b].estado != VACIO)
 							delElemento(t[i][j].posibles, t[i][b].numero);
 					}
 				}
