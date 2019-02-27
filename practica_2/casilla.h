@@ -50,7 +50,7 @@ bool esSimple(const tCasilla & casilla, int & numero);
 void colorFondo(tPaleta colorLet = BLANCO_OSC);
 
 //Ecribe el string del argumento con el color seleccionado. Despues de llamar esta funcion el color vuelve a ser blanco
-void colorStr(const string str, tPaleta colorLet = BLANCO_OSC);
+void colorStr(const string &str, tPaleta colorLet = BLANCO_OSC);
 
 
 

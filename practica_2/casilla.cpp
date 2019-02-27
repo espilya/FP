@@ -59,7 +59,7 @@ void colorFondo(tPaleta colorLet){
 	SetConsoleTextAttribute(handle, colorLet | (0 << 4));
 }
 
-void colorStr(const string str, tPaleta colorLet) {
+void colorStr(const string &str, tPaleta colorLet) {
 	// 1 = azul;
 	// 4 = rojo;
 	// 15 = BLANCO;  

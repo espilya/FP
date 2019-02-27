@@ -5,10 +5,10 @@
 //
 
 
-void iniciaTablero(tTablero &tablero) {
+void iniciaTablero(tTablero &t) {
 	for (int i = 0; i < DIMENSION; i++) {
 		for (int j = 0; j < DIMENSION; j++) {
-			iniciaCasilla(tablero[i][j]);
+			iniciaCasilla(t[i][j]);
 
 		}
 	}
@@ -40,7 +40,7 @@ bool cargarTablero(const string &fichero, tTablero &t, bool &esSalvado) {
 	return ok;
 }
 
-void dibujarTablero(const tTablero t) {
+void dibujarTablero(const tTablero &t) {
 	//lineas de fuera: 200, 201, 202, 203, 204, 205, 206, 188, 187, 186, 185
 	// ╚ ╔ ╩ ╦ ╠ ═ ╬ ╝ ║ ╣ ╗
 	//dentro: 191, 192 ,193, 194 , 195 ,196, 197, 217, 218, 124
@@ -151,7 +151,7 @@ void dibujarTablero(const tTablero t) {
 	}
 }
 
-void dibujarCuadrado(const tTablero t, int &y) {
+void dibujarCuadrado(const tTablero &t, int &y) {
 	//--------------------DIBUJA COLUMNAS--------------------
 	char barraCh = (char)186;
 	string barra = "";
@@ -219,7 +219,7 @@ bool borraNum(tTablero &t, int x, int y, short int &error) {
 	return ok;
 }
 
-bool tableroLleno(const tTablero t) {
+bool tableroLleno(const tTablero &t) {
 	bool lleno = true;
 	for (int i = 0; i < DIMENSION; i++) {
 		for (int j = 0; j < DIMENSION; j++) {
@@ -231,7 +231,7 @@ bool tableroLleno(const tTablero t) {
 	return lleno;
 }
 
-bool tableroSoloFijo(const tTablero t) {
+bool tableroSoloFijo(const tTablero &t) {
 	bool lleno = true;
 	for (int i = 0; i < DIMENSION; i++) {
 		for (int j = 0; j < DIMENSION; j++) {
@@ -244,7 +244,7 @@ bool tableroSoloFijo(const tTablero t) {
 }
 	
 
-void mostrarPosibles(const tTablero t, int x, int y) {
+void mostrarPosibles(const tTablero &t, int x, int y) {
 	//muestra los valores posibles de la casilla del tablero dado que tiene
 	//coordenadas(fila, col) (fila y col estarán en el intervalo[1, 9])
 	if (((x >= 0)&& (x < 9)) && ((y >= 0) && (y < 9)) && (t[x][y].estado==VACIO)) {

@@ -1,2 +1,7 @@
-﻿  listaSudokus.cpp
+﻿  casilla.cpp
+  juego.cpp
+  listaSudokus.cpp
+  main.cpp
+  tablero.cpp
+  Generating Code...
   ConsoleApplication1.vcxproj -> C:\GitHub\university\practica_2\Debug\practica_2.exe
