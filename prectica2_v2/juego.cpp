@@ -4,7 +4,6 @@
 
 //
 //
-//	vale la pena usar const string???
 //
 //
 //

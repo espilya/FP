@@ -29,7 +29,7 @@ void dibujarTablero(const tTablero &t);
 //Dibuja la submatriz
 void dibujarCuadrado(const tTablero &t, int &y);
 
-  
+
 //Coloca c en x, y
 //c, x e y estan 1 y 9
 //El resultado booleano indica si se ha podido: para ello la casilla ha de estar vacia y c ser uno de los valores posibles

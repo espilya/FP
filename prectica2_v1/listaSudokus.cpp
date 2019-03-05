@@ -22,8 +22,7 @@ bool cargarListaSudokus(tListaSudokus & lista) {
 	ifstream file;
 	file.open(listaSudoku);
 	if (file.is_open()) {
-		while ((!file.eof()) && (ctd < MAX_SUDOKUS)) {
-			file >> nombre;
+		while ((!file.eof()) && (ctd < MAX_SUDOKUS) && (file >> nombre) && (nombre != "")) {
 			file >> nivel;
 			//cout << nombre << '\t' << nivel << endl;
 			lista.array[ctd].fichero = nombre;
@@ -37,6 +36,7 @@ bool cargarListaSudokus(tListaSudokus & lista) {
 }
 
 void mostrarListaSudokus(const tListaSudokus &lista) {
+	clear();
 	string tempStr = "sudokuX.txt";
 	cout << "Los sudokus disponibles son los siguientes:" << endl;
 	colorStr("# ", VERDE_OSC);

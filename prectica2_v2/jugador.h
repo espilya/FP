@@ -6,7 +6,7 @@
 using namespace std;
 
 typedef struct {
-	unsigned int id;
+	string id;
 	int pts;
 }tJugador;
 

@@ -2,8 +2,6 @@
 #include "listaSudokus.h"
 
 //
-//				hacer que en mostrarListaSudokus se vean los vacios o no?
-//
 //
 
 

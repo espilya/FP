@@ -3,7 +3,7 @@
 #include "jugador.h"
 #include <fstream>
 
-
+const string nombreListaJug = "listaJugadores.txt";
 const int MAX_JUGADORES = 10;
 typedef tJugador tListaJugadores[MAX_JUGADORES];
 
@@ -32,8 +32,12 @@ void puntuarJugador(tListaJugadores & lista, int puntos);
 //lista.Debe implementar una búsqueda binaria.
 bool buscar(const tListaJugadores & lista, string id, int &pos);
 
+
 //devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad de puntos crecientemente por identificador).
 tListaJugadores ordenarPorRanking(const tListaJugadores &lista);
+
+//anadir jugador
+void anadirJugador(tListaJugadores &lista, string id, unsigned int pts);
 
 
 #endif

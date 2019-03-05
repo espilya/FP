@@ -7,7 +7,6 @@
 #include <iomanip>     
 #include <cmath>
 #include <stdio.h>
-#include <string.h>
 
 using namespace std;
 
@@ -30,7 +29,7 @@ typedef struct {
 
 
 // Mostrar menú de acciones para jugar un sudoku
-void mostrarMenuPrincipal(tJuego &juego); //mostrarMenuJugada
+void mostrarMenuPrincipal(tJuego &juego, int op); //mostrarMenuJugada
 
 // Bucle del menu(texto) del juego(proceso) de un sudoku.
 int menuJugarSudoku(int &x, int &y, int &c);
