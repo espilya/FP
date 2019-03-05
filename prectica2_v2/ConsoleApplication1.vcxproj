@@ -155,6 +155,8 @@
     <ClInclude Include="casilla.h" />
     <ClInclude Include="Conjunto.h" />
     <ClInclude Include="juego.h" />
+    <ClInclude Include="jugador.h" />
+    <ClInclude Include="listaJugadores.h" />
     <ClInclude Include="listaSudokus.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="tablero.h" />
@@ -163,6 +165,8 @@
     <ClCompile Include="casilla.cpp" />
     <ClCompile Include="Conjunto.cpp" />
     <ClCompile Include="juego.cpp" />
+    <ClCompile Include="jugador.cpp" />
+    <ClCompile Include="listaJugadores.cpp" />
     <ClCompile Include="listaSudokus.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
@@ -172,6 +176,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="tablero.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="listaJugadores.txt" />
+    <Text Include="listaSudokus.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

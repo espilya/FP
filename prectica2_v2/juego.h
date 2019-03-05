@@ -2,12 +2,12 @@
 #define _juego
 #include "pch.h"
 #include "tablero.h"
+#include "listaJugadores.h"
 #include <conio.h>
 #include <locale.h>
 #include <iomanip>     
 #include <cmath>
 #include <stdio.h>
-#include <string.h>
 
 using namespace std;
 

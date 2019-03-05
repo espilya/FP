@@ -2,20 +2,13 @@
 #include "juego.h"
 
 
-
-//
-// preguntar si hace falta hacer comprobacion de ficheros:
-//		-listaSudokus.txt
-//		-sudoku9.txt
 //
 //
-//	el sudoku2 tiene auto-solucion?? en mi juego no furula)
+//	vale la pena usar const string???
 //
 //
-//	error al salvar juego y reiniciarlo. encontrar solucion o dejarlo?
 //
 //
-//	Hacer ver los puntos de jugadores en la v1???????
 
 
 void iniciaJuego(tJuego & juego) {

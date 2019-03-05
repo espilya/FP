@@ -33,6 +33,12 @@
     <ClInclude Include="tablero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="jugador.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="listaJugadores.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -56,5 +62,15 @@
     <ClCompile Include="listaSudokus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="listaJugadores.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jugador.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="listaJugadores.txt" />
+    <Text Include="listaSudokus.txt" />
   </ItemGroup>
 </Project>
