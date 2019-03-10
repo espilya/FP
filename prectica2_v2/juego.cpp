@@ -2,17 +2,13 @@
 #include "juego.h"
 
 
-//
-//
-//
-//
-//
-//
+
+
 
 
 void iniciaJuego(tJuego & juego) {
 	juego.esSalvado = false;
-	juego.sudoku.nivel = EMPTY;
+	juego.sudoku.nivel = 0;
 	juego.sudoku.fichero = "VACIO";
 	iniciaTablero(juego.tablero);
 }
@@ -27,47 +23,13 @@ bool cargaJuego(tJuego & juego) {
 	return ok;
 }
 
-void mostrarMenuPrincipal(tJuego &juego) { //mostrarMenuJugada
-	int op;
-	string fileStr;
-	do {
-		fileStr = juego.sudoku.fichero;
-		cout << "Sudoku seleccionado: ";
-		if (fileStr.find(".txt"))
-			fileStr = fileStr.substr(0, fileStr.size() - 4);
-		colorStr(fileStr, AMARILLO_OSC);
-		cout << " de nivel: ";
-		switch ((int)juego.sudoku.nivel)
-		{
-		case 0:
-			colorStr("FACIL", AMARILLO_OSC);
-			break;
-		case 1:
-			colorStr("MEDIO", AMARILLO_OSC);
-			break;
-		case 2:
-			colorStr("DIFICIL", AMARILLO_OSC);
-			break;
-		case 3:
-			colorStr("VACIO", AMARILLO_OSC);
-			break;
-		}
-		cout << "\n1. - Jugar.\n"
-			<< "2. - Seleccionar otro sudoku / Salir.\n";
-		op = leerOpcion(1, 2);
-		switch (op)
-		{
-		case 1:
-			clear();
-			if (cargaJuego(juego))
-				mostrarJuego(juego);
-			else
-				if(errorAbrirFichero(juego.sudoku.fichero))
-					mostrarJuego(juego);
-			break;
-		}
+void startJuego(tJuego &juego) { //mostrarMenuJugada
 		clear();
-	} while (op != 2);
+		if (cargaJuego(juego))
+			mostrarJuego(juego);
+		else
+			if(errorAbrirFichero(juego.sudoku.fichero))
+				mostrarJuego(juego);
 }
 
 int menuJugarSudoku(int &x, int &y, int &c) {
@@ -119,7 +81,7 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 			//colorStr("\n\n\nGracias por jugar!", BLANCO);
 			break;
 	}
-return op;
+	return op;
 }
 
 void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
@@ -145,7 +107,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 		cout << "\t  ";
 		colorStr(fileStr, AMARILLO_OSC);
 		cout << " de nivel: ";
-		switch ((int)juego.sudoku.nivel)
+		switch (juego.sudoku.nivel)
 		{
 		case 0:
 			colorStr("FACIL", AMARILLO_OSC);
@@ -220,7 +182,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 			salvarJuego(juego);
 			break;
 		}
-		if (op != 0)
+		if (op != 0 && op !=8)
 			pausa();
 		clear();
 	} while (op != 0);
@@ -355,7 +317,7 @@ void salvarJuego(tJuego &juego, bool reiniciar) {
 			getline(file, temp);
 		}
 		file >> tempInteger;
-		juego.sudoku.nivel = (tNivelSudoku)tempInteger;
+		juego.sudoku.nivel = tempInteger;
 		calcElementosPosibles(juego.tablero);
 		juego.esSalvado = true;
 	}

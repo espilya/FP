@@ -2,7 +2,6 @@
 #define _juego
 #include "pch.h"
 #include "tablero.h"
-#include "listaJugadores.h"
 #include <conio.h>
 #include <locale.h>
 #include <iomanip>     
@@ -12,12 +11,13 @@
 using namespace std;
 
 // Tipos de Sudokus
-typedef enum { FACIL, MEDIO, DIFICIL, EMPTY} tNivelSudoku;
+typedef enum { FACIL, MEDIO, DIFICIL, EMPTY} t
+Sudoku;
 
 // tipo Sudoku
 typedef struct {
 	string fichero;
-	tNivelSudoku nivel;
+	int nivel;
 } tSudoku;
 
 // Juego
@@ -30,7 +30,7 @@ typedef struct {
 
 
 // Mostrar menú de acciones para jugar un sudoku
-void mostrarMenuPrincipal(tJuego &juego); //mostrarMenuJugada
+void startJuego(tJuego &juego); //mostrarMenuJugada
 
 // Bucle del menu(texto) del juego(proceso) de un sudoku.
 int menuJugarSudoku(int &x, int &y, int &c);
@@ -38,8 +38,10 @@ int menuJugarSudoku(int &x, int &y, int &c);
 // Inicializa el juego
 void iniciaJuego(tJuego & juego);
 
+bool cargaJuego(tJuego & juego);
+
 //Procesado de opcion seleccionada del menu del juego.
-void mostrarJuego(tJuego &juego);//(const tJuego &juego)
+void mostrarJuego(tJuego &juego);
 
 void pausa();
 

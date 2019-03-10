@@ -1,7 +1,8 @@
-﻿#include "jugador.h"
+﻿#include "pch.h"
+#include "jugador.h"
 
 string toString(tJugador jugador){
-	return (jugador.id + '\t' + to_string(jugador.pts));
+	return (jugador.id + '\t' + to_string(jugador.pts) + '\n');
 }
 
 void modificarJugador(tJugador & jugador, int puntos) {

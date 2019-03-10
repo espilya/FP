@@ -1,11 +1,18 @@
 ﻿#ifndef _listaJugadores
 #define _listaJugadores
+#include "pch.h"
 #include "jugador.h"
 #include <fstream>
 
 const string nombreListaJug = "listaJugadores.txt";
 const int MAX_JUGADORES = 10;
-typedef tJugador tListaJugadores[MAX_JUGADORES];
+typedef tJugador tArrJugadores[MAX_JUGADORES];
+typedef struct {
+	tArrJugadores jugador;
+	int cont;
+} tListaJugadores;
+
+bool comprobarStr(const string &str);
 
 //inicializa lista a una lista vacía.
 void creaListaVacia(tListaJugadores & lista);
@@ -34,7 +41,7 @@ bool buscar(const tListaJugadores & lista, string id, int &pos);
 
 
 //devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad de puntos crecientemente por identificador).
-tListaJugadores ordenarPorRanking(const tListaJugadores &lista);
+//tListaJugadores ordenarPorRanking(const tListaJugadores &lista);
 
 //anadir jugador
 void anadirJugador(tListaJugadores &lista, string id, unsigned int pts);

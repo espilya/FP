@@ -2,13 +2,15 @@
 #include "listaSudokus.h"
 
 //
+//				hacer que en mostrarListaSudokus se vean los vacios o no?
+//
 //
 
 
 void creaListaVacia(tListaSudokus &lista) {
 	for (int i = 0; i < MAX_SUDOKUS; i++) {
 		lista.array[i].fichero = "VACIO";
-		lista.array[i].nivel = EMPTY;
+		lista.array[i].nivel = 0;
 	}
 	lista.cont = 0;
 }
@@ -20,12 +22,11 @@ bool cargarListaSudokus(tListaSudokus & lista) {
 	ifstream file;
 	file.open(listaSudoku);
 	if (file.is_open()) {
-		while ((!file.eof()) && (ctd < MAX_SUDOKUS)) {
-			file >> nombre;
+		while ((!file.eof()) && (ctd < MAX_SUDOKUS) && (file >> nombre) && (nombre != "")) {
 			file >> nivel;
 			//cout << nombre << '\t' << nivel << endl;
 			lista.array[ctd].fichero = nombre;
-			lista.array[ctd].nivel = (tNivelSudoku)(nivel-1);
+			lista.array[ctd].nivel = nivel;
 			ctd++;
 		}
 		lista.cont = ctd;
@@ -35,6 +36,7 @@ bool cargarListaSudokus(tListaSudokus & lista) {
 }
 
 void mostrarListaSudokus(const tListaSudokus &lista) {
+	clear();
 	string tempStr = "sudokuX.txt";
 	cout << "Los sudokus disponibles son los siguientes:" << endl;
 	colorStr("# ", VERDE_OSC);
@@ -81,4 +83,70 @@ int  menuListaSudokus(const tListaSudokus & lista, tJuego & juego) {
 	}
 	clear();
 	return op;
+}
+
+
+bool guardar(const tListaSudokus & lista) {
+	ofstream file;
+	int i = 0;
+	file.open(listaSudoku);
+	while(i<MAX_SUDOKUS && lista.array[i].fichero != "VACIO"){
+		file << lista.array[i].fichero << '\t' << lista.array[i].nivel << '\n';
+		i++;
+	}
+	return true;
+}
+
+bool registrarSudoku(tListaSudokus & lista) {
+	int pts;
+	bool ok = false;
+	string nombreFich;
+	cout << "Introduzca el nombre del nuevo sudoku:\n>";
+	do {
+		getline(cin, nombreFich);
+		if (!comprobarStr(nombreFich))
+			cout << "Nombre incorrecto" << endl;
+	} while (!comprobarStr(nombreFich));
+	cout << "Introduzca los puntos del sudoku:\n>";
+	cin >> pts;
+	if ((lista.cont < MAX_SUDOKUS)  && (!buscarFichero(lista, nombreFich))) {
+		lista.cont++;
+		lista.array[lista.cont].fichero = nombreFich;
+		lista.array[lista.cont].nivel = pts;
+		ok = true;
+	}
+	return ok;
+}
+//solicita los datos de un nuevo sudoku(nombre del fichero y puntos que permite conseguir) y si
+//no existe un sudoku en lista con igual nombre de fichero lo inserta en la
+//posición adecuada respetando el orden existente.Se devuelve un booleano
+//que indica si se pudo registrar un nuevo sudoku, para lo cual también hay
+//que tener en cuenta si la lista está o no llena.
+
+bool buscarFichero(const tListaSudokus & lista, string nombreFich) {
+	int i, x = lista.cont;
+	bool encontrado = false;
+	while ((x--> 0) && !encontrado) {
+		if (nombreFich == lista.array[i].fichero)
+			encontrado = true;
+		i++;
+	}
+	return encontrado;
+}
+//devuelve un boleano que indica si existe o no un sudoku en
+//lista con nombre de fichero igual a nombreFich.
+
+int buscarPos(const tListaSudokus & lista, const tSudoku &sudoku) {
+	//Y POR Q NO INSERTAR AL FINAL??
+
+	return 0;
+}
+//devuelve la posición de lista en la que debería insertarse sudoku
+//para respetar el orden existente en la lista.Debe implementar una búsqueda binaria.
+
+bool comprobarStr(const string &str) {
+	int i = 0;
+	while (!isspace(str[i]) && i < str.size())
+		i++;
+	return !isspace(str[i]);
 }

@@ -1,10 +1,18 @@
-﻿#include "listaJugadores.h"
+﻿#include "pch.h"
+#include "listaJugadores.h"
+
+bool comprobarStr(const string &str) {
+	int i = 0;
+	while (!isspace(str[i]) && i < str.size())
+		i++;
+	return !isspace(str[i]);
+}
 
 
 void creaListaVacia(tListaJugadores & lista) {
 	for (int i = 0; i < MAX_JUGADORES; i++) {
-		lista[i].id = "";
-		lista[i].pts = 0;
+		lista.jugador[i].id = "";
+		lista.jugador[i].pts = 0;
 	}
 }
 
@@ -16,16 +24,16 @@ bool cargar(tListaJugadores & lista) {
 	ifstream file;
 	file.open(nombreListaJug);
 
-	while (!file.eof && ctd < MAX_JUGADORES) {
-		//como sera el archivo?
+	while (!file.eof() && ctd < MAX_JUGADORES) {
+		
 	}
 	ok = true;
-
+	return false;
 }
 
 void mostrar(const tListaJugadores & lista) {
 	for (int i = 0; i < MAX_JUGADORES; i++) {
-		cout << lista[i].id << '\t' << lista[i].pts << endl;
+		toString(lista.jugador[i]);
 	}
 }
 
@@ -33,8 +41,8 @@ bool guardar(const tListaJugadores & lista) {
 	ofstream file;
 	file.open(nombreListaJug);
 	int i = 0;
-	while(lista[i].id != ""){
-		toString(lista[i]);
+	while(lista.jugador[i].id != ""){
+		toString(lista.jugador[i]);
 		i++;
 	}
 	return true;
@@ -42,12 +50,16 @@ bool guardar(const tListaJugadores & lista) {
 
 void puntuarJugador(tListaJugadores & lista, int puntos) {
 	int pos;
-
 	string id;
 	cout << "Introduce tu nickname:\n>";
-	cin >> id;
+	do {
+		getline(cin, id);
+		if (!comprobarStr(id))
+			cout << "Nombre incorrecto" << endl;
+	} while (!comprobarStr(id));
+
 	if(buscar(lista, id, pos)){
-		modificarJugador(lista[pos], puntos);
+		modificarJugador(lista.jugador[pos], puntos);
 	}
 	else {
 		anadirJugador(lista, id, puntos);
@@ -60,25 +72,30 @@ void puntuarJugador(tListaJugadores & lista, int puntos) {
 //	encontraba ya en la lista) o en incorporarlo a la lista con la puntuación
 //	obtenida(si no está llena).
 
-bool buscar(const tListaJugadores & lista, string id, int &pos) {
-	int i = 0, pos = 0;
+bool buscar(const tListaJugadores & lista, string id, int &pos, int inf, int sup) {
+	int i = 0;
+	string inf = lista.jugador[inf].id;
+	string sup = lista.jugador[sup].id;
 	bool encontrado = false;
-	while (lista[i].id != "") {
-		if (lista[i].id == id) {
-			encontrado = true;
-			pos = i;
-		}
-		i++;
-	}
+	if(id == inf)
+		
+
+	else if (id == sup)
+
+	else
+		if (id[0] < lista.jugador[lista.cont / 2].id[0])
+
+
+	return false;
 }
 //busca al jugador con identificador id en lista; devuelve true y la posición(pos)
 //en la que se encuentra si el jugador está en la lista; devuelve false y la posición(pos) en la que debería estar si el jugador no está en la
 //lista.Debe implementar una búsqueda binaria.
 
-tListaJugadores ordenarPorRanking(const tListaJugadores &lista) {
-
-	return lista;
-}
+//tListaJugadores ordenarPorRanking(const tListaJugadores &lista) {
+//
+//	return lista;
+//}
 //devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad de puntos crecientemente por identificador).
 
 
