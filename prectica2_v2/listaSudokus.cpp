@@ -2,8 +2,6 @@
 #include "listaSudokus.h"
 
 //
-//				hacer que en mostrarListaSudokus se vean los vacios o no?
-//
 //
 
 
@@ -35,7 +33,7 @@ bool cargarListaSudokus(tListaSudokus & lista) {
 	return ok;
 }
 
-void mostrarListaSudokus(const tListaSudokus &lista) {
+void mostrarListaSudokus(const tListaSudokus &LISTA) {
 	clear();
 	string tempStr = "sudokuX.txt";
 	cout << "Los sudokus disponibles son los siguientes:" << endl;
@@ -43,13 +41,13 @@ void mostrarListaSudokus(const tListaSudokus &lista) {
 	colorStr("Nombre:", MAGENTA_OSC);
 	colorStr("\tNivel:\n", AMARILLO_OSC);
 	for (int i = 0; i < MAX_SUDOKUS; i++) {
-		tempStr = lista.array[i].fichero;
+		tempStr = LISTA.array[i].fichero;
 		if (tempStr!= "VACIO") {
 			colorStr(to_string(i+1) + " ", VERDE_OSC);
 			if (tempStr.find(".txt"))
 			tempStr = tempStr.substr(0, tempStr.size() - 4);
 			colorStr(tempStr, MAGENTA_OSC);
-			switch (lista.array[i].nivel)
+			switch (LISTA.array[i].nivel)
 			{
 			case 0:
 				colorStr("\tFacil", AMARILLO_OSC);
@@ -70,15 +68,15 @@ void mostrarListaSudokus(const tListaSudokus &lista) {
 	colorStr("0. Salir\n", CYAN_OSC);
 }
 
-int  menuListaSudokus(const tListaSudokus & lista, tJuego & juego) {
+int  menuListaSudokus(const tListaSudokus & LISTA, tJuego & juego) {
 	int op;
 	cout << "Seleciona un sudoku." << endl;
-	mostrarListaSudokus(lista);
+	mostrarListaSudokus(LISTA);
 	cout << "Introduze el numero del sudoku:\n>";
-	op = leerOpcion(0, (lista.cont));
+	op = leerOpcion(0, (LISTA.cont));
 	if (op != 0) {
-		juego.sudoku.fichero = lista.array[op - 1].fichero;
-		juego.sudoku.nivel = lista.array[op - 1].nivel;
+		juego.sudoku.fichero = LISTA.array[op - 1].fichero;
+		juego.sudoku.nivel = LISTA.array[op - 1].nivel;
 		juego.esSalvado = false;
 	}
 	clear();
@@ -142,7 +140,7 @@ int buscarPos(const tListaSudokus & lista, const tSudoku &sudoku) {
 	return 0;
 }
 //devuelve la posición de lista en la que debería insertarse sudoku
-//para respetar el orden existente en la lista.Debe implementar una búsqueda binaria.
+//para respetar el orden existente en la lista. Debe implementar una búsqueda binaria.
 
 bool comprobarStr(const string &str) {
 	int i = 0;

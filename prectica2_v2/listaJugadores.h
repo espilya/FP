@@ -12,7 +12,7 @@ typedef struct {
 	int cont;
 } tListaJugadores;
 
-bool comprobarStr(const string &str);
+bool comprobarStr(const string &STR);
 
 //inicializa lista a una lista vacía.
 void creaListaVacia(tListaJugadores & lista);
@@ -21,11 +21,11 @@ void creaListaVacia(tListaJugadores & lista);
 bool cargar(tListaJugadores & lista);
 
 //visualiza por pantalla la lista de jugadores dada.
-void mostrar(const tListaJugadores & lista);
+void mostrar(const tListaJugadores & LISTA);
 
 //almacena en el archivo listaJugadores.txt el contenido de lista y devuelve un valor
 //booleano indicando si la acción fue posible.Debe respetar el formato indicado para el archivo.
-bool guardar(const tListaJugadores & lista);
+bool guardar(const tListaJugadores & LISTA);
 
 //solicita que se introduzca el identificador de un jugador por teclado y se
 //actualiza su información en lista.La actualización puede consistir en
@@ -37,14 +37,22 @@ void puntuarJugador(tListaJugadores & lista, int puntos);
 //busca al jugador con identificador id en lista; devuelve true y la posición(pos)
 //en la que se encuentra si el jugador está en la lista; devuelve false y la posición(pos) en la que debería estar si el jugador no está en la
 //lista.Debe implementar una búsqueda binaria.
-bool buscar(const tListaJugadores & lista, string id, int &pos);
+bool buscar(const tListaJugadores & LISTA, string id, int &pos);
 
 
 //devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad de puntos crecientemente por identificador).
 //tListaJugadores ordenarPorRanking(const tListaJugadores &lista);
 
-//anadir jugador
-void anadirJugador(tListaJugadores &lista, string id, unsigned int pts);
+//anadir nuevo jugador
+void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int PTS);
+
+//elimina un jugador()
+void eliminarJugador(tListaJugadores &lista, const string &ID = "", const int POS = -1);
+
+//en caso de no haber espacio en la lista, busca jugador con menor puntos, compara la pts del jug nuevo y del de menor pts
+//si el jugardor de la lista tiene menos puntos, sera eliminado y se annadira el nuevo jugador
+int buscarConMenorPuntos(const tListaJugadores &LISTA);
+
 
 
 #endif

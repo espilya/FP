@@ -10,17 +10,23 @@ void modificarJugador(tJugador & jugador, int puntos) {
 }
 
 bool operator<(const tJugador & opIzq, const tJugador &opDer) {
-	return(opIzq.id[0] < opDer.id[0]);
+	bool menor = false;
+	int i = 0;
+	while ((!menor) && (i<opIzq.id.size()) && (i < opDer.id.size())) {
+		menor = (opIzq.id[i] < opDer.id[i]);
+		i++;
+	}
+	return menor;
 }
 
 
-bool menor(const tJugador & j1, const tJugador & j2) {
+bool menor(const tJugador & J1, const tJugador & J2) {
 	bool menor;
-	if (j1.pts < j2.pts) {
+	if (J1.pts < J2.pts) {
 		menor = true;
 	}
-	else if (j1.pts == j2.pts) {
-		if (j2 < j1)
+	else if (J1.pts == J2.pts) {
+		if (J2 < J1)
 			menor = true;
 		else
 			menor = false;
