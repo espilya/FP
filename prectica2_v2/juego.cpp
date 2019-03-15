@@ -88,7 +88,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 	int op, x, y, c;
 	short int error;
 	string fileStr;
-	const string fallo = "\t\tFallo.\n";
+	const string fallo = "\t\tFallo\n";
 	const string e_100 = "Error al PONER un digito en una casilla RELLANA.\n";
 	const string e_101 = "Error al BORRAR un digito en una casilla FIJA.\n";
 	const string e_102 = "Error al PONER un valor IMPOSIBLE en una casilla.\n";
@@ -131,7 +131,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 			//Posibles casos
 			mostrarPosibles(juego.tablero, x, y);
 			break;
-		case 2: 
+		case 2:
 			//Introducir numero
 			if (!ponerNum(juego.tablero, x, y, c, error)) {
 				colorStr(fallo, ROJO);
@@ -167,7 +167,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 			//Autocompletar celdas simples
 			rellenarSimples(juego.tablero);
 			break;
-		
+
 		case 6:
 			//Resolver el sudoku
 			if(!resolver(juego.tablero, 0))
@@ -220,7 +220,7 @@ int leerOpcion(int inf, int sup) {
 
 void clear() {
 	system("cls");
-} 
+}
 
 void guardarJuego(const tJuego &juego) {
 	bool continuar = true;
@@ -284,7 +284,7 @@ void salvarJuego(tJuego &juego, bool reiniciar) {
 				cout << "Nombre incorrecto. \nPara cancelar introduzca '0'." << endl;
 			getline(cin, userInput);
 		}
-		else 
+		else
 		userInput = juego.sudoku.fichero;
 		file.open(userInput);
 		ok = file.is_open();
