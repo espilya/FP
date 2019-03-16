@@ -15,7 +15,7 @@ typedef struct {
 //jugador dado en un formato de cadena de caracteres(una cadena de
 //caracteres donde primero aparece el identificador y después los puntos
 //conseguidos por el jugador, separados por uno o más espacios en blanco)
-string toString(tJugador jugador);
+string showJugador(tJugador jugador);
 
 //añade puntos puntos a los puntos que lleva conseguidos el jugador dado.
 void modificarJugador(tJugador & jugador, int puntos);

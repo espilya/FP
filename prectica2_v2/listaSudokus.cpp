@@ -33,6 +33,21 @@ bool cargarListaSudokus(tListaSudokus & lista) {
 	return ok;
 }
 
+int  menuListaSudokus(const tListaSudokus & LISTA, tJuego & juego) {
+	int op;
+	cout << "Seleciona un sudoku." << endl;
+	mostrarListaSudokus(LISTA);
+	cout << "Introduze el numero del sudoku:\n>";
+	op = leerOpcion(0, (LISTA.cont));
+	if (op != 0) {
+		juego.sudoku.fichero = LISTA.array[op - 1].fichero;
+		juego.sudoku.nivel = LISTA.array[op - 1].nivel;
+		juego.esSalvado = false;
+	}
+	clear();
+	return op;
+}
+
 void mostrarListaSudokus(const tListaSudokus &LISTA) {
 	clear();
 	string tempStr = "sudokuX.txt";
@@ -68,21 +83,7 @@ void mostrarListaSudokus(const tListaSudokus &LISTA) {
 	colorStr("0. Salir\n", CYAN_OSC);
 }
 
-int  menuListaSudokus(const tListaSudokus & LISTA, tJuego & juego) {
-	int op;
-	cout << "Seleciona un sudoku." << endl;
-	mostrarListaSudokus(LISTA);
-	cout << "Introduze el numero del sudoku:\n>";
-	op = leerOpcion(0, (LISTA.cont));
-	if (op != 0) {
-		juego.sudoku.fichero = LISTA.array[op - 1].fichero;
-		juego.sudoku.nivel = LISTA.array[op - 1].nivel;
-		juego.esSalvado = false;
-	}
-	clear();
-	return op;
-}
-
+//------------VERSION 2------------
 
 bool guardar(const tListaSudokus & lista) {
 	ofstream file;

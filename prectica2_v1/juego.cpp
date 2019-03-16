@@ -1,14 +1,10 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "juego.h"
-
-
-
-
 
 
 void iniciaJuego(tJuego & juego) {
 	juego.esSalvado = false;
-	juego.sudoku.nivel = EMPTY;
+	juego.sudoku.nivel = 0;
 	juego.sudoku.fichero = "VACIO";
 	iniciaTablero(juego.tablero);
 }
@@ -23,42 +19,13 @@ bool cargaJuego(tJuego & juego) {
 	return ok;
 }
 
-void mostrarMenuPrincipal(tJuego &juego, int op) { //mostrarMenuJugada
-	string fileStr;
-	
-		//fileStr = juego.sudoku.fichero;
-		//cout << "Sudoku seleccionado: ";
-		///*if (filestr.find(".txt"))
-		//	filestr = filestr.substr(0, filestr.size() - 4);*/
-		//colorStr(fileStr, AMARILLO_OSC);
-		//cout << " de nivel: ";
-		//switch ((int)juego.sudoku.nivel)
-		//{
-		//case 0:
-		//	colorStr("FACIL", AMARILLO_OSC);
-		//	break;
-		//case 1:
-		//	colorStr("MEDIO", AMARILLO_OSC);
-		//	break;
-		//case 2:
-		//	colorStr("DIFICIL", AMARILLO_OSC);
-		//	break;
-		//case 3:
-		//	colorStr("VACIO", AMARILLO_OSC);
-		//	break;
-		//}
-		//cout << "\n1. - Jugar.\n"
-		//	<< "2. - Elegir un sudoku de la lista.\n"
-		//	<< "0. - Salir del juego." << endl;
-
-			clear();
-			if (cargaJuego(juego))
+void startJuego(tJuego &juego) { //mostrarMenuJugada
+		clear();
+		if (cargaJuego(juego))
+			mostrarJuego(juego);
+		else
+			if(errorAbrirFichero(juego.sudoku.fichero))
 				mostrarJuego(juego);
-			else
-				if(errorAbrirFichero(juego.sudoku.fichero))
-					mostrarJuego(juego);
-		
-
 }
 
 int menuJugarSudoku(int &x, int &y, int &c) {
@@ -66,7 +33,6 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 	const int sup_a = 8;
 	const int inf_1 = 1;
 	const int sup_9 = 9;
-
 	int op;
 	cout << "1. - Ver posibles valores de una casilla vacia\n"
 		<< "2. - Colocar valor en una casilla\n"
@@ -117,7 +83,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 	int op, x, y, c;
 	short int error;
 	string fileStr;
-	const string fallo = "\t\tFallo.\n";
+	const string fallo = "\t\tFallo\n";
 	const string e_100 = "Error al PONER un digito en una casilla RELLANA.\n";
 	const string e_101 = "Error al BORRAR un digito en una casilla FIJA.\n";
 	const string e_102 = "Error al PONER un valor IMPOSIBLE en una casilla.\n";
@@ -136,7 +102,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 		cout << "\t  ";
 		colorStr(fileStr, AMARILLO_OSC);
 		cout << " de nivel: ";
-		switch ((int)juego.sudoku.nivel)
+		switch (juego.sudoku.nivel)
 		{
 		case 0:
 			colorStr("FACIL", AMARILLO_OSC);
@@ -160,7 +126,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 			//Posibles casos
 			mostrarPosibles(juego.tablero, x, y);
 			break;
-		case 2: 
+		case 2:
 			//Introducir numero
 			if (!ponerNum(juego.tablero, x, y, c, error)) {
 				colorStr(fallo, ROJO);
@@ -196,7 +162,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 			//Autocompletar celdas simples
 			rellenarSimples(juego.tablero);
 			break;
-		
+
 		case 6:
 			//Resolver el sudoku
 			if(!resolver(juego.tablero, 0))
@@ -249,7 +215,7 @@ int leerOpcion(int inf, int sup) {
 
 void clear() {
 	system("cls");
-} 
+}
 
 void guardarJuego(const tJuego &juego) {
 	bool continuar = true;
@@ -313,7 +279,7 @@ void salvarJuego(tJuego &juego, bool reiniciar) {
 				cout << "Nombre incorrecto. \nPara cancelar introduzca '0'." << endl;
 			getline(cin, userInput);
 		}
-		else 
+		else
 		userInput = juego.sudoku.fichero;
 		file.open(userInput);
 		ok = file.is_open();
@@ -346,7 +312,7 @@ void salvarJuego(tJuego &juego, bool reiniciar) {
 			getline(file, temp);
 		}
 		file >> tempInteger;
-		juego.sudoku.nivel = (tNivelSudoku)tempInteger;
+		juego.sudoku.nivel = tempInteger;
 		calcElementosPosibles(juego.tablero);
 		juego.esSalvado = true;
 	}

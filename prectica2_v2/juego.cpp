@@ -2,10 +2,6 @@
 #include "juego.h"
 
 
-
-
-
-
 void iniciaJuego(tJuego & juego) {
 	juego.esSalvado = false;
 	juego.sudoku.nivel = 0;
@@ -37,7 +33,6 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 	const int sup_a = 8;
 	const int inf_1 = 1;
 	const int sup_9 = 9;
-
 	int op;
 	cout << "1. - Ver posibles valores de una casilla vacia\n"
 		<< "2. - Colocar valor en una casilla\n"

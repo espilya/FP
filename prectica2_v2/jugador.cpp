@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "jugador.h"
 
-string toString(tJugador jugador){
+string showJugador(tJugador jugador){
 	return (jugador.id + '\t' + to_string(jugador.pts) + '\n');
 }
 

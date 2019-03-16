@@ -4,7 +4,7 @@
 #include "tablero.h"
 #include <conio.h>
 #include <locale.h>
-#include <iomanip>     
+#include <iomanip>
 #include <cmath>
 #include <stdio.h>
 
@@ -29,7 +29,7 @@ typedef struct {
 
 
 
-// Mostrar menú de acciones para jugar un sudoku
+// Mostrar menï¿½ de acciones para jugar un sudoku
 void startJuego(tJuego &juego); //mostrarMenuJugada
 
 // Bucle del menu(texto) del juego(proceso) de un sudoku.

@@ -23,19 +23,26 @@ bool cargar(tListaJugadores & lista) {
 	int ctd = 0;
 	ifstream file;
 	file.open(nombreListaJug);
-
-	while (!file.eof() && ctd < MAX_JUGADORES) {
-		
+	if(file.is_open()){
+		while (!file.eof() && ctd < MAX_JUGADORES) {
+		file >> player.id;
+		file >> player.pts;
+		lista.jugador[ctd] = player;
+		ctd++;
+		}
+		ctd--;
+		ok = true;
 	}
-	ok = true;
-	return false;
+			return ok;
 }
+
 
 void mostrar(const tListaJugadores & LISTA) {
 	for (int i = 0; i < MAX_JUGADORES; i++) {
-		toString(LISTA.jugador[i]);
+		showJugador(LISTA.jugador[i]);
 	}
 }
+
 
 bool guardar(const tListaJugadores & LISTA) {
 	ofstream file;
@@ -45,24 +52,30 @@ bool guardar(const tListaJugadores & LISTA) {
 		toString(LISTA.jugador[i]);
 		i++;
 	}
+	file.close();
 	return true;
 }
+
 
 void puntuarJugador(tListaJugadores & lista, int puntos) {
 	int pos;
 	string id;
+	cout << "Vamos a puntuar "
 	cout << "Introduce tu nickname:\n>";
 	do {
+		bool = ok;
 		getline(cin, id);
-		if (!comprobarStr(id))
+		ok = comprobarStr(id);
+		if (!ok)
 			cout << "Nombre incorrecto" << endl;
-	} while (!comprobarStr(id));
+	} while (!ok)
 
 	if(buscar(lista, id, pos)){
-		modificarJugador(lista.jugador[pos], puntos);
+		modificarJugador(lista.jugador[pos], puntos);//anadir pts
 	}
 	else {
 		anadirJugador(lista, id, puntos);
+		modificarJugador(lista.jugador[pos], puntos);//anadir pts
 	}
 
 }
@@ -72,49 +85,51 @@ void puntuarJugador(tListaJugadores & lista, int puntos) {
 //	encontraba ya en la lista) o en incorporarlo a la lista con la puntuación
 //	obtenida(si no está llena).
 
-bool buscar(const tListaJugadores & LISTA, string id, int &pos) {
+
+bool buscar(const tListaJugadores & LISTA, const string ID, int &pos) {
+	tJugador tempJug;
 	int pos = -1, ini = 0, fin = LISTA.cont-1, mitad;
 	bool encontrado = false;
+	tempJug.id = ID;
 
 	while ((ini <= fin) && !encontrado) {
 		mitad = (ini + fin) / 2; // División entera
-		if (id == LISTA.jugador[mitad].id)
+		if (tempJug.id == LISTA.jugador[mitad].id)
 			encontrado = true;
-		else if (id < LISTA.jugador[mitad].id)
+		else if (tempJug.id < LISTA.jugador[mitad].id)
 			fin = mitad - 1;
-		else 
+		else
 			ini = mitad + 1;
 	}
-	if (encontrado) {
+//if (encontrado) {
 		pos = mitad;
-	}
+//}
 	return encontrado;
 }
-//busca al jugador con identificador id en lista; devuelve true y la posición(pos)
-//en la que se encuentra si el jugador está en la lista; devuelve false y la posición(pos) en la que debería estar si el jugador no está en la
-//lista.Debe implementar una búsqueda binaria.
 
-//tListaJugadores ordenarPorRanking(const tListaJugadores &lista) {
+// tListaJugadores ordenarPorRanking(const tListaJugadores &lista) {
 //
-//	return lista;
-//}
-//devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad 
+// 	return lista;
+// }
+//Devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad
 //de puntos crecientemente por identificador).
 
 
 void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int PTS) {
 	int pos;
+	//en caso de estar la lista llena..
 	if ((lista.cont >= MAX_JUGADORES)) {
 		pos = buscarConMenorPuntos(lista);
 		if (PTS > lista.jugador[pos].pts) {
-			cout << "La lista de jugadores esta llena, pero ya que tienes mas puntos que algunos jugadores, " 
-				<< "enhorabuena, seras guardado! :D" << endl;
-			eliminarJugador(lista, "", pos);
+			cout << "La lista de jugadores esta llena, pero ya que tienes mas puntos que algunos jugadores, "
+				<< " seras guardado! :D" << endl;
+			eliminarJugador(lista, pos);
 		}
 		else {
 			cout << "La lista se encuentra llena! No se ha podido guardar tu resultado." << endl;
 		}
 	}
+	//en caso de estar la lista con espacio O de QUERER METER UN jugador
 	if ((lista.cont < MAX_JUGADORES) || PTS > lista.jugador[pos].pts)
 	{
 		int i = 0;
@@ -127,28 +142,25 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 		lista.jugador[i].pts = PTS;
 		lista.cont++;
 	}
-		
 }
 
-void eliminarJugador(tListaJugadores &lista, const string &ID, const int POS) {
-	int pos;
-	if (ID == "") 
-		pos = POS;
-	else {
-		if (!buscar(lista, ID, pos))
-			cout << "El jugador no se encontro, no se pudo eleminar." << endl;
-	}
 
-	for (int i = pos; i < lista.cont; i++) 
+bool eliminarJugador(tListaJugadores &lista, const int POS) {
+	bool ok = false;
+
+	for (int i = POS; i < lista.cont; i++)
 		lista.jugador[i] = lista.jugador[i + 1];
+
+	return (!ok);
 }
+
 
 int buscarConMenorPuntos(const tListaJugadores &LISTA) {
 	int pos;
 	unsigned int a = 0, b = 0;
 	for (int i = 0; i < LISTA.cont; i++) {
 		a = LISTA.jugador[i].pts;
-		if (a > b) {
+		if (a <= b) {
 			b = a;
 			pos = i;
 		}
