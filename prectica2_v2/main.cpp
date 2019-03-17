@@ -15,7 +15,7 @@
 int main()
 {
 	int op, op2;
-	bool okListaSud = false, okListaJug = fals
+	bool okListaSud = false, okListaJug = false;
 	tListaSudokus listaSud;
 	tListaJugadores listaJug;
 	tJuego juego;
