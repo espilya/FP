@@ -2,15 +2,7 @@
 #include "listaJugadores.h"
 
 
-bool operator <Pts (const tJugador & opIzq, const tJugador &opDer);
-				bool menor;
-				if (opIzq.pts < opDer.pts)
-					menor = true;
-				else if(opIzq.pts = opDer.pts)
-					menor = (opIzq < opDer);
 
-			return  menor;
-}
 
 
 bool comprobarStr(const string &STR) {
@@ -61,7 +53,7 @@ bool guardar(const tListaJugadores & LISTA) {
 	file.open(nombreListaJug);
 	int i = 0;
 	while(LISTA.jugador[i].id != ""){
-		toString(LISTA.jugador[i]);
+		showJugador(LISTA.jugador[i]);
 		i++;
 	}
 	file.close();
@@ -72,15 +64,15 @@ bool guardar(const tListaJugadores & LISTA) {
 void puntuarJugador(tListaJugadores & lista, int puntos) {
 	int pos;
 	string id;
-	cout << "Vamos a puntuar "
+	bool ok;
+	cout << "Vamos a puntuar ";
 	cout << "Introduce tu nickname:\n>";
 	do {
-		bool = ok;
 		getline(cin, id);
 		ok = comprobarStr(id);
 		if (!ok)
 			cout << "Nombre incorrecto" << endl;
-	} while (!ok)
+	} while (!ok);
 
 	if(buscar(lista, id, pos)){
 		modificarJugador(lista.jugador[pos], puntos);//anadir pts
@@ -100,7 +92,8 @@ void puntuarJugador(tListaJugadores & lista, int puntos) {
 
 bool buscar(const tListaJugadores & LISTA, const string ID, int &pos) {
 	tJugador tempJug;
-	int pos = -1, ini = 0, fin = LISTA.cont-1, mitad;
+	pos = -1;
+	int ini = 0, fin = LISTA.cont-1, mitad;
 	bool encontrado = false;
 	tempJug.id = ID;
 
@@ -120,22 +113,21 @@ bool buscar(const tListaJugadores & LISTA, const string ID, int &pos) {
 tListaJugadores ordenarPorRanking(const tListaJugadores &LISTA) {
 	tListaJugadores listaNew = LISTA;
 	int i = 0;
-	const int N = LISTA.cont;
-	bool inter;
-	while((i<N ‐1) && inter)
-	{
-		for(int j = N ‐1; j > i; j‐‐){
-			if (listaNew.jugador[j] <Pts listaNew.jugador[j ‐1]){
-				int tmp = listaNew.jugador[j];
-				listaNew.jugador[j] = listaNew.jugador[j ‐1];
-				listaNew.jugador[j ‐1] = tmp;
+	int N = LISTA.cont;
+	bool inter = true;
+	while ((i < N-1) && inter) {
+		for (int j = N-1; j > i; j--) {
+			if (menor(listaNew.jugador[j], listaNew.jugador[j - 1])) {
+				int tmp;
+				tmp = listaNew.jugador[j].pts;
+				listaNew.jugador[j].pts = listaNew.jugador[j - 1].pts;
+				listaNew.jugador[j-1].pts = tmp;
 				inter = true;
 			}
 		}
 		if (inter)
 			i++;
 	}
-
 	return listaNew;
 }
 //Devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad

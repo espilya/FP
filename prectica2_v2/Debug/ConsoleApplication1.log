@@ -1,3 +1,5 @@
-﻿  listaJugadores.cpp
-  LINK : C:\GitHub\university\prectica2_v2\Debug\practica2_v2.exe not found or not built by the last incremental link; performing full link
+﻿  juego.cpp
+  listaSudokus.cpp
+  main.cpp
+  Generating Code...
   ConsoleApplication1.vcxproj -> C:\GitHub\university\prectica2_v2\Debug\practica2_v2.exe

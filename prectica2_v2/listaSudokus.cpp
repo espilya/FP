@@ -24,7 +24,7 @@ bool cargarListaSudokus(tListaSudokus & lista) {
 			file >> nivel;
 			//cout << nombre << '\t' << nivel << endl;
 			lista.array[ctd].fichero = nombre;
-			lista.array[ctd].nivel = nivel;
+			lista.array[ctd].nivel = nivel -1;
 			ctd++;
 		}
 		lista.cont = ctd;
@@ -123,7 +123,7 @@ bool registrarSudoku(tListaSudokus & lista) {
 //que tener en cuenta si la lista está o no llena.
 
 bool buscarFichero(const tListaSudokus & lista, string nombreFich) {
-	int i, x = lista.cont;
+	int i = 0, x = lista.cont;
 	bool encontrado = false;
 	while ((x--> 0) && !encontrado) {
 		if (nombreFich == lista.array[i].fichero)
@@ -143,9 +143,3 @@ int buscarPos(const tListaSudokus & lista, const tSudoku &sudoku) {
 //devuelve la posición de lista en la que debería insertarse sudoku
 //para respetar el orden existente en la lista. Debe implementar una búsqueda binaria.
 
-bool comprobarStr(const string &str) {
-	int i = 0;
-	while (!isspace(str[i]) && i < str.size())
-		i++;
-	return !isspace(str[i]);
-}

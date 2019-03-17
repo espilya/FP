@@ -2,6 +2,7 @@
 #define _juego
 #include "pch.h"
 #include "tablero.h"
+#include "listaJugadores.h"
 #include <conio.h>
 #include <locale.h>
 #include <iomanip>
@@ -11,8 +12,7 @@
 using namespace std;
 
 // Tipos de Sudokus
-typedef enum { FACIL, MEDIO, DIFICIL, EMPTY} t
-Sudoku;
+typedef enum { FACIL, MEDIO, DIFICIL, EMPTY} tSudokuNivel;
 
 // tipo Sudoku
 typedef struct {

@@ -52,7 +52,7 @@ int buscarPos(const tListaSudokus & lista, const tSudoku &sudoku);
 //devuelve la posición de lista en la que debería insertarse sudoku
 //para respetar el orden existente en la lista.Debe implementar una búsqueda binaria.
 
-bool comprobarStr(const string &str);
+
 
 
 #endif

@@ -14,7 +14,7 @@
 //	-BUSCAR() listaJugadores
 int main()
 {
-	int op;
+	int op, op2;
 	tListaSudokus lista;
 	tJuego juego;
 	creaListaVacia(lista); //iniciamos lista de sudoku a VACIO
@@ -30,7 +30,7 @@ int main()
 			switch (op)
 			{
 			case 1:
-				int op2 = menuListaSudokus(lista, juego);
+				op2 = menuListaSudokus(lista, juego);
 				if (op2 != 0)
 					startJuego(juego);
 				break;
