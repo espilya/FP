@@ -16,7 +16,7 @@ typedef struct {
 bool comprobarStr(const string &STR);
 
 //inicializa lista a una lista vacía.
-void creaListaVacia(tListaJugadores & lista);
+void creaLista(tListaJugadores & lista);
 
 //guarda en lista el contenido del archivo listaJugadores.txt; devuelve un booleano que indica si la carga se ha podido realizar.
 bool cargar(tListaJugadores & lista);

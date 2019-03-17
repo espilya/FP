@@ -15,11 +15,18 @@
 int main()
 {
 	int op, op2;
-	tListaSudokus lista;
+	bool okListaSud = false, okListaJug = fals
+	tListaSudokus listaSud;
+	tListaJugadores listaJug;
 	tJuego juego;
-	creaListaVacia(lista); //iniciamos lista de sudoku a VACIO
+	creaLista(listaSud); //iniciamos lista de sudoku
+	creaLista(listaJug); //iniciamos lista de jugadores
 	iniciaJuego(juego);  //iniciamos juego.
-	if (cargarListaSudokus(lista)) //cargamos listaSudoku
+	if(cargar(listaSudoku))
+		okListaSud = true;
+	if(cargar(nombreListaJug))
+		okListaJug = true;
+	if (okListaSud && okListaJug) //cargamos listaSudoku
 		do {
 			cout << "1. - Jugar\n"
 				<< "2. - Ver jugadores ordenados por identificador\n"
@@ -30,7 +37,7 @@ int main()
 			switch (op)
 			{
 			case 1:
-				op2 = menuListaSudokus(lista, juego);
+				op2 = menuListaSudokus(listaSud, juego);
 				if (op2 != 0)
 					startJuego(juego);
 				break;
@@ -48,7 +55,9 @@ int main()
 			clear();
 		} while (op != 0);
 
-	else
-		colorStr("Error al cargar 'listaSudokus.txt'.\nFinalizando programa.", ROJO);
+	else if(!okListaSud)
+		colorStr("Error al cargar 'listaSudokus.txt'.\n", ROJO);
+	else if(!okListaJug)
+		colorStr("Error al cargar 'listaJugadores.txt'.\n", ROJO);
 	return 0;
 }

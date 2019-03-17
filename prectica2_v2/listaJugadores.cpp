@@ -13,7 +13,7 @@ bool comprobarStr(const string &STR) {
 }
 
 
-void creaListaVacia(tListaJugadores & lista) {
+void creaListas(tListaJugadores & lista) {
 	for (int i = 0; i < MAX_JUGADORES; i++) {
 		lista.jugador[i].id = "";
 		lista.jugador[i].pts = 0;

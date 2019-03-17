@@ -2,7 +2,7 @@
 #define _listaSudokus
 #include <algorithm>
 #include <string>
-#include <iomanip> 
+#include <iomanip>
 #include "juego.h"
 
 using namespace std;
@@ -18,17 +18,17 @@ typedef tSudoku tSudokus[MAX_SUDOKUS];
 // Lista de Sudokus
 typedef struct {
 	tSudokus array;	// Array de sudokus
-	int cont;	
+	int cont;
 } tListaSudokus;
 
 //inicializa lista a una lista vacía.
-void creaListaVacia(tListaSudokus &lista);
+void creaLista(tListaSudokus &lista);
 
-bool cargarListaSudokus(tListaSudokus & lista);
+bool cargar(tListaSudokus & lista);
 
 //guarda en lista el contenido del archivo listaSudokus.txt.
 //devuelve un booleano que indica si la carga se ha podido realizar.
-void mostrarListaSudokus(const tListaSudokus &lista);
+void mostrar(const tListaSudokus &lista);
 
 /*visualiza por pantalla la lista de sudokus dada.*/
 int  menuListaSudokus(const tListaSudokus & lista, tJuego & juego);

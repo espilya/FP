@@ -5,7 +5,7 @@
 //
 
 
-void creaListaVacia(tListaSudokus &lista) {
+void creaLista(tListaSudokus &lista) {
 	for (int i = 0; i < MAX_SUDOKUS; i++) {
 		lista.array[i].fichero = "VACIO";
 		lista.array[i].nivel = 0;
@@ -13,7 +13,7 @@ void creaListaVacia(tListaSudokus &lista) {
 	lista.cont = 0;
 }
 
-bool cargarListaSudokus(tListaSudokus & lista) {
+bool cargar(tListaSudokus & lista) {
 	bool ok = false;
 	string nombre;
 	int nivel, ctd = 0;
@@ -48,7 +48,7 @@ int  menuListaSudokus(const tListaSudokus & LISTA, tJuego & juego) {
 	return op;
 }
 
-void mostrarListaSudokus(const tListaSudokus &LISTA) {
+void mostrar(const tListaSudokus &LISTA) {
 	clear();
 	string tempStr = "sudokuX.txt";
 	cout << "Los sudokus disponibles son los siguientes:" << endl;
@@ -142,4 +142,3 @@ int buscarPos(const tListaSudokus & lista, const tSudoku &sudoku) {
 }
 //devuelve la posición de lista en la que debería insertarse sudoku
 //para respetar el orden existente en la lista. Debe implementar una búsqueda binaria.
-
