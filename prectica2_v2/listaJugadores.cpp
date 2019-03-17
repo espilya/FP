@@ -1,6 +1,18 @@
 ﻿#include "pch.h"
 #include "listaJugadores.h"
 
+
+bool operator <Pts (const tJugador & opIzq, const tJugador &opDer);
+				bool menor;
+				if (opIzq.pts < opDer.pts)
+					menor = true;
+				else if(opIzq.pts = opDer.pts)
+					menor = (opIzq < opDer);
+
+			return  menor;
+}
+
+
 bool comprobarStr(const string &STR) {
 	int i = 0;
 	while (!isspace(STR[i]) && i < STR.size())
@@ -100,17 +112,32 @@ bool buscar(const tListaJugadores & LISTA, const string ID, int &pos) {
 			fin = mitad - 1;
 		else
 			ini = mitad + 1;
-	}
-//if (encontrado) {
+		}
 		pos = mitad;
-//}
 	return encontrado;
 }
 
-// tListaJugadores ordenarPorRanking(const tListaJugadores &lista) {
-//
-// 	return lista;
-// }
+tListaJugadores ordenarPorRanking(const tListaJugadores &LISTA) {
+	tListaJugadores listaNew = LISTA;
+	int i = 0;
+	const int N = LISTA.cont;
+	bool inter;
+	while((i<N ‐1) && inter)
+	{
+		for(int j = N ‐1; j > i; j‐‐){
+			if (listaNew.jugador[j] <Pts listaNew.jugador[j ‐1]){
+				int tmp = listaNew.jugador[j];
+				listaNew.jugador[j] = listaNew.jugador[j ‐1];
+				listaNew.jugador[j ‐1] = tmp;
+				inter = true;
+			}
+		}
+		if (inter)
+			i++;
+	}
+
+	return listaNew;
+}
 //Devuelve una copia de la lista dada ordenada por ranking (decrecientemente por puntos, y a igualdad
 //de puntos crecientemente por identificador).
 

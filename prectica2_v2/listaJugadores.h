@@ -12,6 +12,8 @@ typedef struct {
 	int cont;
 } tListaJugadores;
 
+bool operator <Pts (const tJugador & opIzq, const tJugador &opDer);
+
 //comprueba un string si contiene espacios
 bool comprobarStr(const string &STR);
 
