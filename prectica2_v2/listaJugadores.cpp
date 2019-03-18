@@ -13,7 +13,7 @@ bool comprobarStr(const string &STR) {
 }
 
 
-void creaListas(tListaJugadores & lista) {
+void creaLista(tListaJugadores & lista) {
 	for (int i = 0; i < MAX_JUGADORES; i++) {
 		lista.jugador[i].id = "";
 		lista.jugador[i].pts = 0;
@@ -106,7 +106,7 @@ bool buscar(const tListaJugadores & LISTA, const string ID, int &pos) {
 		else
 			ini = mitad + 1;
 		}
-		pos = mitad;
+	pos = mitad;
 	return encontrado;
 }
 

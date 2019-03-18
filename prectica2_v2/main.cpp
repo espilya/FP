@@ -1,5 +1,5 @@
 
-#include "pch.h"
+
 #include "listaSudokus.h"
 
 //
@@ -11,7 +11,7 @@
 //
 
 //					TO DO
-//	-BUSCAR() listaJugadores
+//			listaJSudokus: buscarPos()
 int main()
 {
 	int op, op2;

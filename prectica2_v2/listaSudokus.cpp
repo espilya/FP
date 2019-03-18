@@ -83,7 +83,7 @@ void mostrar(const tListaSudokus &LISTA) {
 	colorStr("0. Salir\n", CYAN_OSC);
 }
 
-//------------VERSION 2------------
+//----------------VERSION 2------------------
 
 bool guardar(const tListaSudokus & lista) {
 	ofstream file;
@@ -137,8 +137,25 @@ bool buscarFichero(const tListaSudokus & lista, string nombreFich) {
 
 int buscarPos(const tListaSudokus & lista, const tSudoku &sudoku) {
 	//Y POR Q NO INSERTAR AL FINAL??
+	//hacerla por nivel o nombre?
 
-	return 0;
+	//por nivel
+	int pos;
+	string name = sudoku.fichero
+	int ini = 0, fin = lista.cont-1, mitad;
+	bool encontrado = false;
+	while((ini<=fin) && !encontrado){
+			mitad = (ini + fin) / 2;
+		if(name == lista.array.fichero)
+			encontrado == true;
+		else if(name[0] < lista.array.fichero[0]) //hacer comparacion de str
+			fin = mitad - 1;
+		else
+			ini = mitad + 1;
+	}
+	pos = mitad;
+	return pos;
 }
 //devuelve la posición de lista en la que debería insertarse sudoku
-//para respetar el orden existente en la lista. Debe implementar una búsqueda binaria.
+//para respetar el orden existente en la lista. Debe implementar una
+//búsqueda binaria.
