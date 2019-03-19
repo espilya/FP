@@ -4,7 +4,7 @@
 #include <fstream>
 
 const string nombreListaJug = "listaJugadores.txt";
-const int MAX_JUGADORES = 10;
+const int MAX_JUGADORES = 50;
 typedef tJugador tArrJugadores[MAX_JUGADORES];
 typedef struct {
   tArrJugadores jugador;
@@ -44,11 +44,12 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos);
 
 // devuelve una copia de la lista dada ordenada por ranking (decrecientemente
 // por puntos, y a igualdad de puntos crecientemente por identificador).
-// tListaJugadores ordenarPorRanking(const tListaJugadores &lista);
+tListaJugadores ordenarPorRanking(const tListaJugadores &LISTA);
+
+tListaJugadores ordenarPorAscii(const tListaJugadores &LISTA);
 
 // anadir nuevo jugador
-void anadirJugador(tListaJugadores &lista, const string ID,
-                   const unsigned int PTS);
+void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int PTS);
 
 // elimina un jugador
 bool eliminarJugador(tListaJugadores &lista, const int POS = -1);

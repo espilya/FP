@@ -27,15 +27,16 @@ bool cargar(tListaJugadores &lista) {
       lista.jugador[ctd] = player;
       ctd++;
     }
-    ctd--;
     ok = true;
   }
+  lista.cont = ctd;
   return ok;
 }
 
 void mostrar(const tListaJugadores &LISTA) {
   for (int i = 0; i < MAX_JUGADORES; i++) {
-    showJugador(LISTA.jugador[i]);
+	  if(LISTA.jugador[i].pts != 0)
+		cout << showJugador(LISTA.jugador[i]);
   }
 }
 
@@ -97,23 +98,46 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
   return encontrado;
 }
 
+tListaJugadores ordenarPorAscii(const tListaJugadores &LISTA) {
+	tListaJugadores listaNew = LISTA;
+	int i = 0, cont = 0;
+	int N = LISTA.cont;
+	bool inter = true;
+	while ((i < N - 1) && !inter && cont < LISTA.cont) {
+		inter = false;
+		for (int j = N-1; j > i; j--) {
+			if (listaNew.jugador[j] < listaNew.jugador[j - 1]) {
+				tJugador tmp;
+				tmp = listaNew.jugador[j];
+				listaNew.jugador[j] = listaNew.jugador[j - 1];
+				listaNew.jugador[j - 1] = tmp;
+				inter = true;
+			}
+		}
+		if (inter) 
+			i++;
+	}
+	return listaNew;
+}
+
 tListaJugadores ordenarPorRanking(const tListaJugadores &LISTA) {
   tListaJugadores listaNew = LISTA;
-  int i = 0;
+  int i = 0, cont = 0;
   int N = LISTA.cont;
   bool inter = true;
-  while ((i < N - 1) && inter) {
-    for (int j = N - 1; j > i; j--) {
+  while ((i < N - 1) && inter ) {
+	  inter = false;
+    for (int j = N-1; j > i; j--) {
       if (menor(listaNew.jugador[j], listaNew.jugador[j - 1])) {
-        int tmp;
-        tmp = listaNew.jugador[j].pts;
-        listaNew.jugador[j].pts = listaNew.jugador[j - 1].pts;
-        listaNew.jugador[j - 1].pts = tmp;
+        tJugador tmp;
+        tmp = listaNew.jugador[j];
+        listaNew.jugador[j] = listaNew.jugador[j - 1];
+        listaNew.jugador[j - 1] = tmp;
         inter = true;
       }
     }
-    if (inter)
-      i++;
+	if (inter) 
+		i++;
   }
   return listaNew;
 }

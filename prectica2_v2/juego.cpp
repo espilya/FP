@@ -178,10 +178,12 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
 }
 
 void pausa() {
-  string str;
-  cin.sync();
-  cout << "\nIntroduze un caracter para seguir.." << endl;
-  cin >> str;
+  //string str;
+  //cin.sync();
+  //cout << "\nIntroduze un caracter para seguir.." << endl;
+  //cin >> str;
+	cout << endl;
+	system("pause");
 }
 
 int leerOpcion(int inf, int sup) {

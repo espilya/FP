@@ -4,10 +4,13 @@
 
 //
 //	bool guardar(const tListaJugadores & LISTA)
-//		-para que devolver booleano
+//		- para que devolver booleano?
+//		- por si ya existe un archivo con tal nombre?
 //
-//
-//
+//	int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU) {
+//		- Y POR Q NO INSERTAR AL FINAL??
+//		- hacerla por nivel o nombre?
+//		- ahora hecha por nombre..
 //
 
 //					TO DO
@@ -21,10 +24,13 @@ int main() {
   creaLista(listaSud); // iniciamos lista de sudoku
   creaLista(listaJug); // iniciamos lista de jugadores
   iniciaJuego(juego);  // iniciamos juego.
-  if (cargar(listaSudoku))
+  if (cargar(listaSud))
     okListaSud = true;
-  if (cargar(nombreListaJug))
+  if (cargar(listaJug))
     okListaJug = true;
+	
+  listaJug = ordenarPorAscii(listaJug);
+
   if (okListaSud && okListaJug) // cargamos listaSudoku
     do {
       cout << "1. - Jugar\n"
@@ -32,7 +38,8 @@ int main() {
            << "3. - Ver jugadores ordenados por puntos\n"
            << "4. - Incorporar sudoku\n"
            << "0. - Salir" << endl;
-      op = leerOpcion(0, 1);
+      op = leerOpcion(0, 4);
+	  clear();
       switch (op) {
       case 1:
         op2 = menuListaSudokus(listaSud, juego);
@@ -40,13 +47,18 @@ int main() {
           startJuego(juego);
         break;
       case 2:
-
+		  cout << "Lista de jugadores:\n";
+		  mostrar(listaJug);
+		  pausa();
         break;
       case 3:
-
+		  mostrar(ordenarPorRanking(listaJug));
+		  pausa();
         break;
       case 4:
-
+		  registrarSudoku(listaSud);
+		  mostrar(listaSud);
+		  pausa();
         break;
       }
 
