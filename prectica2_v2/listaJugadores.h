@@ -1,7 +1,6 @@
 ﻿#ifndef _listaJugadores
 #define _listaJugadores
 #include "jugador.h"
-#include "pch.h"
 #include <fstream>
 
 const string nombreListaJug = "listaJugadores.txt";

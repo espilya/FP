@@ -2,7 +2,6 @@
 #define _juego
 
 #include "listaJugadores.h"
-#include "pch.h"
 #include "tablero.h"
 #include <cmath>
 #include <conio.h>
@@ -17,6 +16,7 @@ typedef enum { FACIL, MEDIO, DIFICIL, EMPTY } tSudokuNivel;
 
 // tipo Sudoku
 typedef struct {
+
   string fichero;
   int nivel;
 } tSudoku;

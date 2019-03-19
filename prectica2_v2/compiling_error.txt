@@ -1,6 +1,0 @@
-In file included from /home/espilya/GitHub/prectica2_v2/listaSudokus.h:6:0,
-                 from /home/espilya/GitHub/prectica2_v2/main.cpp:3:
-/home/espilya/GitHub/prectica2_v2/juego.h:3:10: fatal error: pch.h: No such file or directory
- #include "pch.h"
-          ^~~~~~~
-compilation terminated.

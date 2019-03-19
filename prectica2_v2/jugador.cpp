@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿
 #include "jugador.h"
 
 string showJugador(tJugador jugador) {

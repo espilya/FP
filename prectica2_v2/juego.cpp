@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿
 #include "juego.h"
 
 void iniciaJuego(tJuego &juego) {

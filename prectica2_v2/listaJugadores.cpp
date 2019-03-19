@@ -1,4 +1,3 @@
-﻿#include "pch.h"
 #include "listaJugadores.h"
 
 bool comprobarStr(const string &STR) {

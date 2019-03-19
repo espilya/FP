@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿
 #include "tablero.h"
 
 
@@ -34,7 +34,7 @@ bool cargarTablero(const string &fichero, tTablero &t, bool &esSalvado) {
 				getline(file, temp);
 			}
 			calcElementosPosibles(t);
-		
+
 	}
 	file.close();
 	return ok;
@@ -160,23 +160,23 @@ void dibujarCuadrado(const tTablero &t, int &y) {
 	colorStr(barra, MAGENTA_OSC);
 	for (int x = 0; x < 3; x++) {
 		dibujaCasilla(t[x][y]);
-		if (x == 0 || x == 1) 
+		if (x == 0 || x == 1)
 			colorStr(blnc, GRIS);
 	}
 	colorStr(barra, MAGENTA_OSC);
 	for (int x = 3; x < 6; x++) {
 		dibujaCasilla(t[x][y]);
-		if (x == 3 || x == 4) 
+		if (x == 3 || x == 4)
 			colorStr(blnc, GRIS);
 	}
 	colorStr(barra, MAGENTA_OSC);
 	for (int x = 6; x < 9; x++) {
 		dibujaCasilla(t[x][y]);
-		if (x == 6 || x == 7) 
+		if (x == 6 || x == 7)
 			colorStr(blnc, GRIS);
 	}
 	colorStr(barra, MAGENTA_OSC);
-	cout << endl;	
+	cout << endl;
 	y++;
 }
 
@@ -197,7 +197,7 @@ bool ponerNum(tTablero &t, int x, int y, int c, short int &error) {
 					ok = true;
 				}
 
-		
+
 	}
 	return ok;
 }
@@ -242,7 +242,7 @@ bool tableroSoloFijo(const tTablero &t) {
 	}
 	return lleno;
 }
-	
+
 
 void mostrarPosibles(const tTablero &t, int x, int y) {
 	//muestra los valores posibles de la casilla del tablero dado que tiene
@@ -295,7 +295,7 @@ void calcElementosPosibles(tTablero &t, int mode, int x, int y, int c) {
 	else {
 		for (int a = 0; a < DIMENSION; a++) {
 			if (t[a][y].estado != FIJA) { //tampoco es necesario. de todos modos en ningun caso se va a modificar el valor de casilla FIJA
-				if (mode == 1) 
+				if (mode == 1)
 					delElemento(t[a][y].posibles, t[x][y].numero);
 				else {
 					addElemento(t[a][y].posibles, c);
@@ -391,4 +391,3 @@ bool resolver(tTablero &t, int nCasilla) {
 	} while ((!exito) && (ctd < LimiteCtd));
 	return exito;
 }
-

@@ -1,9 +1,7 @@
 #ifndef _tablero
 #define _tablero
-#include "pch.h"
 #include "casilla.h"
 #include <iostream>
-#include <Windows.h>
 #include <string>
 using namespace std;
 
@@ -18,7 +16,7 @@ typedef tCasilla tTablero[DIMENSION][DIMENSION];
 
 
 //Inicia todas las casillas del tablero
-void iniciaTablero(tTablero &t); 
+void iniciaTablero(tTablero &t);
 
 //Carga un tablero de fichero
 bool cargarTablero(const string &fichero, tTablero &t, bool &esSalvado);
@@ -29,7 +27,7 @@ void dibujarTablero(const tTablero &t);
 //Dibuja la submatriz
 void dibujarCuadrado(const tTablero &t, int &y);
 
-  
+
 //Coloca c en x, y
 //c, x e y estan 1 y 9
 //El resultado booleano indica si se ha podido: para ello la casilla ha de estar vacia y c ser uno de los valores posibles

@@ -1,4 +1,3 @@
-﻿#include "pch.h"
 #include "listaSudokus.h"
 
 //
@@ -6,7 +5,7 @@
 
 void creaLista(tListaSudokus &lista) {
   for (int i = 0; i < MAX_SUDOKUS; i++) {
-    lista.array[i].fichero = "VACIO";
+    lista.array[i].fichero = "VACIO"
     lista.array[i].nivel = 0;
   }
   lista.cont = 0;

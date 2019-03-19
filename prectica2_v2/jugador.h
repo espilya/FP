@@ -1,6 +1,5 @@
 ﻿#ifndef _jugador
 #define _jugador
-#include "pch.h"
 #include <iostream>
 #include <sstream>
 #include <string>
