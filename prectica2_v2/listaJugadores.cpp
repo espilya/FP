@@ -35,8 +35,8 @@ bool cargar(tListaJugadores &lista) {
 
 void mostrar(const tListaJugadores &LISTA) {
   for (int i = 0; i < MAX_JUGADORES; i++) {
-	  if(LISTA.jugador[i].pts != 0)
-		cout << showJugador(LISTA.jugador[i]);
+    if (LISTA.jugador[i].pts != 0)
+      cout << showJugador(LISTA.jugador[i]);
   }
 }
 
@@ -54,9 +54,9 @@ bool guardar(const tListaJugadores &LISTA) {
 
 void puntuarJugador(tListaJugadores &lista, int puntos) {
   int pos;
-  string id;
   bool ok;
-  cout << "Vamos a puntuar ";
+  string id;
+  cout << "Vamos a puntuarte ";
   cout << "Introduce tu nickname:\n>";
   do {
     getline(cin, id);
@@ -94,40 +94,40 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
     else
       ini = mitad + 1;
   }
-  pos = mitad;
+  pos = ini;
   return encontrado;
 }
 
 tListaJugadores ordenarPorAscii(const tListaJugadores &LISTA) {
-	tListaJugadores listaNew = LISTA;
-	int i = 0, cont = 0;
-	int N = LISTA.cont;
-	bool inter = true;
-	while ((i < N - 1) && !inter && cont < LISTA.cont) {
-		inter = false;
-		for (int j = N-1; j > i; j--) {
-			if (listaNew.jugador[j] < listaNew.jugador[j - 1]) {
-				tJugador tmp;
-				tmp = listaNew.jugador[j];
-				listaNew.jugador[j] = listaNew.jugador[j - 1];
-				listaNew.jugador[j - 1] = tmp;
-				inter = true;
-			}
-		}
-		if (inter) 
-			i++;
-	}
-	return listaNew;
-}
-
-tListaJugadores ordenarPorRanking(const tListaJugadores &LISTA) {
   tListaJugadores listaNew = LISTA;
   int i = 0, cont = 0;
   int N = LISTA.cont;
   bool inter = true;
-  while ((i < N - 1) && inter ) {
-	  inter = false;
-    for (int j = N-1; j > i; j--) {
+  while ((i < N - 1) && !inter && cont < LISTA.cont) {
+    inter = false;
+    for (int j = N - 1; j > i; j--) {
+      if (listaNew.jugador[j] < listaNew.jugador[j - 1]) {
+        tJugador tmp;
+        tmp = listaNew.jugador[j];
+        listaNew.jugador[j] = listaNew.jugador[j - 1];
+        listaNew.jugador[j - 1] = tmp;
+        inter = true;
+      }
+    }
+    if (inter)
+      i++;
+  }
+  return listaNew;
+}
+
+tListaJugadores ordenarPorRanking(const tListaJugadores &LISTA) {
+  tListaJugadores listaNew = LISTA;
+  int i = 0;
+  int N = LISTA.cont;
+  bool inter = true;
+  while ((i < N - 1) && inter) {
+    inter = false;
+    for (int j = N - 1; j > i; j--) {
       if (menor(listaNew.jugador[j], listaNew.jugador[j - 1])) {
         tJugador tmp;
         tmp = listaNew.jugador[j];
@@ -136,8 +136,8 @@ tListaJugadores ordenarPorRanking(const tListaJugadores &LISTA) {
         inter = true;
       }
     }
-	if (inter) 
-		i++;
+    if (inter)
+      i++;
   }
   return listaNew;
 }
@@ -151,8 +151,8 @@ void anadirJugador(tListaJugadores &lista, const string ID,
   if ((lista.cont >= MAX_JUGADORES)) {
     pos = buscarConMenorPuntos(lista);
     if (PTS > lista.jugador[pos].pts) {
-      cout << "La lista de jugadores esta llena, pero ya que tienes mas puntos "
-              "que algunos jugadores, "
+      cout << "La lista de jugadores esta llena, pero ya que tienes "
+              "mas puntos que algunos jugadores,"
            << " seras guardado! :D" << endl;
       eliminarJugador(lista, pos);
     } else {
@@ -161,7 +161,7 @@ void anadirJugador(tListaJugadores &lista, const string ID,
            << endl;
     }
   }
-  // en caso de estar la lista con espacio O de QUERER METER UN jugador
+  // en caso de estar la lista con espacio o de QUERER METER un jugador
   if ((lista.cont < MAX_JUGADORES) || PTS > lista.jugador[pos].pts) {
     int i = 0;
     while (lista.jugador[i].id < ID) {

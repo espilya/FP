@@ -16,7 +16,6 @@ typedef enum { FACIL, MEDIO, DIFICIL, EMPTY } tSudokuNivel;
 
 // tipo Sudoku
 typedef struct {
-
   string fichero;
   int nivel;
 } tSudoku;
@@ -26,6 +25,7 @@ typedef struct {
   tSudoku sudoku;
   tTablero tablero;
   bool esSalvado;
+  bool finalizado;
 } tJuego;
 
 // Mostrar men� de acciones para jugar un sudoku

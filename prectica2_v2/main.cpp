@@ -28,7 +28,7 @@ int main() {
     okListaSud = true;
   if (cargar(listaJug))
     okListaJug = true;
-	
+
   listaJug = ordenarPorAscii(listaJug);
 
   if (okListaSud && okListaJug) // cargamos listaSudoku
@@ -39,26 +39,27 @@ int main() {
            << "4. - Incorporar sudoku\n"
            << "0. - Salir" << endl;
       op = leerOpcion(0, 4);
-	  clear();
+      clear();
       switch (op) {
       case 1:
         op2 = menuListaSudokus(listaSud, juego);
         if (op2 != 0)
           startJuego(juego);
+
         break;
       case 2:
-		  cout << "Lista de jugadores:\n";
-		  mostrar(listaJug);
-		  pausa();
+        cout << "Lista de jugadores:\n";
+        mostrar(listaJug);
+        pausa();
         break;
       case 3:
-		  mostrar(ordenarPorRanking(listaJug));
-		  pausa();
+        mostrar(ordenarPorRanking(listaJug));
+        pausa();
         break;
       case 4:
-		  registrarSudoku(listaSud);
-		  mostrar(listaSud);
-		  pausa();
+        registrarSudoku(listaSud);
+        mostrar(listaSud);
+        pausa();
         break;
       }
 

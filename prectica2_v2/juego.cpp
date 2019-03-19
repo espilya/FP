@@ -5,6 +5,7 @@ void iniciaJuego(tJuego &juego) {
   juego.esSalvado = false;
   juego.sudoku.nivel = 0;
   juego.sudoku.fichero = "VACIO";
+  juego.sudoku.fichero = false;
   iniciaTablero(juego.tablero);
 }
 
@@ -78,6 +79,7 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 
 void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
   int op, x, y, c;
+  bool jugGuardado = false;
   short int error;
   string fileStr;
   const string fallo = "\t\tFallo\n";
@@ -98,22 +100,10 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
       fileStr = fileStr.substr(0, fileStr.size() - 4);
     cout << "\t  ";
     colorStr(fileStr, AMARILLO_OSC);
-    cout << " de nivel: ";
-    switch (juego.sudoku.nivel) {
-    case 0:
-      colorStr("FACIL", AMARILLO_OSC);
-      break;
-    case 1:
-      colorStr("MEDIO", AMARILLO_OSC);
-      break;
-    case 2:
-      colorStr("DIFICIL", AMARILLO_OSC);
-      break;
-    case 3:
-      colorStr("VACIO", AMARILLO_OSC);
-      break;
-    }
-    cout << '\n';
+    cout << " de : ";
+    colorStr(to_string(juego.sudoku.nivel), AMARILLO_OSC);
+    cout << " puntos\n";
+
     dibujarTablero(juego.tablero);
     op = menuJugarSudoku(x, y, c);
     switch (op) {
@@ -148,6 +138,7 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
       if (!juego.esSalvado) {
         iniciaTablero(juego.tablero);
         bool temp = cargaJuego(juego);
+        jugGuardado = false;
       } else {
         salvarJuego(juego, true);
       }
@@ -156,7 +147,6 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
       // Autocompletar celdas simples
       rellenarSimples(juego.tablero);
       break;
-
     case 6:
       // Resolver el sudoku
       if (!resolver(juego.tablero, 0))
@@ -173,17 +163,21 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
     }
     if (op != 0 && op != 8)
       pausa();
+    if (tableroLleno(juego.tablero) && !jugGuardado){
+      puntuarJugador(listaJug, juego.sudoku.nivel);
+      jugGuardado = true;
+    }
     clear();
   } while (op != 0);
 }
 
 void pausa() {
-  //string str;
-  //cin.sync();
-  //cout << "\nIntroduze un caracter para seguir.." << endl;
-  //cin >> str;
-	cout << endl;
-	system("pause");
+  // string str;
+  // cin.sync();
+  // cout << "\nIntroduze un caracter para seguir.." << endl;
+  // cin >> str;
+  cout << endl;
+  system("pause");
 }
 
 int leerOpcion(int inf, int sup) {

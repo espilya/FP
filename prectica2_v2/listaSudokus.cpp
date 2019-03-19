@@ -22,7 +22,7 @@ bool cargar(tListaSudokus &lista) {
 			file >> nivel;
 			// cout << nombre << '\t' << nivel << endl;
 			lista.array[ctd].fichero = nombre;
-			lista.array[ctd].nivel = nivel - 1;
+			lista.array[ctd].nivel = nivel;
 			ctd++;
 		}
 		lista.cont = ctd;
