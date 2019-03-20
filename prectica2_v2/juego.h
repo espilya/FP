@@ -25,7 +25,7 @@ typedef struct {
   tSudoku sudoku;
   tTablero tablero;
   bool esSalvado;
-  bool finalizado;
+  bool guardar;
 } tJuego;
 
 // Mostrar men� de acciones para jugar un sudoku

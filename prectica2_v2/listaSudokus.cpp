@@ -53,7 +53,7 @@ void mostrar(const tListaSudokus &LISTA) {
 	colorStr("Nombre:", MAGENTA_OSC);
 	colorStr("\tPuntos:\n", AMARILLO_OSC);
 	for (int i = 0; i < LISTA.cont; i++) {
-		colorStr(to_string(i), VERDE_OSC);
+		colorStr(to_string(i + 1), VERDE_OSC);
 		cout << "  ";
 		colorStr(LISTA.array[i].fichero, MAGENTA_OSC);
 		cout << '\t';
