@@ -9,6 +9,15 @@ void iniciaJuego(tJuego &juego) {
 	iniciaTablero(juego.tablero);
 }
 
+
+void startJuego(tJuego &juego) { // iniciamos el proceso del juego
+	clear();
+	if (cargaJuego(juego))
+		mostrarJuego(juego);
+	else if (errorAbrirFichero(juego.sudoku.fichero))
+		mostrarJuego(juego);
+}
+
 bool cargaJuego(tJuego &juego) {
 	bool ok = false;
 	bool esPartidaSalvada = false;
@@ -19,15 +28,11 @@ bool cargaJuego(tJuego &juego) {
 	return ok;
 }
 
-void startJuego(tJuego &juego) { // mostrarMenuJugada
-	clear();
-	if (cargaJuego(juego))
-		mostrarJuego(juego);
-	else if (errorAbrirFichero(juego.sudoku.fichero))
-		mostrarJuego(juego);
-}
-
 int menuJugarSudoku(int &x, int &y, int &c) {
+	// Bucle del menu(texto) del juego(proceso) de un sudoku.
+
+	//valores superioes y inferiores de lectura de la entrada
+	//para elegir la opcion del menu
 	const int inf_a = 0;
 	const int sup_a = 8;
 	const int inf_1 = 1;
@@ -49,8 +54,6 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 		x = leerOpcion(inf_1, sup_9);
 		cout << " y las coodenadas 'Y':\n>";
 		y = leerOpcion(inf_1, sup_9);
-		x--;
-		y--;
 		break;
 	case 2: // Introducir numero
 		cout << "Introduce las coodenadas 'X':\n>";
@@ -59,25 +62,22 @@ int menuJugarSudoku(int &x, int &y, int &c) {
 		y = leerOpcion(inf_1, sup_9);
 		cout << "Introduce el numero:\n>";
 		c = leerOpcion(inf_1, sup_9);
-		x--;
-		y--;
 		break;
 	case 3: // Borrar numero
 		cout << "Introduce las coodenadas 'X':\n>";
 		x = leerOpcion(inf_1, sup_9);
 		cout << " y las coodenadas 'Y':\n>";
 		y = leerOpcion(inf_1, sup_9);
-		x--;
-		y--;
 		break;
 	case 0:
-		// colorStr("\n\n\nGracias por jugar!", BLANCO);
 		break;
 	}
+	x--;
+	y--;
 	return op;
 }
 
-void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
+void mostrarJuego(tJuego &juego) {
 	int op, x, y, c;
 	short int error;
 	bool tableroFin = false;
@@ -92,8 +92,10 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
 			100 - Error al PONER un digito en una casilla RELLANA
 			101 - Error al PONER un digito en una casilla FIJA
 			200 - Error al BORRAR un digito en una casilla VACIA
-			201 - Error al BORRAR un digito en una casilla FIJA*/
+			201 - Error al BORRAR un digito en una casilla FIJA
+			...*/
 	do {
+		//mostramos el nombre y puntos del sudoku
 		error = 0;
 		fileStr = juego.sudoku.fichero;
 		if (fileStr.find(".txt"))
@@ -105,12 +107,15 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
 		cout << " puntos\n";
 
 		dibujarTablero(juego.tablero);
-
 		tableroFin = tableroLleno(juego.tablero);
+
+		//en caso de que este lleno preguntamos si
+		//quiere guardar los puntos obtenidos
 		if (!tableroFin)
 			op = menuJugarSudoku(x, y, c);
 		else
 			op = 69;
+
 		switch (op) {
 		case 1:
 			// Posibles casos
@@ -140,6 +145,7 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
 			break;
 		case 4:
 			// Reiniciar el tablero
+			//si el sudoku es salvado, se diferencia el modo de reiniciar
 			if (!juego.esSalvado) {
 				iniciaTablero(juego.tablero);
 				bool temp = cargaJuego(juego);
@@ -166,7 +172,7 @@ void mostrarJuego(tJuego &juego) { //(const tJuego &juego)
 			salvarJuego(juego);
 			break;
 		case 69:
-			if (tableroFin) {
+			if (tableroFin) {//proceso de guardar el score
 				cout << "Juego finalizado. Desea guardar sus resultados antes de salir?" << endl
 					<< "1.-Si, deseo salir y guardar." << endl
 					<< "0.-No, deseo salir sin guardar." << endl;
@@ -292,12 +298,12 @@ void salvarJuego(tJuego &juego, bool reiniciar) {
 		ok = file.is_open();
 		clear();
 	} while (!ok && userInput != "0");
+
 	if (userInput != "0") {
 		juego.sudoku.fichero = userInput;
 		iniciaTablero(juego.tablero);
 		for (int a = 0; a < 3; a++)
 			getline(file, temp);
-
 		for (int j = 0; j < 9; j++) {
 			for (int i = 0; i < 9; i++) {
 				file.get(ch);

@@ -4,17 +4,21 @@
 
 //
 //	bool guardar(const tListaJugadores & LISTA)
-//		- para que devolver booleano?
-//		- por si ya existe un archivo con tal nombre?
+//			-Martes
 //
 //	int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU) {
-//		- Y POR Q NO INSERTAR AL FINAL??
-//		- hacerla por nivel o nombre?
-//		- ahora hecha por nombre..
+//			-leer pdf
 //
 
+//					OPCIONALES:
+//			->Eliminar lista de SUDOKU
+//			->Preguntar con que algoritmo ordenar a los jugadores
+
+
 //					TO DO
-//			primero probar si es posible puntuar(guardar score) y luego preguntar nombre
+//			->primero probar si es posible puntuar(guardar score)
+//				y luego preguntar nombre
+//			->Mejorar el reinicio del tablero
 //
 //		+Ordenacion por ID:
 		//pepe                    101
@@ -54,6 +58,7 @@ int main() {
 					if (juego.guardar) {
 						puntuarJugador(listaJug, juego.sudoku.nivel);
 						mostrar(listaJug);
+						guardar(listaJug);
 						pausa();
 						//listaJug = ordenarPorAscii(listaJug);
 

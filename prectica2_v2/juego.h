@@ -28,22 +28,26 @@ typedef struct {
   bool guardar;
 } tJuego;
 
-// Mostrar men� de acciones para jugar un sudoku
-void startJuego(tJuego &juego); // mostrarMenuJugada
-
-// Bucle del menu(texto) del juego(proceso) de un sudoku.
-int menuJugarSudoku(int &x, int &y, int &c);
-
 // Inicializa el juego
 void iniciaJuego(tJuego &juego);
 
+//  iniciamos el proceso del juego
+void startJuego(tJuego &juego); // mostrarMenuJugada
+
+//cargar el juego y tablero
 bool cargaJuego(tJuego &juego);
+
+// Bucle del menu(texto) del juego(proceso) de un sudoku.
+//tambien se leen los valores de entrada.
+int menuJugarSudoku(int &x, int &y, int &c);
+
 
 // Procesado de opcion seleccionada del menu del juego.
 void mostrarJuego(tJuego &juego);
 
 void pausa();
 
+//valido solo si esta en el rango
 // (op >= inf) && (op <= sup)
 int leerOpcion(int inf, int sup);
 
