@@ -103,7 +103,7 @@ void mostrarJuego(tJuego &juego) {//(const tJuego &juego)
 		colorStr(fileStr, AMARILLO_OSC);
 		cout << " de nivel: ";
 		switch (juego.sudoku.nivel)
-		{
+		{                                       
 		case 0:
 			colorStr("FACIL", AMARILLO_OSC);
 			break;
@@ -263,7 +263,7 @@ void guardarJuego(const tJuego &juego) {
 	}
 }
 
-void salvarJuego(tJuego &juego, bool reiniciar) {
+void salvarJuego(tJuego &juego, bool reiniciar) {.   // Carga un sudoku guardado
 	bool ok = true;;
 	char ch;
 	int tempInteger;
