@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+﻿
 #include "tablero.h"
 
 
@@ -68,9 +68,9 @@ void dibujarTablero(const tTablero &t) {
 		cout << "\n\t\t";
 		colorStr("FECILIDADES!!", BLANCO);
 		cout << "\n\t\t";
-		colorStr("HAS COMPLETADO EL TABLERO", BLANCO);
+		colorStr("Has completado el tablero", BLANCO);
 		cout << "\n\t\t";
-		colorStr("JUEGO FINALIZADO", BLANCO);
+		colorStr("Juego Finalizado", BLANCO);
 		cout << '\n';
 	}
 	//--------------------DIBUJA FILAS--------------------
@@ -184,20 +184,19 @@ void dibujarCuadrado(const tTablero &t, int &y) {
 bool ponerNum(tTablero &t, int x, int y, int c, short int &error) {
 	const int modo = 1;
 	bool ok = false;
-	if (!pertenece(t[x][y].posibles, c))
+
+	if (t[x][y].estado == RELLENO)
+		error = 100;
+	else if (t[x][y].estado == FIJA)
+		error = 101;
+	else if (!pertenece(t[x][y].posibles, c))
 		error = 102;
 	else{
-				if (t[x][y].estado == RELLENO)
-					error = 100;
-				else if (t[x][y].estado == FIJA)
-					error = 101;
-				else if (t[x][y].estado == VACIO) {
-					rellenaCasilla(t[x][y], c + '0');
-					calcElementosPosibles(t, modo, x, y);
-					ok = true;
-				}
-
-		
+		if (t[x][y].estado == VACIO) {
+			rellenaCasilla(t[x][y], c + '0');
+			calcElementosPosibles(t, modo, x, y);
+			ok = true;
+		}
 	}
 	return ok;
 }

@@ -1,5 +1,4 @@
-﻿#include "pch.h"
-#include "listaSudokus.h"
+﻿#include "listaSudokus.h"
 
 //
 //				hacer que en mostrarListaSudokus se vean los vacios o no?

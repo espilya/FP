@@ -1,6 +1,5 @@
 #ifndef _tablero
 #define _tablero
-#include "pch.h"
 #include "casilla.h"
 #include <iostream>
 #include <Windows.h>

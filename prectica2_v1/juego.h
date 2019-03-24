@@ -1,6 +1,5 @@
 #ifndef _juego
 #define _juego
-#include "pch.h"
 #include "tablero.h"
 #include <conio.h>
 #include <locale.h>
@@ -39,6 +38,8 @@ void iniciaJuego(tJuego & juego);
 
 //Procesado de opcion seleccionada del menu del juego.
 void mostrarJuego(tJuego &juego);//(const tJuego &juego)
+
+void startJuego(tJuego &juego);
 
 void pausa();
 

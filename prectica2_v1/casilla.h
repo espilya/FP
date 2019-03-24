@@ -1,6 +1,5 @@
 #ifndef _casilla
 #define _casilla
-#include "pch.h"
 #include "Conjunto.h"
 #include <Windows.h>
 #include <string>
