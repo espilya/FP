@@ -17,8 +17,8 @@ typedef tSudoku tSudokus[MAX_SUDOKUS];
 
 // Lista de Sudokus
 typedef struct {
-	tSudokus array; // Array de sudokus
-	int cont;
+  tSudokus array; // Array de sudokus
+  int cont;
 } tListaSudokus;
 
 // inicializa lista a una lista vacía.
@@ -59,7 +59,9 @@ int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU);
 
 void insertarSudoku(tListaSudokus &lista, const tSudoku &SUDOKU, const int POS);
 
-//compara el nombre de fichero
+// compara el nombre de fichero
 bool operator<(const tSudoku &opIzq, const tSudoku &opDer);
+
+void eliminarSudoku(tListaSudokus &lista);
 
 #endif
