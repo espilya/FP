@@ -11,7 +11,7 @@
 //
 
 //					OPCIONALES:
-//			->Eliminar lista de SUDOKU--COMPROBAR
+//			->Eliminar lista de SUDOKU --- COMPROBAR
 //			->Preguntar con que algoritmo ordenar a los jugadores
 
 //					TO DO

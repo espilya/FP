@@ -48,6 +48,10 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA);
 
 tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
 
+tListaJugadores ordenarPorRanking_(const tListaJugadores &LISTA);
+
+tListaJugadores ordenarPorAscii_(const tListaJugadores &LISTA);
+
 // anadir nuevo jugador
 void anadirJugador(tListaJugadores &lista, const string ID,
                    const unsigned int PTS);
