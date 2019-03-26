@@ -69,12 +69,16 @@ void mostrar(const tListaSudokus &LISTA) {
 bool guardar(const tListaSudokus &lista) {
   ofstream file;
   int i = 0;
+  bool ok = false;
   file.open(listaSudoku);
+  if(file.is_open()){
   while (i < MAX_SUDOKUS && lista.array[i].fichero != "VACIO") {
     file << lista.array[i].fichero << '\t' << lista.array[i].nivel << '\n';
     i++;
   }
-  return true;
+  ok = true;
+}
+  return ok;
 }
 
 bool registrarSudoku(tListaSudokus &lista) {
@@ -124,7 +128,7 @@ int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU) {
   int ini = 0, fin = LISTA.cont - 1, mitad;
   bool encontrado = false;
   while ((ini <= fin) && !encontrado) {
-	  mitad = (ini + fin) / 2; // División entera
+	  mitad = (ini + fin) / 2; // Divisiï¿½n entera
 	  if (SUDOKU.nivel == LISTA.array[mitad].nivel) {
 		  encontrado = true;
 		  cout << "igual";

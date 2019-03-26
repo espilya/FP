@@ -2,17 +2,17 @@
 
 #include "listaSudokus.h"
 
-//					DUDAS:	
+//					DUDAS:
 //	->hacer probar abrir el nuevo sudoku incorporado?
 
 //					OPCIONALES:
 //			->Preguntar con que algoritmo ordenar a los jugadores
-//					Algoritmo de ordenación por inserción con intercambios 672
-//			
-//			->Guardar jugador sin jugar
+//					Algoritmo de ordenaciï¿½n por inserciï¿½n con intercambios 672
+//
+//			TODO:	->Guardar jugador sin jugar
 
-//					TODO:
-//			->is_open()
+//
+//
 
 
 int main() {
