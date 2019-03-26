@@ -20,9 +20,9 @@ int main()
 	tListaSudokus lista;
 	tJuego juego;
 	creaListaVacia(lista); //iniciamos lista de sudoku a VACIO
-	iniciaJuego(juego);  //iniciamos juego.
 	if (cargarListaSudokus(lista)) { //cargamos listaSudoku
 		do {
+			iniciaJuego(juego);  //iniciamos juego.
 			cout << "1. - Jugar\n"
 				<< "0. - Salir" << endl;
 			op = leerOpcion(0, 1);
