@@ -51,7 +51,6 @@ tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA);
-tListaJugadores ordenarPorRanking_(const tListaJugadores &LISTA);
 
 tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorAscii_(const tListaJugadores &LISTA);
