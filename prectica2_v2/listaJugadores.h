@@ -1,10 +1,11 @@
 ﻿#ifndef _listaJugadores
 #define _listaJugadores
 #include "jugador.h"
+#include "casilla.h"
 #include <fstream>
 
 const string nombreListaJug = "listaJugadores.txt";
-const int MAX_JUGADORES = 25;
+const int MAX_JUGADORES = 20;
 typedef tJugador tArrJugadores[MAX_JUGADORES];
 typedef struct {
   tArrJugadores jugador;
@@ -55,6 +56,9 @@ tListaJugadores ordenarPorAscii_(const tListaJugadores &LISTA);
 // anadir nuevo jugador
 void anadirJugador(tListaJugadores &lista, const string ID,
                    const unsigned int PTS);
+
+//busca al jugador, con el Id y lo elimina
+void borrarJugador(tListaJugadores &lista);
 
 // elimina un jugador
 bool eliminarJugador(tListaJugadores &lista, const int POS = -1);

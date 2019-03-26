@@ -168,15 +168,18 @@ bool operator<(const tSudoku &opIzq, const tSudoku &opDer) {
 
 void eliminarSudoku(tListaSudokus &lista) {
   int pos;
-  cout << "Eliga el sudoku a eliminar:\n>";
+  cout << "Eliga el sudoku a eliminar:" << endl;
   mostrar(lista);
-  pos = leerOpcion(1, lista.cont) - 1;
+  cout << '>';
+  pos = leerOpcion(0, lista.cont) - 1;
 
-  // <eliminacion>
-  for (int i = POS; i < lista.cont - 1; i++) {
-    lista.array[i] = lista.array[i + 1];
+  if (pos > 0) {
+	  // <eliminacion>
+	  for (int i = pos; i < lista.cont - 1; i++) {
+		  lista.array[i] = lista.array[i + 1];
+	  }
+	  lista.cont--;
+	  // </eliminacion>
   }
-  lista, cont--;
-  // </eliminacion>
   clear();
 }

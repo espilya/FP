@@ -2,22 +2,22 @@
 
 #include "listaSudokus.h"
 
-//
-//	bool guardar(const tListaJugadores & LISTA)
+//					DUDAS:
+//	->bool guardar(const tListaJugadores & LISTA)
 //			-Martes
 //
-//	int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU) {
+//	->int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU) {
 //			-leer pdf
 //
+//	->hacer probar abrir el nuevo sudoku incorporado?
 
 //					OPCIONALES:
-//			->Eliminar lista de SUDOKU --- COMPROBAR
 //			->Preguntar con que algoritmo ordenar a los jugadores
 
-//					TO DO
-//			->primero probar si es posible puntuar(guardar score)
-//				y luego preguntar nombre
-//			->Mejorar el reinicio del tablero
+//					TO DO:
+//			->Eliminar jugador///
+//			->primero probar si es posible puntuar(guardar score) y luego preguntar nombre
+//			->Mejorar el reinicio del tablero -- tampoco es muy importante. Con que funcione.. :)
 //
 //		+Ordenacion por ID:
 // pepe                    101
@@ -32,16 +32,17 @@ int main() {
   tJuego juego;
   creaLista(listaSud); // iniciamos lista de sudoku
   creaLista(listaJug); // iniciamos lista de jugadores
-  iniciaJuego(juego);  // iniciamos juego.
+  
   if (cargar(listaSud))
     okListaSud = true;
   if (cargar(listaJug))
     okListaJug = true;
 
-  listaJug = ordenarPorAscii_Burbuja(listaJug);
 
   if (okListaSud && okListaJug) // cargamos listaSudoku
     do {
+		iniciaJuego(juego);  // iniciamos juego
+		listaJug = ordenarPorAscii_Burbuja(listaJug);
       cout << "1. - Jugar\n"
            << "2. - Ver jugadores ordenados por identificador\n"
            << "3. - Ver jugadores ordenados por puntos\n"
@@ -59,18 +60,19 @@ int main() {
             puntuarJugador(listaJug, juego.sudoku.nivel);
             mostrar(listaJug);
             guardar(listaJug);
-            pausa();
-            // listaJug = ordenarPorAscii_Burbuja(listaJug);
+            pausa();         
           }
         }
 
         break;
       case 2:
         cout << "Lista de jugadores:\n";
-        mostrar(listaJug);
+		listaJug = ordenarPorAscii_Burbuja(listaJug);
+        mostrar(ordenarPorAscii_Burbuja(listaJug));
         pausa();
         break;
       case 3:
+		 cout << "Lista de jugadores:\n";
         mostrar(ordenarPorRanking_Burbuja(listaJug));
         pausa();
         break;
@@ -79,11 +81,16 @@ int main() {
         mostrar(listaSud);
         pausa();
         break;
-      case 4:
+      case 5:
         eliminarSudoku(listaSud);
         mostrar(listaSud);
         pausa();
         break;
+	  case 6:
+		  borrarJugador(lista, )
+		  mostrar(listaJug);
+		  pausa();
+		  break;
       }
 
       clear();
