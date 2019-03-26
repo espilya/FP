@@ -94,10 +94,11 @@ bool registrarSudoku(tListaSudokus &lista) {
     } while (!ok || !noExiste);
     cout << endl << "Introduzca los puntos del sudoku:\n>";
     cin >> sudokuNuevo.nivel;
-    pos = buscarPos(lista, sudokuNuevo);
-    cout << pos;
 
-    lista.cont++;
+    pos = buscarPos(lista, sudokuNuevo);
+    cout << pos << " " << lista.cont; ///////////////////////
+	lista.cont++;
+
     insertarSudoku(lista, sudokuNuevo, pos);
     ok = true;
   } else
@@ -117,24 +118,28 @@ bool buscarFichero(const tListaSudokus &LISTA, const string NOMBRE) {
 }
 
 int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU) {
-  // Y POR Q NO INSERTAR AL FINAL??
-  // hacerla por nivel o nombre?
+  // hacerla por puntos, por nombre
   int pos;
   // por nombre
   int ini = 0, fin = LISTA.cont - 1, mitad;
   bool encontrado = false;
   while ((ini <= fin) && !encontrado) {
-    mitad = (ini + fin) / 2;
-    if (SUDOKU.fichero == LISTA.array[mitad].fichero) {
-      encontrado = true;
-    } else if (SUDOKU < LISTA.array[mitad]) {
-      fin = mitad - 1;
-    } else {
-      ini = mitad + 1;
-    }
+	  mitad = (ini + fin) / 2; // División entera
+	  if (SUDOKU.nivel == LISTA.array[mitad].nivel) {
+		  encontrado = true;
+		  cout << "igual";
+	  }
+	  else if (menor(SUDOKU, LISTA.array[mitad])) {
+		  fin = mitad - 1;
+		  cout << "menor";
+	  }
+	  else{
+		  ini = mitad + 1;
+		  cout << "mayor";
+  }
   }
   pos = mitad;
-  return ini;
+  return pos;
 }
 
 void insertarSudoku(tListaSudokus &lista, const tSudoku &SUDOKU,
@@ -149,8 +154,7 @@ bool operator<(const tSudoku &opIzq, const tSudoku &opDer) {
   bool encontrado = false;
   int i = 0;
   const int MAX = 50;
-  while ((!encontrado) && (i < (int)opIzq.fichero.size()) &&
-         (i < (int)opDer.fichero.size())) {
+  while ((!encontrado) && (i < (int)opIzq.fichero.size()) &&  (i < (int)opDer.fichero.size())) {
     if (opIzq.fichero[i] != opDer.fichero[i]) {
       menor = opIzq.fichero[i] < opDer.fichero[i];
       encontrado = true;
@@ -182,4 +186,45 @@ void eliminarSudoku(tListaSudokus &lista) {
 	  // </eliminacion>
   }
   clear();
+}
+
+tListaSudokus ordenarListaSudoku(const tListaSudokus LISTA) {
+	tListaSudokus listaNew = LISTA;
+	int i = 0;
+	int N = LISTA.cont;
+	bool inter = true;
+	while ((i < N - 1) && inter) {
+		inter = false;
+		for (int j = N - 1; j > i; j--) {
+			if (menor(listaNew.array[j], listaNew.array[j-1])) {
+				tSudoku tmp;
+				tmp = listaNew.array[j];
+				listaNew.array[j] = listaNew.array[j-1];
+				listaNew.array[j-1] = tmp;
+				inter = true;
+			}
+		}
+		if (inter) {
+			i++;
+		}
+	}
+
+	return listaNew;
+}
+
+bool menor(const tSudoku &J1, const tSudoku &J2) {
+	bool menor;
+	if (J1.nivel < J2.nivel) {
+		menor = true;
+	}
+	else if (J1.nivel == J2.nivel) {
+		if (J1 < J2)
+			menor = true;
+		else
+			menor = false;
+	}
+	else {
+		menor = false;
+	}
+	return menor;
 }

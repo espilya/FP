@@ -53,7 +53,7 @@ bool registrarSudoku(tListaSudokus &lista);
 bool buscarFichero(const tListaSudokus &lista, string nombreFich);
 
 // devuelve la posición de lista en la que debería insertarse sudoku
-// para respetar el orden existente en la lista.Debe implementar una búsqueda
+// para respetar el orden existente en la lista. Debe implementar una búsqueda
 // binaria.
 int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU);
 
@@ -63,5 +63,11 @@ void insertarSudoku(tListaSudokus &lista, const tSudoku &SUDOKU, const int POS);
 bool operator<(const tSudoku &opIzq, const tSudoku &opDer);
 
 void eliminarSudoku(tListaSudokus &lista);
+
+//ordena la lista por puntos, a igualidad la ordena por nombre
+tListaSudokus ordenarListaSudoku(const tListaSudokus LISTA);
+
+bool menor(const tSudoku &J1, const tSudoku &J2);
+
 
 #endif

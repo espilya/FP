@@ -1,12 +1,12 @@
 a			2
 aa			5
-aaa			1
 aaaa			5
+aaaaa			1
 aaaab			3
 aaabb			9
-h			10
-h			11
-h			4
+aaacc			103
+h			13
 juan_A			234
 juan_a			234
+pepe			3
 pepito_1000			100

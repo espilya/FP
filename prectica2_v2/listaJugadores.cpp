@@ -38,9 +38,22 @@ void mostrar(const tListaJugadores &LISTA) {
 		cout << "La lista se encuentra vacia." << endl;
 	}
 	else {
-		cout << "Numero de jugadores: " << LISTA.cont << endl;
+		cout << "Numero de jugadores: " << LISTA.cont << endl << endl;
+		cout << setw(3);
+		colorStr("#", VERDE_OSC);
+		cout <<  setw(18); 
+		colorStr("Identificador:", MAGENTA_OSC); 
+		cout << setw(18); colorStr("Puntos:", AMARILLO_OSC);
+		cout << endl << endl;
+
 		for (int i = 0; i < LISTA.cont; i++) {
-				cout << showJugador(LISTA.jugador[i]);
+			cout << setw(3);
+			colorStr(to_string(i + 1), VERDE_OSC);
+			cout << setw(18);
+			colorStr(LISTA.jugador[i].id, MAGENTA_OSC);
+			cout << setw(18);
+			colorStr(to_string(LISTA.jugador[i].pts), AMARILLO_OSC);
+			cout << endl;
 		}
 	}
 }
@@ -48,6 +61,7 @@ void mostrar(const tListaJugadores &LISTA) {
 bool guardar(const tListaJugadores &LISTA) {
 	ofstream file;
 	file.open(nombreListaJug);
+
 	bool ok = true;
 	for (int i = 0; i < LISTA.cont; i++) {
 		file << showJugador(LISTA.jugador[i]);
@@ -97,7 +111,7 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
 		else
 			ini = mitad + 1;
 	}
-	pos = ini;
+	pos = mitad;
 	return encontrado;
 }
 
@@ -133,7 +147,7 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
 	while ((i < N - 1) && inter) {
 		inter = false;
 		for (int j = N - 1; j > i; j--) {
-			if (menor(listaNew.jugador[j], listaNew.jugador[j - 1])) {
+			if (menor(listaNew.jugador[j-1], listaNew.jugador[j])) {
 				tJugador tmp;
 				tmp = listaNew.jugador[j];
 				listaNew.jugador[j] = listaNew.jugador[j - 1];
@@ -207,10 +221,12 @@ void borrarJugador(tListaJugadores &lista) {
 		}
 	}while (!ok && !salir);
 	if (buscar(lista, id, pos)) {
-		//...
+		cout << pos;
+		eliminarJugador(lista, pos);
+		lista.cont--;
 	}
-
-	
+	else
+		cout << "Jugador no encontrado." << endl;
 }
 
 bool eliminarJugador(tListaJugadores &lista, const int POS) { //quita al jugador de la lista 

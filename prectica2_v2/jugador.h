@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 typedef struct {
@@ -15,6 +16,8 @@ typedef struct {
 // caracteres donde primero aparece el identificador y después los puntos
 // conseguidos por el jugador, separados por uno o más espacios en blanco)
 string showJugador(tJugador jugador);
+
+//muestra por cout a los jugadores con sus puntos
 
 // añade puntos puntos a los puntos que lleva conseguidos el jugador dado.
 void modificarJugador(tJugador &jugador, int puntos);
