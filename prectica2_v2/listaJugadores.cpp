@@ -81,10 +81,12 @@ void puntuarJugador(tListaJugadores &lista, int puntos) {
   do {
     getline(cin, id);
     ok = comprobarStr(id);
-    if (!ok)
+    if (!ok){
       cout << "Nombre contiene caracteres invalidos!" << endl;
     if (id.size() > 30)
       cout << "El nombre contiene mas de 30 caracteres!" << endl;
+      cout << ">";
+    }
   } while (!ok);
 
   if (buscar(lista, id, pos)) {
@@ -94,6 +96,26 @@ void puntuarJugador(tListaJugadores &lista, int puntos) {
     anadirJugador(lista, id, puntos);
     // cout << ".#.#.anadirJugador_END" << endl;
   }
+}
+
+void incorporarJugador(tListaSudokus lista){
+  int puntos;
+  bool ok;
+  string id;
+  cout << "Introduce tu nickname:\n>";
+  do {
+    getline(cin, id);
+    ok = comprobarStr(id);
+    if (!ok){
+      cout << "Nombre contiene caracteres invalidos!" << endl;
+    if (id.size() > 30)
+      cout << "El nombre contiene mas de 30 caracteres!" << endl;
+      cout << ">";
+    }
+  } while (!ok);
+  cout << "Introduce los puntos del jugador:\n>";
+  puntos = leerOpcion(0, 2147483647);
+  anadirJugador(lista, id, puntos);
 }
 
 bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
@@ -160,6 +182,22 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
       i++;
   }
   return listaNew;
+}
+
+tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA){
+  tListaJugadores listaNew = LISTA;
+  int pos;
+  tJugador nuevo;
+  for(int i = 0; i <LISTA.cont; i++){
+    nuevo = listaNew.jugador[i].pts;
+    while(pos<i && listaNew.jugador[pos].pts <= nuevo.pts){
+    pos++;
+    }
+    for(int j = i; j>pos;j--){
+      listaNew.jugador[j] = listaNew.jugador[j-1];
+    }
+    lista.jugador[pos] = nuevo;
+  }
 }
 
 void anadirJugador(tListaJugadores &lista, const string ID,

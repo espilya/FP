@@ -45,17 +45,23 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos);
 
 // devuelve una copia de la lista dada ordenada por ranking (decrecientemente
 // por puntos, y a igualdad de puntos crecientemente por identificador).
+
+
+tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA);
-
-tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
-
 tListaJugadores ordenarPorRanking_(const tListaJugadores &LISTA);
 
+tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorAscii_(const tListaJugadores &LISTA);
 
 // anadir nuevo jugador
 void anadirJugador(tListaJugadores &lista, const string ID,
                    const unsigned int PTS);
+
+//incorpora un jugador sin jugar
+void incorporarJugador(tListaSudokus lista);
 
 //busca al jugador, con el Id y lo elimina
 void borrarJugador(tListaJugadores &lista);
