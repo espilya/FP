@@ -200,6 +200,11 @@ tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
   }
 }
 
+tListaJugadores
+ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA) {
+  
+}
+
 void anadirJugador(tListaJugadores &lista, const string ID,
                    const unsigned int PTS) {
   // en caso de estar la lista llena..
