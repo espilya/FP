@@ -138,6 +138,7 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
   return encontrado;
 }
 
+
 tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
   //----------BURBUJA----------
   tListaJugadores listaNew = LISTA;
@@ -159,6 +160,48 @@ tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
       i++;
   }
   return listaNew;
+}
+
+
+tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
+  tListaJugadores listaNew = LISTA;
+  int pos;
+  tJugador tmp;
+  for (int i = 0; i < LISTA.cont; i++) {
+    tmp = listaNew.jugador[i];
+    while ((pos < i) && (!menor(listaNew.jugador[pos], tmp))) {
+      pos++;
+    }
+    for (int j = i; j > pos; j--) {
+      listaNew.jugador[j] = listaNew.jugador[j - 1];
+    }
+    lista.jugador[pos] = tmp;
+  }
+}
+
+tListaJugadores
+ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA) {
+  int pos, limit = 0;
+  tListaJugadores listaNew = LISTA;
+  tJugador tmp;
+  bool insertado = false;
+  for (int i = 1; i < LISTA.cont; i++) {
+    pos = i;
+    insertado = false;
+    while ((pos > 0) &&
+           (menor(listaNew.jugador[pos - 1], listaNew.jugador[pos])) {
+      tmp = listaNew.jugador[pos];
+      listaNew.jugador[pos] = listaNew.jugador[pos ‐1];
+      listaNew.jugador[pos ‐1] = tmp;
+      pos--;
+    }
+  }
+}
+}
+
+tListaJugadores
+ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA) {
+
 }
 
 tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
@@ -184,26 +227,6 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
   return listaNew;
 }
 
-tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
-  tListaJugadores listaNew = LISTA;
-  int pos;
-  tJugador nuevo;
-  for (int i = 0; i < LISTA.cont; i++) {
-    nuevo = listaNew.jugador[i];
-    while (pos < i && listaNew.jugador[pos] <= nuevo) {
-      pos++;
-    }
-    for (int j = i; j > pos; j--) {
-      listaNew.jugador[j] = listaNew.jugador[j - 1];
-    }
-    lista.jugador[pos] = nuevo;
-  }
-}
-
-tListaJugadores
-ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA) {
-  
-}
 
 void anadirJugador(tListaJugadores &lista, const string ID,
                    const unsigned int PTS) {
