@@ -1,7 +1,7 @@
 ﻿#ifndef _listaJugadores
 #define _listaJugadores
-#include "jugador.h"
 #include "casilla.h"
+#include "jugador.h"
 #include <fstream>
 
 const string nombreListaJug = "listaJugadores.txt";
@@ -46,23 +46,27 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos);
 // devuelve una copia de la lista dada ordenada por ranking (decrecientemente
 // por puntos, y a igualdad de puntos crecientemente por identificador).
 
-
 tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA);
-tListaJugadores ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA);
-tListaJugadores ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA);
+tListaJugadores
+ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA);
+tListaJugadores
+ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA);
 
+tListaJugadores ordenarPorAscii_insercion(const tListaJugadores &LISTA);
+tListaJugadores
+ordenarPorAscii_insercionConIntercambios(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorAscii_seleccionDirecta(const tListaJugadores &LISTA);
 tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
-tListaJugadores ordenarPorAscii_(const tListaJugadores &LISTA);
 
 // anadir nuevo jugador
 void anadirJugador(tListaJugadores &lista, const string ID,
                    const unsigned int PTS);
 
-//incorpora un jugador sin jugar
+// incorpora un jugador sin jugar
 void incorporarJugador(tListaSudokus lista);
 
-//busca al jugador, con el Id y lo elimina
+// busca al jugador, con el Id y lo elimina
 void borrarJugador(tListaJugadores &lista);
 
 // elimina un jugador
@@ -71,5 +75,8 @@ bool eliminarJugador(tListaJugadores &lista, const int POS = -1);
 // en caso de no haber espacio en la lista, busca jugador con menor puntos,
 // compara la pts del jug nuevo y del de menor pts
 int buscarConMenorPuntos(const tListaJugadores &LISTA);
+
+// da opcion de elegie el malgoritmo de ordenacion
+tListaJugadores menuOrdenacion(const tListaJugadores &LISTA, bool ranking);
 
 #endif

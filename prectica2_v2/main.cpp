@@ -7,8 +7,8 @@
 
 //					OPCIONALES:
 //			->Preguntar con que algoritmo ordenar a los jugadores
-//					Algoritmo de ordenaci�n por inserci�n con
-//					intercambios 672 -- hacer con todos(?)
+//					Algoritmo de ordenaci�n por inserci�n
+//con 					intercambios 672 -- hacer con todos(?)
 //
 //			TODO:	->Guardar jugador sin jugar -- comprobar
 
@@ -59,15 +59,13 @@ int main() {
         }
 
         break;
-      case 2:
-        cout << "Lista de jugadores:\n";
+      case 2: // Ver jugadores ordenados por ID
         listaJug = ordenarPorAscii_Burbuja(listaJug);
-        mostrar(ordenarPorAscii_Burbuja(listaJug));
+        mostrar(menuOrdenacion(listaJug, false));
         pausa();
         break;
-      case 3:
-        cout << "Lista de jugadores:\n";
-        mostrar(ordenarPorRanking_Burbuja(listaJug));
+      case 3: // Ver jugadores ordenados por puntos
+        mostrar(menuOrdenacion(listaJug, true));
         pausa();
         break;
       case 4: // registrar sudoku

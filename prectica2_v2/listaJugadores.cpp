@@ -37,7 +37,10 @@ void mostrar(const tListaJugadores &LISTA) {
   if (LISTA.cont == 0) {
     cout << "La lista se encuentra vacia." << endl;
   } else {
-    cout << "Numero de jugadores: " << LISTA.cont << endl << endl;
+    cout << "Lista de jugadores:\n";
+    cout << "-----------------" cout << "Numero de jugadores: " << LISTA.cont
+         << endl
+         << endl;
     cout << setw(3);
     colorStr("#", VERDE_OSC);
     cout << setw(18);
@@ -138,7 +141,6 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
   return encontrado;
 }
 
-
 tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
   //----------BURBUJA----------
   tListaJugadores listaNew = LISTA;
@@ -162,6 +164,42 @@ tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
   return listaNew;
 }
 
+tListaJugadores ordenarPorAscii_insercion(const tListaJugadores &LISTA) {
+  tListaJugadores listaNew = LISTA;
+  int pos;
+  tJugador tmp;
+  for (int i = 0; i < LISTA.cont; i++) {
+    tmp = listaNew.jugador[i];
+    while ((pos < i) && (listaNew.jugador[pos] < tmp))) {
+      pos++;
+    }
+    for (int j = i; j > pos; j--) {
+      listaNew.jugador[j] = listaNew.jugador[j - 1];
+    }
+    lista.jugador[pos] = tmp;
+  }
+}
+
+tListaJugadores
+ordenarPorAscii_insercionConIntercambios(const tListaJugadores &LISTA) {
+  int pos, limit = 0;
+  tListaJugadores listaNew = LISTA;
+  tJugador tmp;
+  bool insertado = false;
+  for (int i = 1; i < LISTA.cont; i++) {
+    pos = i;
+    insertado = false;
+    while ((pos > 0) && (listaNew.jugador[pos - 1] < listaNew.jugador[pos])) {
+      tmp = listaNew.jugador[pos];
+      listaNew.jugador[pos] = listaNew.jugador[pos ‐1];
+      listaNew.jugador[pos ‐1] = tmp;
+      pos--;
+    }
+  }
+}
+tListaJugadores ordenarPorAscii_seleccionDirecta(const tListaJugadores &LISTA) {
+
+}
 
 tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
   tListaJugadores listaNew = LISTA;
@@ -197,12 +235,9 @@ ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA) {
     }
   }
 }
-}
 
 tListaJugadores
-ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA) {
-
-}
+ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA) {}
 
 tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
   //----------BURBUJA----------
@@ -226,7 +261,6 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
   }
   return listaNew;
 }
-
 
 void anadirJugador(tListaJugadores &lista, const string ID,
                    const unsigned int PTS) {
@@ -314,4 +348,43 @@ int buscarConMenorPuntos(const tListaJugadores &LISTA) {
     }
   }
   return pos;
+}
+
+tListaJugadores menuOrdenacion(const tListaJugadores &LISTA, bool ranking) {
+  int op;
+  tListaJugadores listaNew;
+  cout << "Elige el algoritmo de ordenacion:\n";
+  << "1.- Por insercion\n";
+  << "2.- Por insercion con intercambios\n";
+  << "3.- Por seleccion directa\n";
+  << "4.- Por burbuja" << endl;
+  op = leerOpcion(1, 4);
+  switch (op) {
+  case 1:
+    if (ranking)
+      listaNew = ordenarPorRanking_insercion(LISTA);
+    else
+      listaNew = ordenarPorAscii_insercion(LISTA);
+    break;
+  case 2:
+    if (ranking)
+      listaNew = ordenarPorRanking_insercionConIntercambios(LISTA);
+    else
+      listaNew = ordenarPorAscii_insercionConIntercambios(LISTA);
+    break;
+  case 3:
+    if (ranking)
+      listaNew = ordenarPorRanking_seleccionDirecta(LISTA);
+    else
+      listaNew = ordenarPorAscii_seleccionDirecta(LISTA);
+    break;
+  case 4:
+    if (ranking)
+      listaNew = ordenarPorRanking_Burbuja(LISTA);
+    else
+      listaNew = ordenarPorAscii_Burbuja(LISTA);
+    break;
+  }
+  clear();
+  return listaNew;
 }
