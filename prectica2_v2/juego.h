@@ -60,4 +60,12 @@ void salvarJuego(tJuego &juego, bool reiniciar = false);
 
 bool errorAbrirFichero(const string &fichero);
 
+//----------------------------------V2----------------------------------
+
+// incorpora un jugador sin jugar
+void incorporarJugador(tListaJugadores &lista);
+
+// da opcion de elegie el algoritmo de ordenacion
+tListaJugadores menuOrdenacion(const tListaJugadores &LISTA, bool ranking);
+
 #endif

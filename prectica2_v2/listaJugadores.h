@@ -8,8 +8,8 @@ const string nombreListaJug = "listaJugadores.txt";
 const int MAX_JUGADORES = 20;
 typedef tJugador tArrJugadores[MAX_JUGADORES];
 typedef struct {
-  tArrJugadores jugador;
-  int cont;
+	tArrJugadores jugador;
+	int cont;
 } tListaJugadores;
 
 // comprueba un string si contiene espacios
@@ -46,25 +46,9 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos);
 // devuelve una copia de la lista dada ordenada por ranking (decrecientemente
 // por puntos, y a igualdad de puntos crecientemente por identificador).
 
-tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA);
-tListaJugadores
-ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA);
-tListaJugadores
-ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA);
-tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA);
-
-tListaJugadores ordenarPorAscii_insercion(const tListaJugadores &LISTA);
-tListaJugadores
-ordenarPorAscii_insercionConIntercambios(const tListaJugadores &LISTA);
-tListaJugadores ordenarPorAscii_seleccionDirecta(const tListaJugadores &LISTA);
-tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
-
 // anadir nuevo jugador
 void anadirJugador(tListaJugadores &lista, const string ID,
-                   const unsigned int PTS);
-
-// incorpora un jugador sin jugar
-void incorporarJugador(tListaSudokus lista);
+	const unsigned int PTS);
 
 // busca al jugador, con el Id y lo elimina
 void borrarJugador(tListaJugadores &lista);
@@ -76,7 +60,16 @@ bool eliminarJugador(tListaJugadores &lista, const int POS = -1);
 // compara la pts del jug nuevo y del de menor pts
 int buscarConMenorPuntos(const tListaJugadores &LISTA);
 
-// da opcion de elegie el malgoritmo de ordenacion
-tListaJugadores menuOrdenacion(const tListaJugadores &LISTA, bool ranking);
+
+tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA);
+
+tListaJugadores ordenarPorAscii_insercion(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorAscii_insercionConIntercambios(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorAscii_seleccionDirecta(const tListaJugadores &LISTA);
+tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
+
 
 #endif

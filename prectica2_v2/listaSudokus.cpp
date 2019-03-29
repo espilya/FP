@@ -100,12 +100,14 @@ bool registrarSudoku(tListaSudokus &lista) {
     cin >> sudokuNuevo.nivel;
 
     pos = buscarPos(lista, sudokuNuevo);
-    cout << pos << " " << lista.cont; ///////////////////////
+   // cout << pos << " " << lista.cont; 
 	lista.cont++;
 
     insertarSudoku(lista, sudokuNuevo, pos);
     ok = true;
-  } else
+	clear();
+  }
+  else
     colorStr("Error al insertar sudoku.\n LISTA COMPLETA\n", ROJO);
   return ok;
 }
@@ -131,15 +133,15 @@ int buscarPos(const tListaSudokus &LISTA, const tSudoku &SUDOKU) {
 	  mitad = (ini + fin) / 2; // Divisi�n entera
 	  if (SUDOKU.nivel == LISTA.array[mitad].nivel) {
 		  encontrado = true;
-		  cout << "igual";
+		//  cout << "igual";
 	  }
 	  else if (menor(SUDOKU, LISTA.array[mitad])) {
 		  fin = mitad - 1;
-		  cout << "menor";
+		 // cout << "menor";
 	  }
 	  else{
 		  ini = mitad + 1;
-		  cout << "mayor";
+		  //cout << "mayor";
   }
   }
   pos = mitad;

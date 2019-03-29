@@ -9,7 +9,6 @@ void iniciaJuego(tJuego &juego) {
 	iniciaTablero(juego.tablero);
 }
 
-
 void startJuego(tJuego &juego) { // iniciamos el proceso del juego
 	clear();
 	if (cargaJuego(juego))
@@ -348,4 +347,75 @@ bool errorAbrirFichero(const string &fichero) {
 		temp = leerOpcion(1, 1);
 	}
 	return continuarConVacio;
+}
+
+//----------------------------------V2----------------------------------
+
+void incorporarJugador(tListaJugadores &lista) {
+	unsigned int puntos;
+	bool ok, goodNum;
+	string id, temp;
+	cout << "Introduce tu nickname:\n>";
+	do {
+		getline(cin, id);
+		ok = comprobarStr(id);
+		if (!ok) {
+			cout << "Nombre contiene caracteres invalidos!" << endl;
+			if (id.size() > 30)
+				cout << "El nombre contiene mas de 30 caracteres!" << endl;
+			cout << ">";
+		}
+	} while (!ok);
+	cout << "\nIntroduce los puntos del jugador:\n>";
+	do {
+		getline(cin, temp);
+		goodNum = true;
+		for (int i = 0; i < (int)temp.size(); i++) 
+			if (!isdigit(temp[i]))
+				goodNum = false;
+		if (!goodNum)
+			cout << "\nOpcion incorrecta.\n>";
+		else
+			puntos = stoi(temp);
+	} while (!goodNum);
+	anadirJugador(lista, id, puntos);
+}
+
+tListaJugadores menuOrdenacion(const tListaJugadores &LISTA, bool ranking) {
+	int op;
+	tListaJugadores listaNew;
+	cout << "Elige el algoritmo de ordenacion:\n"
+		<< "1.- Por insercion\n"
+		<< "2.- Por insercion con intercambios\n"
+		<< "3.- Por seleccion directa\n"
+		<< "4.- Por burbuja" << endl;
+	op = leerOpcion(1, 4);
+	switch (op) {
+	case 1:
+		if (ranking)
+			listaNew = ordenarPorRanking_insercion(LISTA);
+		else
+			listaNew = ordenarPorAscii_insercion(LISTA);
+		break;
+	case 2:
+		if (ranking)
+			listaNew = ordenarPorRanking_insercionConIntercambios(LISTA);
+		else
+			listaNew = ordenarPorAscii_insercionConIntercambios(LISTA);
+		break;
+	case 3:
+		if (ranking)
+			listaNew = ordenarPorRanking_seleccionDirecta(LISTA);
+		else
+			listaNew = ordenarPorAscii_seleccionDirecta(LISTA);
+		break;
+	case 4:
+		if (ranking)
+			listaNew = ordenarPorRanking_Burbuja(LISTA);
+		else
+			listaNew = ordenarPorAscii_Burbuja(LISTA);
+		break;
+	}
+	clear();
+	return listaNew;
 }
