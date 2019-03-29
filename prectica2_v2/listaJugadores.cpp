@@ -141,29 +141,6 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
   return encontrado;
 }
 
-tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
-  //----------BURBUJA----------
-  tListaJugadores listaNew = LISTA;
-  int i = 0;
-  int N = LISTA.cont;
-  bool inter = true;
-  while ((i < N - 1) && (inter)) {
-    inter = false;
-    for (int j = N - 1; j > i; j--) {
-      if (listaNew.jugador[j] < listaNew.jugador[j - 1]) {
-        tJugador tmp;
-        tmp = listaNew.jugador[j];
-        listaNew.jugador[j] = listaNew.jugador[j - 1];
-        listaNew.jugador[j - 1] = tmp;
-        inter = true;
-      }
-    }
-    if (inter)
-      i++;
-  }
-  return listaNew;
-}
-
 tListaJugadores ordenarPorAscii_insercion(const tListaJugadores &LISTA) {
   tListaJugadores listaNew = LISTA;
   int pos;
@@ -198,7 +175,44 @@ ordenarPorAscii_insercionConIntercambios(const tListaJugadores &LISTA) {
   }
 }
 tListaJugadores ordenarPorAscii_seleccionDirecta(const tListaJugadores &LISTA) {
-
+  tListaJugadores listaNew = LISTA;
+  for (int i = 0; i < LISTA.cont ‐1; i++) {
+  tJugador menor = listaNew.jugador[i];
+    for (int j = i + 1; j < LISTA.cont; j++) {
+      if (listaNew.jugador[j] < listaNew.jugador[menor]) {
+        menor = listaNew.jugador[j];
+      }
+    }
+    if (menor > listaNew.jugador[i]) {
+      tJugador tmp;
+      tmp = listaNew.jugador[i];
+      listaNew.jugador[i] = listaNew.jugador[menor];
+      listaNew.jugador[menor] = tmp;
+    }
+  }
+  return listaNew;
+}
+tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
+  //----------BURBUJA----------
+  tListaJugadores listaNew = LISTA;
+  int i = 0;
+  int N = LISTA.cont;
+  bool inter = true;
+  while ((i < N - 1) && (inter)) {
+    inter = false;
+    for (int j = N - 1; j > i; j--) {
+      if (listaNew.jugador[j] < listaNew.jugador[j - 1]) {
+        tJugador tmp;
+        tmp = listaNew.jugador[j];
+        listaNew.jugador[j] = listaNew.jugador[j - 1];
+        listaNew.jugador[j - 1] = tmp;
+        inter = true;
+      }
+    }
+    if (inter)
+      i++;
+  }
+  return listaNew;
 }
 
 tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
@@ -216,7 +230,6 @@ tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
     lista.jugador[pos] = tmp;
   }
 }
-
 tListaJugadores
 ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA) {
   int pos, limit = 0;
@@ -235,10 +248,25 @@ ordenarPorRanking_insercionConIntercambios(const tListaJugadores &LISTA) {
     }
   }
 }
-
 tListaJugadores
-ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA) {}
-
+ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA) {
+  tListaJugadores listaNew = LISTA;
+  for (int i = 0; i < LISTA.cont ‐1; i++) {
+  tJugador menor = listaNew.jugador[i];
+    for (int j = i + 1; j < LISTA.cont; j++) {
+      if (menor(listaNew.jugador[j], listaNew.jugador[menor])) {
+        menor = listaNew.jugador[j];
+      }
+    }
+    if (menor > listaNew.jugador[i]) {
+      tJugador tmp;
+      tmp = listaNew.jugador[i];
+      listaNew.jugador[i] = listaNew.jugador[menor];
+      listaNew.jugador[menor] = tmp;
+    }
+  }
+  return listaNew;
+}
 tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
   //----------BURBUJA----------
   tListaJugadores listaNew = LISTA;
