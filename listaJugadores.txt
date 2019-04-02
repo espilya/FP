@@ -1,0 +1,15 @@
+a			6
+aaaa			6
+aaaaa			1
+aaaab			3
+aaabb			9
+aaacc			103
+espilya			1999
+h			13
+ilya			199999
+ilyaa			11
+juan_A			234
+juan_a			234
+mivhal			6
+pepe			3
+pepito_1000			100
