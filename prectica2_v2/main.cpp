@@ -2,16 +2,14 @@
 
 #include "listaSudokus.h"
 
-//					DUDAS:
-//	->hacer probar abrir el nuevo sudoku incorporado?
-
-//					OPCIONALES:
-//			->Preguntar con que algoritmo ordenar a los jugadores
-//					Algoritmo de ordenaci�n por inserci�n
-//con 					intercambios 672 -- hacer con todos(?)
+//	
+//				HECHO POR: 
+//		ILYA LAPSHIN y MICHAL FITAL
 //
-//			TODO:	->Guardar jugador sin jugar -- comprobar
-
+//
+//
+//
+//
 //
 //
 

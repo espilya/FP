@@ -1,0 +1,13 @@
+a			6
+aa			5
+aaaa			5
+aaaaa			1
+aaaab			3
+aaabb			9
+aaacc			103
+h			13
+juan_A			234
+juan_a			234
+pepe			3
+pepito_1000			100
+espilya			1999

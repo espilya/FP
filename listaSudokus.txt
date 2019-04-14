@@ -1,7 +1,0 @@
-a	1
-sudoku1.txt	1
-sudoku5.txt	1
-z	1
-sudoku2.txt	2
-sudoku3.txt	3
-sudoku4.txt	4
