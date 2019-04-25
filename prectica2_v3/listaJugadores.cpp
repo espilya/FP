@@ -369,7 +369,18 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
 
 //Amplía la dimensión del array dinámico de lista al doble de la que 
 //tiene.Los datos de los jugadores que ya existen en la lista deben mantenerse.
-void ampliar(tListaJugadores & lista);
+void ampliar(tListaJugadores & lista) {
+	int tam = lista.cont * 2;
+	//
+	int *temp1 = new int[tam];
+	//
+	int *temp = new int[tam];
+	memcpy(temp, temp1, lista.cont);
+
+}
 
 //Libera la memoria dinámica usada por lista.
-void borrarListaJugadores(tListaJugadores & lista);
+void borrarListaJugadores(tListaJugadores & lista) {
+	delete[] lista.jugador; 
+	lista.cont = 0;
+}

@@ -19,6 +19,7 @@ int main() {
 	bool okListaSud = false, okListaJug = false;
 	tListaSudokus listaSud;
 	tListaJugadores listaJug;
+	int
 	tJuego juego;
 	creaLista(listaSud); // iniciamos lista de sudoku
 	creaLista(listaJug); // iniciamos lista de jugadores

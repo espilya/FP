@@ -4,9 +4,13 @@
 #include "jugador.h"
 #include <fstream>
 
+
+
+
+
 const string nombreListaJug = "listaJugadores.txt";
 const int MAX_JUGADORES = 20;
-typedef tJugador tArrJugadores[MAX_JUGADORES];
+typedef tJugPtr tArrJugadores[MAX_JUGADORES];
 typedef struct {
 	tArrJugadores jugador;
 	int cont;

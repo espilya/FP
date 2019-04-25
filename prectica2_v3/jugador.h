@@ -10,6 +10,7 @@ typedef struct {
   string id;
   int pts;
 } tJugador;
+typedef tJugador *tJugPtr;
 
 // devuelve la información del
 // jugador dado en un formato de cadena de caracteres(una cadena de
@@ -30,5 +31,9 @@ bool operator<(const tJugador &opIzq, const tJugador &opDer);
 // tienen los mismos puntos pero el identificador del jugador j2 es menor que el
 // del jugador j1; false en caso contrario.
 bool menor(const tJugador &j1, const tJugador &j2);
+
+//----------------------------Version 3----------------------------
+
+
 
 #endif
