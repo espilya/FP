@@ -12,8 +12,9 @@ const string nombreListaJug = "listaJugadores.txt";
 const int MAX_JUGADORES = 20;
 typedef tJugPtr tArrJugadores[MAX_JUGADORES];
 typedef struct {
-	tArrJugadores jugador;
+	tArrJugadores *jugador;
 	int cont;
+	int cap;
 } tListaJugadores;
 
 // comprueba un string si contiene espacios
@@ -77,9 +78,9 @@ tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
 
 //----------------------------Version 3----------------------------
 
-//Amplía la dimensión del array dinámico de lista al doble de la que 
+//Amplía la dimensión del array dinámico de lista al doble de la que
 //tiene.Los datos de los jugadores que ya existen en la lista deben mantenerse.
-void ampliar(tListaJugadores & lista); 
+void ampliar(tListaJugadores & lista);
 
 //Libera la memoria dinámica usada por lista.
 void borrarListaJugadores(tListaJugadores & lista);

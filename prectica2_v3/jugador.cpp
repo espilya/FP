@@ -5,8 +5,6 @@ string showJugador(tJugador jugador) {
 	return (jugador.id + "\t\t\t" + to_string(jugador.pts) + '\n');
 }
 
-
-
 void modificarJugador(tJugador &jugador, int puntos) { jugador.pts += puntos; }
 
 bool operator<(const tJugador &opIzq, const tJugador &opDer) {
