@@ -1,5 +1,5 @@
 
-
+#include "checkML.h"
 #include "listaSudokus.h"
 
 //	
@@ -11,6 +11,10 @@
 //
 //
 //
+//				Preg:
+//	--Policia de memoria
+//	--(return true;  return false;) ???
+//	--Opcionales
 //
 
 int main() {
@@ -62,8 +66,8 @@ int main() {
 
 				break;
 			case 2: // Ver jugadores ordenados por ID
-				listaJug = ordenarPorAscii_Burbuja(listaJug);
-				mostrar(menuOrdenacion(listaJug, false));
+				//listaJug = ordenarPorAscii_Burbuja(listaJug);
+				mostrar(listaJug);
 				pausa();
 				break;
 			case 3: // Ver jugadores ordenados por puntos
@@ -105,6 +109,7 @@ int main() {
 		colorStr("Error al cargar 'listaSudokus.txt'.\n", ROJO);
 	else if (!okListaJug)
 		colorStr("Error al cargar 'listaJugadores.txt'.\n", ROJO);
-	borrarListaJugadores(listaJug.jugador);
+	borrarJugadores(listaJug);
+	//borrarListaJugadores(listaJug);
 	return 0;
 }

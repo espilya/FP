@@ -1,5 +1,4 @@
-﻿
-#include "jugador.h"
+﻿#include "jugador.h"
 
 string showJugador(const tJugador &jugador) {
 	return (jugador.id + "\t\t\t" + to_string(jugador.pts) + '\n');

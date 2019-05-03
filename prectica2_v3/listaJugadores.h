@@ -49,6 +49,8 @@ void puntuarJugador(tListaJugadores &lista, int puntos);
 // lista.Debe implementar una búsqueda binaria.
 bool buscar(const tListaJugadores &LISTA, const string ID, int &pos);
 
+int buscarBR(const tListaJugadores LISTA, const string buscado, int ini, int fin);
+
 // devuelve una copia de la lista dada ordenada por ranking (decrecientemente
 // por puntos, y a igualdad de puntos crecientemente por identificador).
 
@@ -86,5 +88,5 @@ void ampliar(tListaJugadores & lista);
 void borrarJugadores(tListaJugadores & lista);
 
 //Libera la memoria dinámica usada por lista.
-void borrarListaJugadores(tJugPtr *jugador);
+void borrarListaJugadores(tListaJugadores & lista);
 #endif

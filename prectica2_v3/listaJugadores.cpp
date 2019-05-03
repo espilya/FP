@@ -1,3 +1,4 @@
+#include "checkML.h"
 #include "listaJugadores.h"
 
 bool comprobarStr(const string &STR) {
@@ -9,9 +10,6 @@ bool comprobarStr(const string &STR) {
 
 void creaLista(tListaJugadores &lista) {
 	lista.jugador = new tJugPtr[INICIO_JUGADORES];
-	for (int i = 0; i < INICIO_JUGADORES; i++) {
-		lista.jugador[i] = new tJugador;
-	}
 }
 
 
@@ -22,23 +20,18 @@ bool cargar(tListaJugadores &lista) { //CREACION DE NEW
 	lista.cap = INICIO_JUGADORES;
 	ifstream file;
 	file.open(nombreListaJug);
-	cout << "duck";
 	if (file.is_open()) {
 		while ((!file.eof()) && (file >> player.id) && (lista.cont < MAX_JUGADORES)) {
 			if (lista.cont >= lista.cap) {
 				ampliar(lista);
-				for (int i = 0; i < lista.cont; i++)
-					cout << lista.jugador[i] << " " << lista.jugador[i]->id << endl;
 			}
 			file >> player.pts;
-			cout << "intento copiar, cont: " << lista.cont << " " << lista.cap << endl;
 			lista.jugador[lista.cont] = new tJugador(player);
-			cout << "lista.cap " << lista.cap << endl;
 			lista.cont++;
 		}
 		ok = true;
 	}
-	cout << "\nfck";
+	mostrar(lista);
 	file.close();
 	return ok;
 }
@@ -104,14 +97,10 @@ void puntuarJugador(tListaJugadores &lista, int puntos) {
 		}
 	} while (!ok);
 
-	if (buscar(lista, id, pos)) {
+	if (buscar(lista, id, pos))
 		modificarJugador(*lista.jugador[pos], puntos); // anadir pts
-	}
-	else {
-		// cout << ".#.#.anadirJugador_START" << endl;
+	else
 		anadirJugador(lista, id, puntos);
-		// cout << ".#.#.anadirJugador_END" << endl;
-	}
 }
 
 void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int PTS) {
@@ -127,9 +116,7 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 			cout << "La lista de jugadores esta llena, pero ya que tienes "
 				"mas puntos que algunos jugadores,"
 				<< " seras guardado! :D" << endl;
-			// cout << ".#.#.eleminar_STAR" << endl;
 			eliminarJugador(lista, pos);
-			// cout << ".#.#.eleminar_END" << endl;
 		}
 		else {
 			cout << "La lista se encuentra llena! No se ha podido guardar tu "
@@ -139,43 +126,58 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 	}
 
 	if (meter) {
-		// cout << ".#.#.guardarHARD_STAR" << endl;
 		for (int i = lista.cont - 1; i > pos; i--)
-			lista.jugador[i] = lista.jugador[i - 1];
+			*lista.jugador[i] = *lista.jugador[i - 1];
 		lista.jugador[pos]->id = ID;
 		lista.jugador[pos]->pts = PTS;
-		// cout << ".#.#.guardarHARD_END//" << endl;
 	}
 
 	else if ((lista.cont < MAX_JUGADORES)) {
-		//cout << ".#.#.guardarSLOW_START//" << endl;
 		lista.jugador[lista.cont]->id = ID;
 		lista.jugador[lista.cont]->pts = PTS;
 		lista.cont++;
-		// cout << ".#.#.guardarSLOW_END//" << endl;
 	}
 	else
 		cout << "Lista llena." << endl;
 }
 
 bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
-	tJugador tempJug;
-	pos = -1;
-	int ini = 0, fin = LISTA.cont - 1, mitad;
-	bool encontrado = false;
-	tempJug.id = ID;
+	//tJugador tempJug;
+	//pos = -1;
+	//int ini = 0, fin = LISTA.cont - 1, mitad;
+	//tempJug.id = ID;
+	//while ((ini <= fin) && !encontrado) {
+	//	mitad = (ini + fin) / 2; // División entera
+	//	if (tempJug.id == LISTA.jugador[mitad]->id)
+	//		encontrado = true;
+	//	else if (tempJug.id < LISTA.jugador[mitad]->id)
+	//		fin = mitad - 1;
+	//	else
+	//		ini = mitad + 1;
+	//}
+	//pos = mitad;
+	pos = buscarBR(LISTA, ID, 0, LISTA.cont - 1);
+	if (pos == -1)
+		return false;
+	else
+		return true;
+}
 
-	while ((ini <= fin) && !encontrado) {
-		mitad = (ini + fin) / 2; // División entera
-		if (tempJug.id == LISTA.jugador[mitad]->id)
-			encontrado = true;
-		else if (tempJug.id < LISTA.jugador[mitad]->id)
-			fin = mitad - 1;
-		else
-			ini = mitad + 1;
+int buscarBR(const tListaJugadores LISTA, const string buscado, int ini, int fin) {
+	int pos = -1;
+	if (ini <= fin) {
+		int mitad = (ini + fin) / 2;
+		if (buscado == LISTA.jugador[mitad]->id) {
+			pos = mitad;
+		}
+		else if (buscado < LISTA.jugador[mitad]->id) {
+			pos = buscarBR(LISTA, buscado, ini, mitad - 1);
+		}
+		else {
+			pos = buscarBR(LISTA, buscado, mitad + 1, fin);
+		}
 	}
-	pos = mitad;
-	return encontrado;
+	return pos;
 }
 
 void borrarJugador(tListaJugadores &lista) {
@@ -197,7 +199,6 @@ void borrarJugador(tListaJugadores &lista) {
 		}
 	} while (!ok && !salir);
 	if (buscar(lista, id, pos)) {
-		cout << pos;
 		eliminarJugador(lista, pos);
 		lista.cont--;
 	}
@@ -209,7 +210,7 @@ bool eliminarJugador(tListaJugadores &lista, const int POS) { // quita al jugado
 	bool ok = false;
 
 	for (int i = POS; i < lista.cont - 1; i++)
-		lista.jugador[i] = lista.jugador[i + 1];
+		*lista.jugador[i] = *lista.jugador[i + 1];
 
 	return (!ok);
 }
@@ -238,7 +239,7 @@ tListaJugadores ordenarPorAscii_insercion(const tListaJugadores &LISTA) {
 			pos++;
 		}
 		for (int j = i; j > pos; j--) {
-			listaNew.jugador[j] = listaNew.jugador[j - 1];
+			*listaNew.jugador[j] = *listaNew.jugador[j - 1];
 		}
 		*listaNew.jugador[pos] = tmp;
 	}
@@ -252,9 +253,9 @@ tListaJugadores ordenarPorAscii_insercionConIntercambios(const tListaJugadores &
 	for (int i = 1; i < LISTA.cont; i++) {
 		pos = i;
 		insertado = false;
-		while ((pos > 0) && (listaNew.jugador[pos] < listaNew.jugador[pos - 1])) {
+		while ((pos > 0) && (*listaNew.jugador[pos] < *listaNew.jugador[pos - 1])) {
 			tmp = *listaNew.jugador[pos];
-			listaNew.jugador[pos] = listaNew.jugador[pos - 1];
+			*listaNew.jugador[pos] = *listaNew.jugador[pos - 1];
 			*listaNew.jugador[pos - 1] = tmp;
 			pos--;
 		}
@@ -266,14 +267,14 @@ tListaJugadores ordenarPorAscii_seleccionDirecta(const tListaJugadores &LISTA) {
 	for (int i = 0; i < LISTA.cont - 1; i++) {
 		int menorPos = i;
 		for (int j = i + 1; j < LISTA.cont; j++) {
-			if (listaNew.jugador[j] < listaNew.jugador[menorPos]) {
+			if (*listaNew.jugador[j] < *listaNew.jugador[menorPos]) {
 				menorPos = j;
 			}
 		}
-		if (listaNew.jugador[menorPos] < listaNew.jugador[i]) {
+		if (*listaNew.jugador[menorPos] < *listaNew.jugador[i]) {
 			tJugador tmp;
 			tmp = *listaNew.jugador[i];
-			listaNew.jugador[i] = listaNew.jugador[menorPos];
+			*listaNew.jugador[i] = *listaNew.jugador[menorPos];
 			*listaNew.jugador[menorPos] = tmp;
 		}
 	}
@@ -288,10 +289,10 @@ tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
 	while ((i < N - 1) && (inter)) {
 		inter = false;
 		for (int j = N - 1; j > i; j--) {
-			if (listaNew.jugador[j] < listaNew.jugador[j - 1]) {
+			if (*listaNew.jugador[j] < *listaNew.jugador[j - 1]) {
 				tJugador tmp;
 				tmp = *listaNew.jugador[j];
-				listaNew.jugador[j] = listaNew.jugador[j - 1];
+				*listaNew.jugador[j] = *listaNew.jugador[j - 1];
 				*listaNew.jugador[j - 1] = tmp;
 				inter = true;
 			}
@@ -313,7 +314,7 @@ tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
 			pos++;
 		}
 		for (int j = i; j > pos; j--) {
-			listaNew.jugador[j] = listaNew.jugador[j - 1];
+			*listaNew.jugador[j] = *listaNew.jugador[j - 1];
 		}
 		*listaNew.jugador[pos] = tmp;
 	}
@@ -329,7 +330,7 @@ tListaJugadores ordenarPorRanking_insercionConIntercambios(const tListaJugadores
 		insertado = false;
 		while ((pos > 0) && (menor(*listaNew.jugador[pos - 1], *listaNew.jugador[pos]))) {
 			tmp = *listaNew.jugador[pos];
-			listaNew.jugador[pos] = listaNew.jugador[pos - 1];
+			*listaNew.jugador[pos] = *listaNew.jugador[pos - 1];
 			*listaNew.jugador[pos - 1] = tmp;
 			pos--;
 		}
@@ -348,7 +349,7 @@ tListaJugadores ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA)
 		if (menor(*listaNew.jugador[i], *listaNew.jugador[menorPos])) {
 			tJugador tmp;
 			tmp = *listaNew.jugador[i];
-			listaNew.jugador[i] = listaNew.jugador[menorPos];
+			*listaNew.jugador[i] = *listaNew.jugador[menorPos];
 			*listaNew.jugador[menorPos] = tmp;
 		}
 	}
@@ -366,7 +367,7 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
 			if (menor(*listaNew.jugador[j - 1], *listaNew.jugador[j])) {
 				tJugador tmp;
 				tmp = *listaNew.jugador[j];
-				listaNew.jugador[j] = listaNew.jugador[j - 1];
+				*listaNew.jugador[j] = *listaNew.jugador[j - 1];
 				*listaNew.jugador[j - 1] = tmp;
 				inter = true;
 			}
@@ -384,26 +385,10 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
 void ampliar(tListaJugadores & lista) {
 	lista.cap = lista.cont * 2;
 	tJugPtr *new_jugador = new tJugPtr[lista.cap];
-	//memcpy(new_jugador, lista.jugador, lista.cont);
-	//				 =
 	for (int i = 0; i < lista.cont; i++)
 		new_jugador[i] = lista.jugador[i];
-	cout << "estado al copiar: " << endl;
-	for (int i = 0; i < lista.cont; i++)
-		cout << new_jugador[i] << " " << new_jugador[i]->id << endl;
-	cout << "lista.jugador: " << lista.jugador << endl;
-	cout << "new_jugador: " << new_jugador << endl;
+	borrarListaJugadores(lista);
 	lista.jugador = new_jugador;
-	cout << "=========" << endl;
-	cout << "lista.jugador: " << lista.jugador << endl;
-	cout << "new_jugador: " << new_jugador << endl;
-	cout << "estado despues: " << endl;
-	for (int i = 0; i < lista.cont; i++)
-		cout << lista.jugador[i] << " " << lista.jugador[i]->id << endl;
-
-	//for (int i = 0; i < lista.cont; i++)
-	//	delete  new_jugador[i];
-	//delete[] new_jugador;
 }
 
 void borrarJugadores(tListaJugadores & lista) {
@@ -412,7 +397,7 @@ void borrarJugadores(tListaJugadores & lista) {
 }
 
 //Libera la memoria dinámica usada por lista.
-void borrarListaJugadores(tJugPtr *jugador) {
-	delete[] jugador;
+void borrarListaJugadores(tListaJugadores & lista) {
+	delete[] lista.jugador;
 }
 
