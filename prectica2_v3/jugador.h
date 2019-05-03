@@ -16,7 +16,7 @@ typedef tJugador *tJugPtr;
 // jugador dado en un formato de cadena de caracteres(una cadena de
 // caracteres donde primero aparece el identificador y después los puntos
 // conseguidos por el jugador, separados por uno o más espacios en blanco)
-string showJugador(tJugador jugador);
+string showJugador(const tJugador &jugador);
 
 //muestra por cout a los jugadores con sus puntos
 

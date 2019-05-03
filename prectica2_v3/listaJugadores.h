@@ -8,11 +8,12 @@
 
 
 
+
 const string nombreListaJug = "listaJugadores.txt";
+const int INICIO_JUGADORES = 5;
 const int MAX_JUGADORES = 20;
-typedef tJugPtr tArrJugadores[MAX_JUGADORES];
 typedef struct {
-	tArrJugadores *jugador;
+	tJugPtr *jugador;
 	int cont;
 	int cap;
 } tListaJugadores;
@@ -82,6 +83,8 @@ tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA);
 //tiene.Los datos de los jugadores que ya existen en la lista deben mantenerse.
 void ampliar(tListaJugadores & lista);
 
+void borrarJugadores(tListaJugadores & lista);
+
 //Libera la memoria dinámica usada por lista.
-void borrarListaJugadores(tListaJugadores & lista);
+void borrarListaJugadores(tJugPtr *jugador);
 #endif

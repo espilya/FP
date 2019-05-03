@@ -1,7 +1,7 @@
 ﻿
 #include "jugador.h"
 
-string showJugador(tJugador jugador) {
+string showJugador(const tJugador &jugador) {
 	return (jugador.id + "\t\t\t" + to_string(jugador.pts) + '\n');
 }
 

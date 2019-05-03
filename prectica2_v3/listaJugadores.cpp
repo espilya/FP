@@ -8,28 +8,38 @@ bool comprobarStr(const string &STR) {
 }
 
 void creaLista(tListaJugadores &lista) {
-	for (int i = 0; i < MAX_JUGADORES; i++) {
-		lista.jugador[i].id = "";
-		lista.jugador[i].pts = 0;
-	}
+	//lista.jugador = new tJugPtr[INICIO_JUGADORES];
+	//for (int i = 0; i < INICIO_JUGADORES; i++) {
+	//	lista.jugador[i] = new tJugador;
+	//}
 }
 
-bool cargar(tListaJugadores &lista) {
+
+bool cargar(tListaJugadores &lista) { //CREACION DE NEW
 	tJugador player;
 	bool ok = false;
-	int ctd = 0;
+	lista.cont = 0;
+	lista.cap = INICIO_JUGADORES;
 	ifstream file;
 	file.open(nombreListaJug);
+	cout << "duck";
 	if (file.is_open()) {
-		while ((!file.eof()) && (file >> player.id) && (ctd < MAX_JUGADORES)) {
+		while ((!file.eof()) && (file >> player.id) && (lista.cont < MAX_JUGADORES)) {
+			if (lista.cont >= lista.cap) {
+				ampliar(lista);
+				for (int i = 0; i < lista.cont; i++)
+					cout << lista.jugador[i] << " " << lista.jugador[i]->id << endl;
+			}
 			file >> player.pts;
-			lista.jugador[ctd] = player;
-			ctd++;
+			cout << "intento copiar, cont: " << lista.cont << " " << lista.cap << endl;
+			lista.jugador[lista.cont] = new tJugador(player);
+			cout << "lista.cap " << lista.cap << endl;
+			lista.cont++;
 		}
 		ok = true;
 	}
+	cout << "\nfck";
 	file.close();
-	lista.cont = ctd;
 	return ok;
 }
 
@@ -55,9 +65,9 @@ void mostrar(const tListaJugadores &LISTA) {
 			cout << setw(3);
 			colorStr(to_string(i + 1), VERDE_OSC);
 			cout << setw(18);
-			colorStr(LISTA.jugador[i].id, MAGENTA_OSC);
+			colorStr(LISTA.jugador[i]->id, MAGENTA_OSC);
 			cout << setw(18);
-			colorStr(to_string(LISTA.jugador[i].pts), AMARILLO_OSC);
+			colorStr(to_string(LISTA.jugador[i]->pts), AMARILLO_OSC);
 			cout << endl;
 		}
 	}
@@ -69,7 +79,7 @@ bool guardar(const tListaJugadores &LISTA) {
 	bool ok = false;
 	if (file.is_open()) {
 		for (int i = 0; i < LISTA.cont; i++) {
-			file << showJugador(LISTA.jugador[i]);
+			file << showJugador(*LISTA.jugador[i]);
 		}
 		ok = true;
 	}
@@ -95,7 +105,7 @@ void puntuarJugador(tListaJugadores &lista, int puntos) {
 	} while (!ok);
 
 	if (buscar(lista, id, pos)) {
-		modificarJugador(lista.jugador[pos], puntos); // anadir pts
+		modificarJugador(*lista.jugador[pos], puntos); // anadir pts
 	}
 	else {
 		// cout << ".#.#.anadirJugador_START" << endl;
@@ -109,8 +119,10 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 	int pos;
 	bool meter = false;
 	if ((lista.cont >= MAX_JUGADORES)) {
+		if (!(lista.cont < lista.cap))
+			ampliar(lista);
 		pos = buscarConMenorPuntos(lista);
-		if ((int)PTS > (int)lista.jugador[pos].pts) {
+		if ((int)PTS > (int)lista.jugador[pos]->pts) {
 			meter = true;
 			cout << "La lista de jugadores esta llena, pero ya que tienes "
 				"mas puntos que algunos jugadores,"
@@ -130,15 +142,15 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 		// cout << ".#.#.guardarHARD_STAR" << endl;
 		for (int i = lista.cont - 1; i > pos; i--)
 			lista.jugador[i] = lista.jugador[i - 1];
-		lista.jugador[pos].id = ID;
-		lista.jugador[pos].pts = PTS;
+		lista.jugador[pos]->id = ID;
+		lista.jugador[pos]->pts = PTS;
 		// cout << ".#.#.guardarHARD_END//" << endl;
 	}
 
 	else if ((lista.cont < MAX_JUGADORES)) {
 		//cout << ".#.#.guardarSLOW_START//" << endl;
-		lista.jugador[lista.cont].id = ID;
-		lista.jugador[lista.cont].pts = PTS;
+		lista.jugador[lista.cont]->id = ID;
+		lista.jugador[lista.cont]->pts = PTS;
 		lista.cont++;
 		// cout << ".#.#.guardarSLOW_END//" << endl;
 	}
@@ -155,9 +167,9 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
 
 	while ((ini <= fin) && !encontrado) {
 		mitad = (ini + fin) / 2; // División entera
-		if (tempJug.id == LISTA.jugador[mitad].id)
+		if (tempJug.id == LISTA.jugador[mitad]->id)
 			encontrado = true;
-		else if (tempJug.id < LISTA.jugador[mitad].id)
+		else if (tempJug.id < LISTA.jugador[mitad]->id)
 			fin = mitad - 1;
 		else
 			ini = mitad + 1;
@@ -206,7 +218,7 @@ int buscarConMenorPuntos(const tListaJugadores &LISTA) {
 	int pos;
 	unsigned int a = 0, b = 2147483647; // el valor de int maximo
 	for (int i = 0; i < LISTA.cont; i++) {
-		a = LISTA.jugador[i].pts;
+		a = LISTA.jugador[i]->pts;
 		if (a <= b) {
 			b = a;
 			pos = i;
@@ -220,15 +232,15 @@ tListaJugadores ordenarPorAscii_insercion(const tListaJugadores &LISTA) {
 	int pos;
 	tJugador tmp;
 	for (int i = 0; i < LISTA.cont; i++) {
-		tmp = listaNew.jugador[i];
+		tmp = *listaNew.jugador[i];
 		pos = 0;
-		while ((pos < i) && (listaNew.jugador[pos] < tmp)) {
+		while ((pos < i) && (*listaNew.jugador[pos] < tmp)) {
 			pos++;
 		}
 		for (int j = i; j > pos; j--) {
 			listaNew.jugador[j] = listaNew.jugador[j - 1];
 		}
-		listaNew.jugador[pos] = tmp;
+		*listaNew.jugador[pos] = tmp;
 	}
 	return listaNew;
 }
@@ -241,9 +253,9 @@ tListaJugadores ordenarPorAscii_insercionConIntercambios(const tListaJugadores &
 		pos = i;
 		insertado = false;
 		while ((pos > 0) && (listaNew.jugador[pos] < listaNew.jugador[pos - 1])) {
-			tmp = listaNew.jugador[pos];
+			tmp = *listaNew.jugador[pos];
 			listaNew.jugador[pos] = listaNew.jugador[pos - 1];
-			listaNew.jugador[pos - 1] = tmp;
+			*listaNew.jugador[pos - 1] = tmp;
 			pos--;
 		}
 	}
@@ -260,9 +272,9 @@ tListaJugadores ordenarPorAscii_seleccionDirecta(const tListaJugadores &LISTA) {
 		}
 		if (listaNew.jugador[menorPos] < listaNew.jugador[i]) {
 			tJugador tmp;
-			tmp = listaNew.jugador[i];
+			tmp = *listaNew.jugador[i];
 			listaNew.jugador[i] = listaNew.jugador[menorPos];
-			listaNew.jugador[menorPos] = tmp;
+			*listaNew.jugador[menorPos] = tmp;
 		}
 	}
 	return listaNew;
@@ -278,9 +290,9 @@ tListaJugadores ordenarPorAscii_Burbuja(const tListaJugadores &LISTA) {
 		for (int j = N - 1; j > i; j--) {
 			if (listaNew.jugador[j] < listaNew.jugador[j - 1]) {
 				tJugador tmp;
-				tmp = listaNew.jugador[j];
+				tmp = *listaNew.jugador[j];
 				listaNew.jugador[j] = listaNew.jugador[j - 1];
-				listaNew.jugador[j - 1] = tmp;
+				*listaNew.jugador[j - 1] = tmp;
 				inter = true;
 			}
 		}
@@ -295,15 +307,15 @@ tListaJugadores ordenarPorRanking_insercion(const tListaJugadores &LISTA) {
 	int pos;
 	tJugador tmp;
 	for (int i = 0; i < LISTA.cont; i++) {
-		tmp = listaNew.jugador[i];
+		tmp = *listaNew.jugador[i];
 		pos = 0;
-		while ((pos < i) && (!menor(listaNew.jugador[pos], tmp))) {
+		while ((pos < i) && (!menor(*listaNew.jugador[pos], tmp))) {
 			pos++;
 		}
 		for (int j = i; j > pos; j--) {
 			listaNew.jugador[j] = listaNew.jugador[j - 1];
 		}
-		listaNew.jugador[pos] = tmp;
+		*listaNew.jugador[pos] = tmp;
 	}
 	return listaNew;
 }
@@ -315,10 +327,10 @@ tListaJugadores ordenarPorRanking_insercionConIntercambios(const tListaJugadores
 	for (int i = 1; i < LISTA.cont; i++) {
 		pos = i;
 		insertado = false;
-		while ((pos > 0) && (menor(listaNew.jugador[pos - 1], listaNew.jugador[pos]))) {
-			tmp = listaNew.jugador[pos];
+		while ((pos > 0) && (menor(*listaNew.jugador[pos - 1], *listaNew.jugador[pos]))) {
+			tmp = *listaNew.jugador[pos];
 			listaNew.jugador[pos] = listaNew.jugador[pos - 1];
-			listaNew.jugador[pos - 1] = tmp;
+			*listaNew.jugador[pos - 1] = tmp;
 			pos--;
 		}
 	}
@@ -329,15 +341,15 @@ tListaJugadores ordenarPorRanking_seleccionDirecta(const tListaJugadores &LISTA)
 	for (int i = 0; i < LISTA.cont - 1; i++) {
 		int menorPos = i;
 		for (int j = i + 1; j < LISTA.cont; j++) {
-			if (menor(listaNew.jugador[menorPos], listaNew.jugador[j])) {
+			if (menor(*listaNew.jugador[menorPos], *listaNew.jugador[j])) {
 				menorPos = j;
 			}
 		}
-		if (menor(listaNew.jugador[i], listaNew.jugador[menorPos])) {
+		if (menor(*listaNew.jugador[i], *listaNew.jugador[menorPos])) {
 			tJugador tmp;
-			tmp = listaNew.jugador[i];
+			tmp = *listaNew.jugador[i];
 			listaNew.jugador[i] = listaNew.jugador[menorPos];
-			listaNew.jugador[menorPos] = tmp;
+			*listaNew.jugador[menorPos] = tmp;
 		}
 	}
 	return listaNew;
@@ -351,11 +363,11 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
 	while ((i < N - 1) && inter) {
 		inter = false;
 		for (int j = N - 1; j > i; j--) {
-			if (menor(listaNew.jugador[j - 1], listaNew.jugador[j])) {
+			if (menor(*listaNew.jugador[j - 1], *listaNew.jugador[j])) {
 				tJugador tmp;
-				tmp = listaNew.jugador[j];
+				tmp = *listaNew.jugador[j];
 				listaNew.jugador[j] = listaNew.jugador[j - 1];
-				listaNew.jugador[j - 1] = tmp;
+				*listaNew.jugador[j - 1] = tmp;
 				inter = true;
 			}
 		}
@@ -370,20 +382,37 @@ tListaJugadores ordenarPorRanking_Burbuja(const tListaJugadores &LISTA) {
 //Amplía la dimensión del array dinámico de lista al doble de la que
 //tiene.Los datos de los jugadores que ya existen en la lista deben mantenerse.
 void ampliar(tListaJugadores & lista) {
-	int tam = lista.cont * 2;
-	tArrJugadores *new_jugador = new new_jugador[tam];
+	lista.cap = lista.cont * 2;
+	tJugPtr *new_jugador = new tJugPtr[lista.cap];
+	//memcpy(new_jugador, lista.jugador, lista.cont);
+	//				 =
 	for (int i = 0; i < lista.cont; i++)
-			new_jugador[i] = lista.jugador[i];
-	borrarListaJugadores(lista);
+		new_jugador[i] = lista.jugador[i];
+	cout << "estado al copiar: " << endl;
+	for (int i = 0; i < lista.cont; i++)
+		cout << new_jugador[i] << " " << new_jugador[i]->id << endl;
+	cout << "lista.jugador: " << lista.jugador << endl;
+	cout << "new_jugador: " << new_jugador << endl;
 	lista.jugador = new_jugador;
-	//memcpy(temp, temp1, lista.cont);
+	cout << "=========" << endl;
+	cout << "lista.jugador: " << lista.jugador << endl;
+	cout << "new_jugador: " << new_jugador << endl;
+	cout << "estado despues: " << endl;
+	for (int i = 0; i < lista.cont; i++)
+		cout << lista.jugador[i] << " " << lista.jugador[i]->id << endl;
 
+	//for (int i = 0; i < lista.cont; i++)
+	//	delete  new_jugador[i];
+	//delete[] new_jugador;
+}
+
+void borrarJugadores(tListaJugadores & lista) {
+	for (int i = 0; i < lista.cont; i++)
+		delete  lista.jugador[i];
 }
 
 //Libera la memoria dinámica usada por lista.
-void borrarListaJugadores(tListaJugadores & lista) {
-	for(int i = 0; i<lista.cont; i++)
-		delete lisa.jugador[i];
-	delete [] lista.jugador;
-	lista.cont = 0;
+void borrarListaJugadores(tJugPtr *jugador) {
+	delete[] jugador;
 }
+

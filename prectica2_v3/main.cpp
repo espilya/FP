@@ -19,7 +19,7 @@ int main() {
 	bool okListaSud = false, okListaJug = false;
 	tListaSudokus listaSud;
 	tListaJugadores listaJug;
-	int
+
 	tJuego juego;
 	creaLista(listaSud); // iniciamos lista de sudoku
 	creaLista(listaJug); // iniciamos lista de jugadores
@@ -101,10 +101,10 @@ int main() {
 
 			clear();
 		} while (op != 0);
-
 	else if (!okListaSud)
 		colorStr("Error al cargar 'listaSudokus.txt'.\n", ROJO);
 	else if (!okListaJug)
 		colorStr("Error al cargar 'listaJugadores.txt'.\n", ROJO);
+	borrarListaJugadores(listaJug.jugador);
 	return 0;
 }
