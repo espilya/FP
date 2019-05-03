@@ -8,10 +8,10 @@ bool comprobarStr(const string &STR) {
 }
 
 void creaLista(tListaJugadores &lista) {
-	//lista.jugador = new tJugPtr[INICIO_JUGADORES];
-	//for (int i = 0; i < INICIO_JUGADORES; i++) {
-	//	lista.jugador[i] = new tJugador;
-	//}
+	lista.jugador = new tJugPtr[INICIO_JUGADORES];
+	for (int i = 0; i < INICIO_JUGADORES; i++) {
+		lista.jugador[i] = new tJugador;
+	}
 }
 
 
