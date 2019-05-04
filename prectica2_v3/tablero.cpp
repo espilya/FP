@@ -22,18 +22,18 @@ bool cargarTablero(const string &fichero, tTablero &t, bool &esSalvado) {
 	file.open(fichero);
 	if (file.is_open()) {
 		ok = true;
-			for (int j = 0; j < 9; j++) {
-				for (int i = 0; i < 9; i++) {
-					file.get(ch);
-					rellenaCasilla(t[i][j], ch, true);
-					if (ch == 'N') {
-						esSalvado = true;
-						ok = false;
-					}
+		for (int j = 0; j < 9; j++) {
+			for (int i = 0; i < 9; i++) {
+				file.get(ch);
+				rellenaCasilla(t[i][j], ch, true);
+				if (ch == 'N') {
+					esSalvado = true;
+					ok = false;
 				}
-				getline(file, temp);
 			}
-			calcElementosPosibles(t);
+			getline(file, temp);
+		}
+		calcElementosPosibles(t);
 
 	}
 	file.close();
@@ -60,9 +60,9 @@ void dibujarTablero(const tTablero &t) {
 	//	║      5║       ║      4║
 	//	║   8   ║  3    ║       ║
 	//	╚═══════╩═══════╩═══════╝
-	const tArray arriba = {201,205,205,205,205,205,205,205,203,205,205,205,205,205,205,205,203,205,205,205,205,205,205,205,187};
-	const tArray medio = {204,205,205,205,205,205,205,205,206,205,205,205,205,205,205,205,206,205,205,205,205,205,205,205,185};
-	const tArray abajo = {200,205,205,205,205,205,205,205,202,205,205,205,205,205,205,205,202,205,205,205,205,205,205,205,188};
+	const tArray arriba = { 201,205,205,205,205,205,205,205,203,205,205,205,205,205,205,205,203,205,205,205,205,205,205,205,187 };
+	const tArray medio = { 204,205,205,205,205,205,205,205,206,205,205,205,205,205,205,205,206,205,205,205,205,205,205,205,185 };
+	const tArray abajo = { 200,205,205,205,205,205,205,205,202,205,205,205,205,205,205,205,202,205,205,205,205,205,205,205,188 };
 	int y = 0;
 	if (tableroLleno(t)) {
 		cout << "\n\t\t";
@@ -186,16 +186,16 @@ bool ponerNum(tTablero &t, int x, int y, int c, short int &error) {
 	bool ok = false;
 	if (!pertenece(t[x][y].posibles, c))
 		error = 102;
-	else{
-				if (t[x][y].estado == RELLENO)
-					error = 100;
-				else if (t[x][y].estado == FIJA)
-					error = 101;
-				else if (t[x][y].estado == VACIO) {
-					rellenaCasilla(t[x][y], c + '0');
-					calcElementosPosibles(t, modo, x, y);
-					ok = true;
-				}
+	else {
+		if (t[x][y].estado == RELLENO)
+			error = 100;
+		else if (t[x][y].estado == FIJA)
+			error = 101;
+		else if (t[x][y].estado == VACIO) {
+			rellenaCasilla(t[x][y], c + '0');
+			calcElementosPosibles(t, modo, x, y);
+			ok = true;
+		}
 
 
 	}
@@ -247,12 +247,12 @@ bool tableroSoloFijo(const tTablero &t) {
 void mostrarPosibles(const tTablero &t, int x, int y) {
 	//muestra los valores posibles de la casilla del tablero dado que tiene
 	//coordenadas(fila, col) (fila y col estarán en el intervalo[1, 9])
-	if (((x >= 0)&& (x < 9)) && ((y >= 0) && (y < 9)) && (t[x][y].estado==VACIO)) {
+	if (((x >= 0) && (x < 9)) && ((y >= 0) && (y < 9)) && (t[x][y].estado == VACIO)) {
 		if (t[x][y].estado != FIJA) {
 			cout << "Valores posibles: ";
 			for (int i = 0; i < DIMENSION; i++) {
-				if(t[x][y].posibles.elementos[i])
-				cout << i+1 << ' ';
+				if (t[x][y].posibles.elementos[i])
+					cout << i + 1 << ' ';
 			}
 			cout << endl;
 		}
@@ -379,15 +379,23 @@ void calcElementosPosibles_SubMatriz(tTablero &t) {
 	}
 }
 
-bool resolver(tTablero &t, int nCasilla) {
-	const int LimiteCtd = 40;
-	int ctd = 0; //para no entrar en un bucle infinito, si no se puede resolver con esta algoritmo/funcion rellenarSimples()
-	bool exito = false;
+bool resolver(tTablero &t, int ctd) {
+	const int limite = 40; //para no entrar en un bucle infinito, si no se puede resolver con esta algoritmo/funcion rellenarSimples()
+	bool exito;
 
-	do {
-		rellenarSimples(t);
-		ctd++;
-		exito = tableroLleno(t);
-	} while ((!exito) && (ctd < LimiteCtd));
+	//------>Modo RECURSIVO de solucion de sudoku<------
+	rellenarSimples(t);
+	exito = tableroLleno(t);
+	ctd++;
+	if (ctd < limite && !exito) {
+		exito = resolver(t, ctd);
+	}
+
+	//------>Modo NORMAL de solucion de sudoku<------
+	///do {
+	///	rellenarSimples(t);
+	///	ctd++;
+	///	exito = tableroLleno(t);
+	///} while ((!exito) && (ctd < LimiteCtd));
 	return exito;
 }

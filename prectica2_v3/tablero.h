@@ -55,7 +55,7 @@ void mostrarPosibles(const tTablero &t, int x, int y);
 //De nuevo quita valores posibles de la fila, columna y submatriz
 void rellenarSimples(tTablero &t);
 
-bool resolver(tTablero &t, int nCasilla);
+bool resolver(tTablero &t, int ctd);
 
 //--------HECHOS POR LOS ALUMNOS -----
 //Recorre todas las casillas y elimina los valores ya no posibles(viejos)

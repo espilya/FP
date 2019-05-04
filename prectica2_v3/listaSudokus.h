@@ -13,11 +13,11 @@ const string listaSudoku = "listaSudokus.txt";
 const int MAX_SUDOKUS = 20;
 
 // Array de Sudokus
-typedef tSudoku tSudokus[MAX_SUDOKUS];
+//typedef tSudoku tSudokus[MAX_SUDOKUS];
 
 // Lista de Sudokus
 typedef struct {
-  tSudokus array; // Array de sudokus
+  tSudoku *array; // Array de sudokus
   int cont;
 } tListaSudokus;
 
@@ -68,6 +68,9 @@ void eliminarSudoku(tListaSudokus &lista);
 tListaSudokus ordenarListaSudoku(const tListaSudokus LISTA);
 
 bool menor(const tSudoku &J1, const tSudoku &J2);
+
+//--------------------V3--------------------
+void borrarLista(tListaSudokus &lista);
 
 
 #endif

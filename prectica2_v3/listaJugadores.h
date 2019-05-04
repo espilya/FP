@@ -88,5 +88,5 @@ void ampliar(tListaJugadores & lista);
 void borrarJugadores(tListaJugadores & lista);
 
 //Libera la memoria dinámica usada por lista.
-void borrarListaJugadores(tListaJugadores & lista);
+void borrarLista(tListaJugadores & lista);
 #endif

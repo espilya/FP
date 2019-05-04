@@ -110,6 +110,7 @@ int main() {
 	else if (!okListaJug)
 		colorStr("Error al cargar 'listaJugadores.txt'.\n", ROJO);
 	borrarJugadores(listaJug);
-	//borrarListaJugadores(listaJug);
+	borrarLista(listaJug);
+	borrarLista(listaSud);
 	return 0;
 }

@@ -31,7 +31,6 @@ bool cargar(tListaJugadores &lista) { //CREACION DE NEW
 		}
 		ok = true;
 	}
-	mostrar(lista);
 	file.close();
 	return ok;
 }
@@ -387,7 +386,7 @@ void ampliar(tListaJugadores & lista) {
 	tJugPtr *new_jugador = new tJugPtr[lista.cap];
 	for (int i = 0; i < lista.cont; i++)
 		new_jugador[i] = lista.jugador[i];
-	borrarListaJugadores(lista);
+	borrarLista(lista);
 	lista.jugador = new_jugador;
 }
 
@@ -397,7 +396,7 @@ void borrarJugadores(tListaJugadores & lista) {
 }
 
 //Libera la memoria dinámica usada por lista.
-void borrarListaJugadores(tListaJugadores & lista) {
+void borrarLista(tListaJugadores & lista) {
 	delete[] lista.jugador;
 }
 
