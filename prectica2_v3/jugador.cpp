@@ -9,21 +9,21 @@ void modificarJugador(tJugador &jugador, int puntos) { jugador.pts += puntos; }
 bool operator<(const tJugador &opIzq, const tJugador &opDer) {
 	bool menor = false;
 	bool encontrado = false;
-	int i = 0;
-	const int MAX = 50;
-	while ((!encontrado) && (i < (int)opIzq.id.size()) && (i < (int)opDer.id.size()) && (i < MAX)) {
-		if (opIzq.id[i] != opDer.id[i]) {
-			menor = opIzq.id[i] < opDer.id[i];
-			encontrado = true;
-		}
-		i++;
-	}
-	if ((!encontrado) && (opIzq.id.size() != opDer.id.size())) {
-		if (opIzq.id.size() < opDer.id.size())
+	//int i = 0;
+	//const int MAX = 50;
+	//while ((!encontrado) && (i < (int)opIzq.id.size()) && (i < (int)opDer.id.size()) && (i < MAX)) {
+	//	if (opIzq.id[i] != opDer.id[i]) {
+	//		menor = opIzq.id[i] < opDer.id[i];
+	//		encontrado = true;
+	//	}
+	//	i++;
+	//}
+	//if ((!encontrado) && (opIzq.id.size() != opDer.id.size())) {
+		if ((opIzq.id < opDer.id))
 			menor = true;
 		else
 			menor = false;
-	}
+		//}
 	return menor;
 }
 
@@ -33,7 +33,7 @@ bool menor(const tJugador &J1, const tJugador &J2) {
 		menor = true;
 	}
 	else if (J1.pts == J2.pts) {
-		if (J1 < J2)
+		if (!(J1 < J2))
 			menor = true;
 		else
 			menor = false;

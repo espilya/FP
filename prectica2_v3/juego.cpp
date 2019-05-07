@@ -387,7 +387,6 @@ void incorporarJugador(tListaJugadores &lista) {
 		else
 			puntos = stoi(temp);
 	} while (!goodNum);
-	cout << "hola";
 	anadirJugador(lista, id, puntos);
 }
 

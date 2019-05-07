@@ -165,18 +165,18 @@ bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
 		return true;
 }
 
-int buscarBR(const tListaJugadores LISTA, const string buscado, int ini, int fin) {
+int buscarBR(const tListaJugadores LISTA, const string ID, int ini, int fin) {
 	int pos = -1;
 	if (ini <= fin) {
 		int mitad = (ini + fin) / 2;
-		if (buscado == LISTA.jugador[mitad]->id) {
+		if (ID == LISTA.jugador[mitad]->id) {
 			pos = mitad;
 		}
-		else if (buscado < LISTA.jugador[mitad]->id) {
-			pos = buscarBR(LISTA, buscado, ini, mitad - 1);
+		else if (ID < LISTA.jugador[mitad]->id) {
+			pos = buscarBR(LISTA, ID, ini, mitad - 1);
 		}
 		else {
-			pos = buscarBR(LISTA, buscado, mitad + 1, fin);
+			pos = buscarBR(LISTA, ID, mitad + 1, fin);
 		}
 	}
 	return pos;

@@ -1,14 +1,19 @@
-a	2
-aa	44
-aaa	551515
+1			1
+a			4
+aa			44
+aaa			551515
 aaaa			5
 aaaaa			1
 aaaab			3
 aaabb			9
+bbbbb			1
+ccccc			1
+ddddd			1
 espilya			1999
 h			1231
 juan_A			234
 juan_a			234
-pepe			1
+mmmmm			1
+nnnnn			1
 pepito_1000			100
-
+player			60

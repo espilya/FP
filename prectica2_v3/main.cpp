@@ -23,7 +23,7 @@ int main() {
 	bool okListaSud = false, okListaJug = false;
 	tListaSudokus listaSud;
 	tListaJugadores listaJug;
-
+	cout << boolalpha << ("luis" < "jugador");
 	tJuego juego;
 	creaLista(listaSud); // iniciamos lista de sudoku
 	creaLista(listaJug); // iniciamos lista de jugadores
@@ -90,6 +90,7 @@ int main() {
 			case 6: // Incorporar jugador
 				listaJug = ordenarPorAscii_Burbuja(listaJug);
 				incorporarJugador(listaJug);
+				listaJug = ordenarPorAscii_Burbuja(listaJug);
 				guardar(listaJug);
 				mostrar(listaJug);
 				pausa();

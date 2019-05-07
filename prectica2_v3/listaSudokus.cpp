@@ -4,17 +4,20 @@
 //
 
 void creaLista(tListaSudokus &lista) {
-	lista.array = new tSudoku[MAX_SUDOKUS];
-	for (int i = 0; i < MAX_SUDOKUS; i++) {
-		lista.array[i].fichero = "VACIO";
-		lista.array[i].nivel = 0;
+	lista.array = new tSudoku[INICIO_SUDOKUS];
+	tSudoku sud; sud.fichero = "VACIO"; sud.nivel = 0;
+	for (int i = 0; i < INICIO_SUDOKUS; i++) {
+		
+		lista.array[i] = sud;
 	}
 	lista.cont = 0;
+	lista.cap = 5;
 }
 
 bool cargar(tListaSudokus &lista) {
 	bool ok = false;
 	string nombre;
+	tSudoku sud;
 	int nivel, ctd = 0;
 	ifstream file;
 	file.open(listaSudoku);
@@ -22,12 +25,16 @@ bool cargar(tListaSudokus &lista) {
 		while ((!file.eof()) && (ctd < MAX_SUDOKUS) && (file >> nombre) &&
 			(nombre != "")) {
 			file >> nivel;
+			if (lista.cont >= lista.cap) {
+				ampliar(lista);
+			}
 			// cout << nombre << '\t' << nivel << endl;
-			lista.array[ctd].fichero = nombre;
-			lista.array[ctd].nivel = nivel;
+			sud.fichero = nombre; sud.nivel = nivel;
+			lista.array[ctd] = sud;
 			ctd++;
+			lista.cont = ctd;
 		}
-		lista.cont = ctd;
+		
 		ok = true;
 	}
 	return ok;
@@ -73,7 +80,7 @@ bool guardar(const tListaSudokus &lista) {
 	bool ok = false;
 	file.open(listaSudoku);
 	if (file.is_open()) {
-		while (i < MAX_SUDOKUS && lista.array[i].fichero != "VACIO") {
+		while (i < lista.cont && lista.array[i].fichero != "VACIO") {
 			file << lista.array[i].fichero << '\t' << lista.array[i].nivel << '\n';
 			i++;
 		}
@@ -99,7 +106,9 @@ bool registrarSudoku(tListaSudokus &lista) {
 		} while (!ok || !noExiste);
 		cout << endl << "Introduzca los puntos del sudoku:\n>";
 		cin >> sudokuNuevo.nivel;
-
+		if (lista.cont >= lista.cap) 
+			ampliar(lista);
+		
 		pos = buscarPos(lista, sudokuNuevo);
 		// cout << pos << " " << lista.cont; 
 		lista.cont++;
@@ -183,7 +192,6 @@ void eliminarSudoku(tListaSudokus &lista) {
 	mostrar(lista);
 	cout << '>';
 	pos = leerOpcion(0, lista.cont) - 1;
-
 	if (pos > 0) {
 		// <eliminacion>
 		for (int i = pos; i < lista.cont - 1; i++) {
@@ -234,6 +242,15 @@ bool menor(const tSudoku &J1, const tSudoku &J2) {
 		menor = false;
 	}
 	return menor;
+}
+
+void ampliar(tListaSudokus & lista) {
+	lista.cap *= 2;
+	tSudoku *array = new tSudoku[lista.cap];
+	for (int i = 0; i < lista.cont; i++)
+		array[i] = lista.array[i];
+	borrarLista(lista);
+	lista.array = array;
 }
 
 void borrarLista(tListaSudokus &lista) {

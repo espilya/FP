@@ -11,14 +11,18 @@ const string listaSudoku = "listaSudokus.txt";
 
 // Nъmero mбximo de Sudokus registrados
 const int MAX_SUDOKUS = 20;
+const int INICIO_SUDOKUS = 5;
 
 // Array de Sudokus
 //typedef tSudoku tSudokus[MAX_SUDOKUS];
 
+typedef tSudoku *tSudPtr;
+
 // Lista de Sudokus
 typedef struct {
-  tSudoku *array; // Array de sudokus
+	tSudoku *array; // Array de sudokus
   int cont;
+  int cap;
 } tListaSudokus;
 
 // inicializa lista a una lista vacía.
@@ -70,6 +74,8 @@ tListaSudokus ordenarListaSudoku(const tListaSudokus LISTA);
 bool menor(const tSudoku &J1, const tSudoku &J2);
 
 //--------------------V3--------------------
+void ampliar(tListaSudokus & lista);
+
 void borrarLista(tListaSudokus &lista);
 
 
