@@ -105,8 +105,12 @@ void puntuarJugador(tListaJugadores &lista, int puntos) {
 void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int PTS) {
 	// en caso de estar la lista llena..
 	int pos;
+	tJugador player;
+	player.id = ID;
+	player.pts = PTS;
 	bool meter = false;
 	if ((lista.cont >= MAX_JUGADORES)) {
+		cout << "hola";
 		if (!(lista.cont < lista.cap))
 			ampliar(lista);
 		pos = buscarConMenorPuntos(lista);
@@ -127,17 +131,17 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 	if (meter) {
 		for (int i = lista.cont - 1; i > pos; i--)
 			*lista.jugador[i] = *lista.jugador[i - 1];
-		lista.jugador[pos]->id = ID;
-		lista.jugador[pos]->pts = PTS;
+		lista.jugador[pos] = new tJugador(player);
 	}
 
 	else if ((lista.cont < MAX_JUGADORES)) {
-		lista.jugador[lista.cont]->id = ID;
-		lista.jugador[lista.cont]->pts = PTS;
+		cout << lista.cont << " " << lista.cap<< endl;
+		lista.jugador[lista.cont] = new tJugador(player);
 		lista.cont++;
 	}
 	else
 		cout << "Lista llena." << endl;
+	cout << "FIN" << endl;
 }
 
 bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
@@ -210,6 +214,7 @@ bool eliminarJugador(tListaJugadores &lista, const int POS) { // quita al jugado
 
 	for (int i = POS; i < lista.cont - 1; i++)
 		*lista.jugador[i] = *lista.jugador[i + 1];
+	delete lista.jugador[lista.cont - 1];
 
 	return (!ok);
 }
