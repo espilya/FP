@@ -1,13 +1,14 @@
-11111			11111
-8			8
-aa			5
+a	2
+aa	44
+aaa	551515
 aaaa			5
 aaaaa			1
 aaaab			3
 aaabb			9
 espilya			1999
+h			1231
 juan_A			234
 juan_a			234
-pepe			3
+pepe			1
 pepito_1000			100
-h			1231
+

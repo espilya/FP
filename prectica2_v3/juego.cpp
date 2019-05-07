@@ -352,20 +352,29 @@ bool errorAbrirFichero(const string &fichero) {
 //----------------------------------V2----------------------------------
 
 void incorporarJugador(tListaJugadores &lista) {
+	int pos;
 	unsigned int puntos;
-	bool ok, goodNum;
+	bool ok, goodNum, encontrado;
 	string id, temp;
 	cout << "Introduce tu nickname:\n>";
 	do {
 		getline(cin, id);
 		ok = comprobarStr(id);
+		encontrado = false;
 		if (!ok) {
 			cout << "Nombre contiene caracteres invalidos!" << endl;
 			if (id.size() > 30)
 				cout << "El nombre contiene mas de 30 caracteres!" << endl;
 			cout << ">";
 		}
-	} while (!ok);
+		if (ok) {
+			if (buscar(lista, id, pos)) {
+				encontrado = true;
+				cout << "El nombre ya existe!" << endl;
+				cout << ">";
+			}
+		}
+	} while (encontrado || !ok);
 	cout << "\nIntroduce los puntos del jugador:\n>";
 	do {
 		getline(cin, temp);

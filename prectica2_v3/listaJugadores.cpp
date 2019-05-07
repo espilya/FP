@@ -3,6 +3,8 @@
 
 bool comprobarStr(const string &STR) {
 	int i = 0;
+	if (STR == "")
+		return false;
 	while (!isspace(STR[i]) && i < (int)STR.size())
 		i++;
 	return !isspace(STR[i]);
@@ -110,7 +112,6 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 	player.pts = PTS;
 	bool meter = false;
 	if ((lista.cont >= MAX_JUGADORES)) {
-		cout << "hola";
 		if (!(lista.cont < lista.cap))
 			ampliar(lista);
 		pos = buscarConMenorPuntos(lista);
@@ -135,13 +136,11 @@ void anadirJugador(tListaJugadores &lista, const string ID, const unsigned int P
 	}
 
 	else if ((lista.cont < MAX_JUGADORES)) {
-		cout << lista.cont << " " << lista.cap<< endl;
 		lista.jugador[lista.cont] = new tJugador(player);
 		lista.cont++;
 	}
 	else
 		cout << "Lista llena." << endl;
-	cout << "FIN" << endl;
 }
 
 bool buscar(const tListaJugadores &LISTA, const string ID, int &pos) {
