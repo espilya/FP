@@ -1,3 +1,0 @@
-sudoku1.txt	1
-sudoku2.txt	2
-sudoku3.txt	3
